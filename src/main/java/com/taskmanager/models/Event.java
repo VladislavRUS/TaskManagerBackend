@@ -1,12 +1,11 @@
 package com.taskmanager.models;
 
-import java.sql.Timestamp;
 import java.util.Date;
 
 /**
  * Created by User on 012 12.12.16.
  */
-public class Event {
+public class Event implements Comparable<Event> {
     private String UUID;
     private String title;
     private String comment;
@@ -42,5 +41,10 @@ public class Event {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    @Override
+    public int compareTo(Event o) {
+        return this.getDate().compareTo(o.getDate());
     }
 }

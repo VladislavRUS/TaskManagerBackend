@@ -1,0 +1,28 @@
+<div class="add-event-dialog jsPopup" ng-controller="AddEventDialogController as addEventDialogCtrl">
+    <div class="add-event-dialog__header">
+        Добавление события
+    </div>
+
+    <div class="add-event-dialog__body">
+        <div class="add-event-dialog__control">
+            <input class="input" type="text" ng-model="addEventDialogCtrl.title" placeholder="Введите название">
+        </div>
+
+        <div class="add-event-dialog__control">
+            <input class="input" type="date" ng-model="addEventDialogCtrl.date" placeholder="Введите дату">
+        </div>
+
+        <div class="add-event-dialog__control">
+            <textarea class="input _area" type="text" ng-model="addEventDialogCtrl.comment" placeholder="Введите комментарий"></textarea>
+        </div>
+
+    </div>
+
+    <div class="add-event-dialog__actions">
+        <div class="add-event-dialog__actions-button _save"
+             ng-click="addEventDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="add-event-dialog__actions-button _cancel"
+             ng-click="addEventDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>

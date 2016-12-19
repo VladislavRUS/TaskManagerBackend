@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 @Service
@@ -38,7 +40,10 @@ public class EventService {
 
     public List<Event> getAll() {
         String sql = "SELECT * FROM event";
-        return jdbcTemplate.query(sql, rowMapper);
+        List<Event> query = jdbcTemplate.query(sql, rowMapper);
+        Collections.sort(query);
+
+        return query;
     }
 
     public void update(Event event) {

@@ -1,0 +1,40 @@
+.main-header {
+    display: flex;
+    margin-bottom: 50px;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 50px;
+    background-color: #009688;
+    box-shadow: 0 0 7px black;
+    overflow: hidden;
+
+    &__item {
+        position: relative;
+        display: inline-block;
+        padding-left: 20px;
+        padding-right: 20px;
+        font-family: 'Roboto', sans-serif;
+        font-size: 25px;
+        color: white;
+        opacity: 1;
+        cursor: pointer;
+        height: 100%;
+        line-height: 50px;
+        user-select: none;
+
+        &:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        &._active::after{
+            position: absolute;
+            content: "";
+            left: 0;
+            right: 0;
+            top: 46px;
+            height: 15px;
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+    }
+}
