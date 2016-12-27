@@ -1,0 +1,33 @@
+.detail-contract {
+    background-color: white;
+    height: 20px;
+
+    &__add {
+        margin-top: 20px;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        background-color: white;
+        cursor: pointer;
+        font-size: 25px;
+
+        &:hover {
+            background-color: #BBDEFB;
+        }
+    }
+
+    &__row {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+    }
+
+    &__col {
+        flex-basis: 10%;
+        text-align: center;
+    }
+
+    &__col:nth-child(odd) {
+        background-color: #fbf7f7;
+    }
+}

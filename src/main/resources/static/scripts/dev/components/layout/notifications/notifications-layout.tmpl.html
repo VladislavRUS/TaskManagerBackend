@@ -1,0 +1,8 @@
+<div class="page-layout">
+
+    <div class="notification"
+         ng-repeat="notification in notificationsLayoutCtrl.notifications"
+         ui-sref="details({uuid: notification.detail.uuid})">
+        {{notification.text}}
+    </div>
+</div>

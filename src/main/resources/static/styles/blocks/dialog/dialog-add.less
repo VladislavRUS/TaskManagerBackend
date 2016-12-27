@@ -1,0 +1,61 @@
+.dialog-add {
+    height: auto;
+    width: 600px;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+
+    background-color: #fff;
+
+    &__header {
+        position: relative;
+        top: 0;
+        height: 50px;
+        text-align: center;
+        line-height: 50px;
+        font-size: 30px;
+        color: #fff;
+        background-color: #0D47A1;
+    }
+
+    &__body {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 10px;
+    }
+
+    &__control {
+        width: 90%;
+
+        & + & {
+            margin-top: 5px;
+        }
+    }
+
+    &__actions {
+        position: relative;
+        margin-top: 10px;
+
+        bottom: 0;
+        height: 50px;
+        line-height: 50px;
+        padding-left: 45px;
+        background-color: #0D47A1;
+
+        &-button {
+            display: inline-block;
+            color: white;
+            font-size: 25px;
+            cursor: pointer;
+            font-weight: bold;
+
+            & + & {
+                margin-left: 270px;
+            }
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

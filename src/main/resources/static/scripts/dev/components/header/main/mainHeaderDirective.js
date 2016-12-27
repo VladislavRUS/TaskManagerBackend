@@ -1,4 +1,4 @@
-function mainHeaderDirective($state) {
+function mainHeaderDirective($state, notificationsFactory) {
     return {
         scope: {},
         bindToController: {},
@@ -6,9 +6,12 @@ function mainHeaderDirective($state) {
         controller: function() {
             var self = this;
 
+            self.storage = notificationsFactory;
+
             self.currentState = function() {
                 return $state.current.name;
             }
+
         },
         controllerAs: 'mainHeaderCtrl'
     }

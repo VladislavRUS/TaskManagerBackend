@@ -1,0 +1,50 @@
+<div class="dialog-add jsPopup" ng-controller="AddContractDialogController as addContractDialogCtrl">
+    <div class="dialog-add__header">
+        Добавление контракта
+    </div>
+
+    <div class="dialog-add__body">
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addContractDialogCtrl.agreement" placeholder="Договор поставки, доп. соглашение">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addContractDialogCtrl.customer" placeholder="Заказчик">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="number" ng-model="addContractDialogCtrl.amount" placeholder="Количество изделий">
+        </div>
+
+        <div class="dialog-add__control">
+            Выберите квартал:
+            <select class="select"
+                    ng-model="addContractDialogCtrl.quoter">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div>
+
+        <div class="dialog-add__control">
+            Выберите год:
+            <select class="select"
+                    ng-model="addContractDialogCtrl.year">
+                <option ng-repeat="year in addContractDialogCtrl.years">{{year}}</option>
+            </select>
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addContractDialogCtrl.prepaidNote" placeholder="Отметка об авансировании">
+        </div>
+    </div>
+
+    <div class="dialog-add__actions">
+        <div class="dialog-add__actions-button _save"
+             ng-click="addContractDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="dialog-add__actions-button _cancel"
+             ng-click="addContractDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>

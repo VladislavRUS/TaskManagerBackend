@@ -1,13 +1,21 @@
 <div class="main-header">
+    <div class="main-header__item _left"
+         ui-sref="notifications"
+         ng-class="{'_active': mainHeaderCtrl.currentState() === 'notifications'}">
+
+        <span class="main-header__item-notification">{{mainHeaderCtrl.storage.notificationsLength()}}</span>
+
+        Уведомления
+    </div>
+
+    <div class="main-header__item"
+         ui-sref="details"
+         ng-class="{'_active': mainHeaderCtrl.currentState() === 'details'}">
+        Виброизоляторы
+    </div>
     <div class="main-header__item"
          ui-sref="events"
         ng-class="{'_active': mainHeaderCtrl.currentState() === 'events'}">
         События
-    </div>
-    <div class="main-header__item">
-        Документы
-    </div>
-    <div class="main-header__item">
-        Таблицы
     </div>
 </div>
