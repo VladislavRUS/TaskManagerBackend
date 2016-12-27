@@ -1,4 +1,6 @@
-<div class="page" ng-controller="NotificationsController as notificationsCtrl">
+<div class="page">
+    <login-landing ng-if="!notificationsCtrl.loginFactory.loggedIn"></login-landing>
+
     <main-header></main-header>
     <notifications-layout notifications="notificationsCtrl.storage.notifications"></notifications-layout>
     <dialog-wrap></dialog-wrap>

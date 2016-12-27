@@ -1,4 +1,5 @@
 <div class="main-header">
+
     <div class="main-header__item _left"
          ui-sref="notifications"
          ng-class="{'_active': mainHeaderCtrl.currentState() === 'notifications'}">
@@ -8,14 +9,15 @@
         Уведомления
     </div>
 
-    <div class="main-header__item"
-         ui-sref="details"
-         ng-class="{'_active': mainHeaderCtrl.currentState() === 'details'}">
-        Виброизоляторы
+    <div class="main-header__dropdown">
+        <div class="main-header__dropdown-button">Самарский университет</div>
+        <div class="main-header__dropdown-content">
+            <div class="main-header__dropdown-link" ui-sref="details">Виброизоляторы</div>
+            <div class="main-header__dropdown-link" ui-sref="equipments">Испытательное оборудование</div>
+        </div>
     </div>
-    <div class="main-header__item"
-         ui-sref="events"
-        ng-class="{'_active': mainHeaderCtrl.currentState() === 'events'}">
-        События
+
+    <div class="main-header__item">
+        АО РКЦ Прогресс
     </div>
 </div>

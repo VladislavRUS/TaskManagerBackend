@@ -1,4 +1,4 @@
-function detailItemDirective($document, $timeout, dialogWrapFactory, dateFactory, notificationsFactory) {
+function detailItemDirective($document, $timeout, $q, dialogWrapFactory, dateFactory, detailsFactory, notificationsFactory) {
     return {
         scope: {},
         bindToController: {
@@ -16,7 +16,7 @@ function detailItemDirective($document, $timeout, dialogWrapFactory, dateFactory
                 if (self.isOpened) {
                     $timeout(function() {
                         var contract = angular.element(document.getElementById(self.item.uuid + '-table'));
-                        $document.scrollToElement(contract, 150, 300);
+                        $document.scrollToElement(contract, 100, 300);
                     }, 200);
                 }
             };
@@ -39,6 +39,19 @@ function detailItemDirective($document, $timeout, dialogWrapFactory, dateFactory
                 dialogWrapFactory.open('scripts/dev/components/dialog/contract/add/add-contract-dialog.tmpl.html', {
                     detail: self.item
                 })
+            };
+
+            self.editContract = function(contract) {
+                var deferred = $q.defer();
+
+                dialogWrapFactory.open('scripts/dev/components/dialog/contract/edit/edit-contract-dialog.tmpl.html', {
+                    contract: contract,
+                    deferred : deferred
+                });
+
+                deferred.promise.then(function() {
+
+                });
             }
         },
         controllerAs: 'detailItemCtrl'

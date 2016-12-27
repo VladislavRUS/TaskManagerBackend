@@ -1,7 +1,10 @@
-function DetailsController($stateParams, $document, $timeout, detailsFactory) {
+function DetailsController($stateParams, $document, $timeout, $rootScope, detailsFactory, loginFactory) {
     var self = this;
-    detailsFactory.getDetails();
+    self.loginFactory = loginFactory;
 
+    if (self.loginFactory.loggedIn) {
+        detailsFactory.getDetails();
+    }
 
     var uuid = $stateParams.uuid;
 

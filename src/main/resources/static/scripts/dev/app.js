@@ -1,7 +1,7 @@
 angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate', 'duScroll'])
     .config(function($stateProvider, $urlRouterProvider) {
 
-        $urlRouterProvider.otherwise('/details');
+        $urlRouterProvider.otherwise('/notifications');
 
         $stateProvider
             .state('/', {
@@ -29,6 +29,13 @@ angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate', 'duScroll'])
                 controllerAs: 'notificationsCtrl',
                 templateUrl: 'scripts/dev/activity/notifications/notifictions-activity.tmpl.html'
             })
+
+            .state('equipments', {
+                url: '/equipments',
+                controller: 'EquipmentsController',
+                controllerAs: 'equipmentsCtrl',
+                templateUrl: 'scripts/dev/activity/equipments/equipments-activity.tmpl.html'
+            })
     });
 
 /*Controllers*/
@@ -36,8 +43,11 @@ angular.module('app')
     .controller('AddEventDialogController', AddEventDialogController)
     .controller('AddContractDialogController', AddContractDialogController)
     .controller('AddDetailDialogController', AddDetailDialogController)
+    .controller('AddEquipmentDialogController', AddEquipmentDialogController)
     .controller('DetailsController', DetailsController)
     .controller('EventsController', EventsController)
+    .controller('EquipmentsController', EquipmentsController)
+    .controller('EditContractDialogController', EditContractDialogController)
     .controller('NotificationsController', NotificationsController);
 
 
@@ -49,6 +59,9 @@ angular.module('app')
     .directive('detailContract', detailContractDirective)
     .directive('eventsLayout', eventsLayoutDirective)
     .directive('eventItem', eventItemDirective)
+    .directive('equipmentsLayout', equipmentsLayoutDirective)
+    .directive('equipmentItem', equipmentItemDirective)
+    .directive('loginLanding', loginLandingDirective)
     .directive('mainHeader', mainHeaderDirective)
     .directive('notificationsLayout', notificationsLayoutDirective);
 
@@ -58,6 +71,8 @@ angular.module('app')
     .factory('dialogWrapFactory', dialogWrapFactory)
     .factory('detailsFactory', detailsFactory)
     .factory('eventsFactory', eventsFactory)
+    .factory('equipmentsFactory', equipmentsFactory)
+    .factory('loginFactory', loginFactory)
     .factory('restServiceFactory', restServiceFactory)
     .factory('notificationsFactory', notificationsFactory);
 

@@ -1,13 +1,18 @@
 function detailsFactory($http, restServiceFactory, dateFactory, notificationsFactory) {
     var factory = {};
 
-    var initialLoad = true;
+    var detailTypeValue = 'details',
+        detailTypeName = 'Виброизоляторы',
+
+        contractTypeValue = 'contracts',
+        contractTypeName = 'Договоры';
 
     factory.getDetails = function () {
         $http.get(restServiceFactory.detailsReadAll).then(function (resp) {
-            factory.details = resp.data;
 
-            notificationsFactory.clearNotifications();
+            notificationsFactory.clearNotifications([detailTypeValue, contractTypeValue]);
+
+            factory.details = resp.data;
 
             for (var i = 0; i < factory.details.length; i++) {
                 var detail = factory.details[i];
@@ -15,9 +20,11 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
                 var expired = new Date(detail.expirationDate).getTime() < new Date().getTime();
 
                 if (expired) {
-                    notificationsFactory.addNotification(
-                        { text: 'Истек срок действия ПИ на виброизолятор: ' + detail.name, detail: detail }
-                    )
+                    notificationsFactory.addNotification({
+                        type: { value: detailTypeValue, name: detailTypeName },
+                        text: 'Истек срок действия ПИ на виброизолятор: ' + detail.name,
+                        link: detailTypeValue + '?uuid=' + detail.uuid
+                    });
                 }
 
                 var contracts = detail.contracts;
@@ -27,12 +34,18 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
                     var expiresIn = dateFactory.expiresIn(contract.quoter, contract.year);
 
                     if (expiresIn == -1) {
-                        notificationsFactory.addNotification({ text: 'Выполнение обязательств по договору: ' + contract.agreement + ' прекращено. Виброизолятор: ' + detail.name, detail: detail })
+                        notificationsFactory.addNotification({
+                            type: { value: contractTypeValue, name: contractTypeName},
+                            text: 'Выполнение обязательств по договору: ' + contract.agreement + ' прекращено. Виброизолятор: ' + detail.name,
+                            link: detailTypeValue + '?uuid=' + detail.uuid
+                        });
 
                     } else if(expiresIn !== 100) {
-                        notificationsFactory.addNotification(
-                            { text: 'До выполнения обязательств по договору: ' + contract.agreement + ' осталось дней: ' + expiresIn +'. Виброизолятор: ' + detail.name,
-                                detail: detail});
+                        notificationsFactory.addNotification({
+                            type: { value: contractTypeValue, name: contractTypeName },
+                            text: 'До выполнения обязательств по договору: ' + contract.agreement + ' осталось дней: ' + expiresIn +'. Виброизолятор: ' + detail.name,
+                            link: detailTypeValue + '?uuid=' + detail.uuid
+                        });
                     }
                 }
             }
@@ -65,6 +78,12 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
         $http.delete(restServiceFactory.detailsDelete.replace('{UUID}', detail.uuid)).then(function (data) {
             factory.getDetails();
         })
+    };
+
+    factory.updateContract = function(contract) {
+        $http.put(restServiceFactory.updateContract.replace('{UUID}', contract.uuid), contract).then(function() {
+            factory.getDetails();
+        });
     };
 
     return factory;

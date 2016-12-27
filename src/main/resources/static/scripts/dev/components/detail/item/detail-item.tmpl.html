@@ -3,7 +3,6 @@
      ng-click="detailItemCtrl.toggleContracts()"
      ng-class="{'_expired': detailItemCtrl.expired, '_opened': detailItemCtrl.isOpened}">
 
-    <div class="item-status" ng-class="detailItemCtrl.item.status | lowercase"></div>
     <div class="item__col">
         <div class="item__col-text">{{detailItemCtrl.item.name}}</div>
     </div>
@@ -27,7 +26,9 @@
         </tr>
         <tr class="item__table-row"
             ng-repeat="contract in detailItemCtrl.item.contracts"
-            ng-class="'{{detailItemCtrl.contractStatus(contract)}}'">
+            ng-class="'{{detailItemCtrl.contractStatus(contract)}}'"
+            ng-click="detailItemCtrl.editContract(contract)">
+
             <td class="item__table-body-cell">{{contract.agreement}}</td>
             <td class="item__table-body-cell">{{contract.customer}}</td>
             <td class="item__table-body-cell">{{contract.amount}}</td>

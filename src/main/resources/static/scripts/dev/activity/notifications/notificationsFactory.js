@@ -1,5 +1,6 @@
 function notificationsFactory() {
     var factory = {};
+
     factory.notifications = [];
 
     factory.addNotification = function(event) {
@@ -10,9 +11,13 @@ function notificationsFactory() {
         return factory.notifications.length;
     };
 
-    factory.clearNotifications = function() {
-        factory.notifications = [];
-    }
+    factory.clearNotifications = function(types) {
+        types.forEach(function(type) {
+            factory.notifications = factory.notifications.filter(function(n) {
+                return n.type.value !== type;
+            });
+        });
+    };
 
     return factory;
 }

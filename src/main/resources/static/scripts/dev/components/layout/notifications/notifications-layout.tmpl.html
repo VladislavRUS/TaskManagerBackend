@@ -1,8 +1,17 @@
 <div class="page-layout">
 
+
+    <div class="notification__types">
+        <div class="notification__types-item"
+             ng-repeat="type in notificationsLayoutCtrl.types()"
+             ng-class="{'_active': type.value == notificationsLayoutCtrl.currentType.value}"
+             ng-click="notificationsLayoutCtrl.setCurrentType(type)">{{type.name + ' (' + type.amount + ')'}}
+        </div>
+    </div>
+
     <div class="notification"
-         ng-repeat="notification in notificationsLayoutCtrl.notifications"
-         ui-sref="details({uuid: notification.detail.uuid})">
+         ng-repeat="notification in notificationsLayoutCtrl.notifications | filter : notificationsLayoutCtrl.filterType"
+         ng-click="notificationsLayoutCtrl.go(notification.link)">
         {{notification.text}}
     </div>
 </div>

@@ -1,0 +1,18 @@
+<div class="item"
+     id="{{equipmentItemCtrl.item.uuid}}"
+     ng-click="equipmentItemCtrl.toggleContracts()"
+     ng-class="{'_expired': equipmentItemCtrl.expired}">
+
+    <div class="item__col">
+        <div class="item__col-text">{{equipmentItemCtrl.item.name}}</div>
+    </div>
+    <div class="item__col">
+        <div class="item__col-text">{{equipmentItemCtrl.item.type}}</div>
+    </div>
+    <div class="item__col">
+        <div class="item__col-text">{{equipmentItemCtrl.item.number}}</div>
+    </div>
+    <div class="item__col">
+        <div class="item__col-text">{{equipmentItemCtrl.item.expirationDate | date}}</div>
+    </div>
+</div>

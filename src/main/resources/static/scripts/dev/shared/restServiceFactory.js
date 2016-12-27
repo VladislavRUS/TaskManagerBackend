@@ -17,9 +17,15 @@ function restServiceFactory() {
     service.detailsDelete = service.ip + 'details/{UUID}';
 
     /*Contracts*/
-    service.updateCOntract = service.ip + 'contracts/{UUID}';
+    service.updateContract = service.ip + 'contracts/{UUID}';
     service.createContract = service.ip + 'contracts/{detailUUID}';
     service.deleteContract = service.ip + 'contracts/{detailUUID}/{UUID}';
+
+    /*Equipments*/
+    service.equipmentsAll = service.ip + 'equipments';
+    service.equipmentsCreate = service.ip + 'equipments';
+    service.equipmentsUpdate = service.ip + 'equipments/{UUID}';
+    service.equipmentsDelete  = service.ip + 'equipments/{UUID}';
 
     return service;
 }

@@ -11,7 +11,8 @@ function dialogWrapFactory($timeout) {
         $timeout(function() {
             var popup = angular.element(document).find('.jsPopup');
             popup.css({
-                'opacity': 1
+                'transform': 'translateY(10%)',
+                'opacity': '1'
             });
         }, 100);
     };
