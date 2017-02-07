@@ -42,6 +42,7 @@ public class StepService {
                 step.getStepEquipmentUUID());
     }
 
+
     @Transactional
     public void deleteStep(String stepUuid) {
         String sql = "delete from step where uuid=?";
