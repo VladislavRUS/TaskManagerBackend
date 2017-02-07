@@ -1,7 +1,5 @@
 package com.taskmanager.services;
 
-import com.taskmanager.models.Contract;
-import com.taskmanager.models.Detail;
 import com.taskmanager.models.Equipment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -11,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,19 +32,20 @@ public class EquipmentService {
             equipment.setType(resultSet.getString("type"));
             equipment.setNumber(resultSet.getString("number"));
             equipment.setExpirationDate(resultSet.getDate("expirationDate"));
+            equipment.setVendor(resultSet.getString("vendor"));
 
             return equipment;
         }
     }
 
     public void createEquipment(Equipment equipment) {
-        String sql = "insert into equipment (uuid, name, type, number, expirationdate) values(?, ?, ?, ?, ?)";
-        jdbcTemplate.update(sql, UUID.randomUUID(), equipment.getName(), equipment.getType(), equipment.getNumber(), equipment.getExpirationDate());
+        String sql = "insert into equipment (uuid, name, type, number, expirationdate, vendor) values(?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, UUID.randomUUID(), equipment.getName(), equipment.getType(), equipment.getNumber(), equipment.getExpirationDate(), equipment.getVendor());
     }
 
     public void updateEquipment(Equipment equipment) {
-        String sql = "update equipment set name=?, type=?, number=?, expirationDate=? where uuid=?";
-        jdbcTemplate.update(sql, equipment.getName(), equipment.getType(), equipment.getNumber(), equipment.getExpirationDate(), equipment.getUUID());
+        String sql = "update equipment set name=?, type=?, number=?, expirationDate=?, vendor=? where uuid=?";
+        jdbcTemplate.update(sql, equipment.getName(), equipment.getType(), equipment.getNumber(), equipment.getExpirationDate(), equipment.getVendor(), equipment.getUUID());
     }
 
     @Transactional

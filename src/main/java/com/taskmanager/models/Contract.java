@@ -12,6 +12,15 @@ public class Contract {
     private int quoter;
     private int year;
     private String prepaidNote;
+    private boolean isDone;
+
+    public boolean getIsDone() {
+        return isDone;
+    }
+
+    public void setDone(boolean done) {
+        isDone = done;
+    }
 
     public String getUUID() {
         return UUID;

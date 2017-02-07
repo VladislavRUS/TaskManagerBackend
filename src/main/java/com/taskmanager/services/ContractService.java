@@ -35,6 +35,7 @@ public class ContractService {
             contract.setYear(resultSet.getInt("year"));
             contract.setPrepaidNote(resultSet.getString("prepaidnote"));
             contract.setCustomer(resultSet.getString("customer"));
+            contract.setDone(resultSet.getBoolean("isdone"));
 
             return contract;
         }
@@ -42,12 +43,13 @@ public class ContractService {
 
     @Transactional
     public void createContract(String detailUuid, Contract contract) {
-        String sql = "insert into contract (uuid, detailuuid, agreement, customer, amount, quoter, year, prepaidNote) values (?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "insert into contract (uuid, detailuuid, agreement, customer, amount, quoter, year, prepaidNote, isdone) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         jdbcTemplate.update(sql,
                 UUID.randomUUID(), detailUuid,
                 contract.getAgreement(), contract.getCustomer(),
                 contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote());
+                contract.getYear(), contract.getPrepaidNote(),
+                contract.getIsDone());
     }
 
     @Transactional
@@ -57,14 +59,15 @@ public class ContractService {
     }
 
     public void updateContract(Contract contract) {
-        String sql = "update contract set agreement=?, amount=?, quoter=?, year=?, prepaidNote=? where uuid=?";
+        String sql = "update contract set agreement=?, amount=?, quoter=?, year=?, prepaidNote=?, isdone=? where uuid=?";
         jdbcTemplate.update(sql,
                 contract.getAgreement(), contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote(), contract.getUUID());
+                contract.getYear(), contract.getPrepaidNote(), contract.getIsDone(), contract.getUUID());
     }
 
     public List<Contract> getContracts(String detailUuid) {
         String sql = "select * from contract where detailuuid=?";
         return jdbcTemplate.query(sql, new Object[]{detailUuid}, contractRowMapper);
     }
+
 }

@@ -31,8 +31,8 @@ public class EquipmentController {
         return new ResponseEntity<Equipment>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/v1/frontend-api/equipments/{equipmentUUID}", method = RequestMethod.PUT)
-    public ResponseEntity<Equipment> updateDetail(@RequestBody Equipment equipment) {
+    @RequestMapping(value = "/api/v1/frontend-api/equipments", method = RequestMethod.PUT)
+    public ResponseEntity<Equipment> updateEquipment(@RequestBody Equipment equipment) {
         equipmentService.updateEquipment(equipment);
         return new ResponseEntity<Equipment>(HttpStatus.OK);
     }

@@ -8,6 +8,15 @@ public class Equipment {
     private String type;
     private String number;
     private Date expirationDate;
+    private String vendor;
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
 
     public String getUUID() {
         return UUID;

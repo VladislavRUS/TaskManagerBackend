@@ -23,7 +23,7 @@ public class ContractController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/v1/frontend-api/contracts/{contractUUID}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/v1/frontend-api/contracts", method = RequestMethod.PUT)
     public ResponseEntity<Contract> updateContract(@RequestBody Contract contract) {
         contractService.updateContract(contract);
         return new ResponseEntity<>(HttpStatus.OK);

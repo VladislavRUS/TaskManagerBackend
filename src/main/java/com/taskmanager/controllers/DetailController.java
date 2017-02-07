@@ -30,7 +30,7 @@ public class DetailController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/api/v1/frontend-api/details/{detailUUID}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/v1/frontend-api/details", method = RequestMethod.PUT)
     public ResponseEntity<Detail> updateDetail(@RequestBody Detail detail) {
         detailService.updateDetail(detail);
         return new ResponseEntity<>(HttpStatus.OK);
