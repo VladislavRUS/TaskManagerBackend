@@ -23,7 +23,8 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
                     notificationsFactory.addNotification({
                         type: { value: detailTypeValue, name: detailTypeName },
                         text: 'Истек срок действия ПИ на виброизолятор: ' + detail.name,
-                        link: detailTypeValue + '?uuid=' + detail.uuid
+                        link: detailTypeValue + '?uuid=' + detail.uuid,
+                        color: 'red'
                     });
                 }
 
@@ -36,15 +37,17 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
                     if (expiresIn == -1) {
                         notificationsFactory.addNotification({
                             type: { value: contractTypeValue, name: contractTypeName},
-                            text: 'Выполнение обязательств по договору: ' + contract.agreement + ' прекращено. Виброизолятор: ' + detail.name,
-                            link: detailTypeValue + '?uuid=' + detail.uuid
+                            text: 'Истек срок выполнения договора: ' + contract.agreement + '. Виброизолятор: ' + detail.name,
+                            link: detailTypeValue + '?uuid=' + detail.uuid,
+                            color: 'red'
                         });
 
                     } else if(expiresIn !== 100) {
                         notificationsFactory.addNotification({
                             type: { value: contractTypeValue, name: contractTypeName },
                             text: 'До выполнения обязательств по договору: ' + contract.agreement + ' осталось дней: ' + expiresIn +'. Виброизолятор: ' + detail.name,
-                            link: detailTypeValue + '?uuid=' + detail.uuid
+                            link: detailTypeValue + '?uuid=' + detail.uuid,
+                            color: 'yellow'
                         });
                     }
                 }

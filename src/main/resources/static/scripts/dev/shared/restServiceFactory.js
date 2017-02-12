@@ -2,7 +2,7 @@ function restServiceFactory() {
 
     var service = {};
 
-    service.ip = 'http://localhost:9999/api/v1/frontend-api/';
+    service.ip = 'http://localhost:9999//api/v1/frontend-api/';
 
     /*Events*/
     service.eventsReadAll = service.ip + 'events';
@@ -26,6 +26,17 @@ function restServiceFactory() {
     service.equipmentsCreate = service.ip + 'equipments';
     service.equipmentsUpdate = service.ip + 'equipments/{UUID}';
     service.equipmentsDelete  = service.ip + 'equipments/{UUID}';
+
+    /*Steps*/
+    service.stepsAll = service.ip + 'steps';
+    service.stepsCreate = service.ip + 'steps/';
+    service.stepsDelete = service.ip + 'steps/{UUID}';
+
+    /*Created equipments*/
+    service.detailsProgressReadAll = service.ip + 'createdequipments';
+    service.detailsProgressCreate = service.ip + 'createdequipments';
+    service.detailsProgressUpdate = service.ip + 'createdequipments/{UUID}';
+    service.detailsProgressDelete  = service.ip + 'createdequipments/{UUID}';
 
     return service;
 }

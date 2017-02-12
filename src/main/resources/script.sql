@@ -4,6 +4,7 @@ drop TABLE IF EXISTS detail;
 drop TABLE if EXISTS crtd_equipment;
 drop table if EXISTS equipment;
 drop TABLE IF EXISTS contract;
+drop TABLE IF EXISTS accessory_detail;
 
 CREATE table detail(
   uuid text NOT NULL,
@@ -45,4 +46,11 @@ CREATE TABLE crtd_equipment(
   agreement text NOT NULL,
   description text not null,
   number text not null
+);
+
+create table accessory_detail(
+  uuid text,
+  detail_uuid text,
+  name text,
+  designation text
 );

@@ -4,7 +4,7 @@
         <input class="input" placeholder="Введите название оборудования" ng-model="equipmentsLayoutCtrl.equipmentSearch">
     </div>
 
-    <equipment-item item="equipment" ng-repeat="equipment in equipmentsLayoutCtrl.storage.equipments | filter: equipmentsLayoutCtrl.equipmentSearch"></equipment-item>
+    <equipment-item item="equipment" ng-repeat="equipment in equipmentsLayoutCtrl.storage.equipments | filter: equipmentsLayoutCtrl.equipmentFilter"></equipment-item>
 
     <div class="floating-button-wrapper">
         <div class="floating-button" ng-click="equipmentsLayoutCtrl.addEquipment()"></div>

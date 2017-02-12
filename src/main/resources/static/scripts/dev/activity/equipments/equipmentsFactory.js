@@ -18,8 +18,9 @@ function equipmentsFactory($http, restServiceFactory, notificationsFactory) {
                 if (expired) {
                     notificationsFactory.addNotification({
                         type: { value: equipmentTypeValue, name: equipmentTypeName },
-                        text: 'Истекла дата последней аттестации на испытательное оборудование: ' + equipment.name, equipment: equipment,
-                        link: equipmentTypeValue + '?uuid=' + equipment.uuid
+                        text: 'Истек срок действия аттестации на оборудование: ' + equipment.name, equipment: equipment,
+                        link: equipmentTypeValue + '?uuid=' + equipment.uuid,
+                        color: 'red'
                     });
                 }
             }

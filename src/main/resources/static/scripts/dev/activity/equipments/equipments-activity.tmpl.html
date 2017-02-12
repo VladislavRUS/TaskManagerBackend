@@ -1,6 +1,8 @@
 <div class="page">
+    <login-landing ng-if="!equipmentsCtrl.loginFactory.loggedIn"></login-landing>
+
     <main-header></main-header>
-    <equipments-layout></equipments-layout>
+    <equipments-layout vendor="university"></equipments-layout>
 
     <dialog-wrap></dialog-wrap>
 </div>
