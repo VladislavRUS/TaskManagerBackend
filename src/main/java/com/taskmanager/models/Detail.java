@@ -12,6 +12,7 @@ public class Detail {
     private String description;
     private Date expirationDate;
     private List<Contract> contracts;
+    private List<AccessoryDetail> accessories;
 
     public String getUUID() {
         return UUID;
@@ -51,5 +52,13 @@ public class Detail {
 
     public void setContracts(List<Contract> contracts) {
         this.contracts = contracts;
+    }
+
+    public List<AccessoryDetail> getAccessories() {
+        return accessories;
+    }
+
+    public void setAccessories(List<AccessoryDetail> accessories) {
+        this.accessories = accessories;
     }
 }

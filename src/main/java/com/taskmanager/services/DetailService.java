@@ -1,5 +1,6 @@
 package com.taskmanager.services;
 
+import com.taskmanager.models.AccessoryDetail;
 import com.taskmanager.models.Contract;
 import com.taskmanager.models.Detail;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class DetailService {
     @Autowired
     private ContractService contractService;
 
+    @Autowired
+    private AccessoryDetailService accessoryDetailService;
+
     private DetailRowMapper detailRowMapper = new DetailRowMapper();
 
     private static class DetailRowMapper implements RowMapper {
@@ -36,7 +40,6 @@ public class DetailService {
             detail.setName(resultSet.getString("name"));
             detail.setDescription(resultSet.getString("description"));
             detail.setExpirationDate(resultSet.getDate("expirationDate"));
-            detail.setContracts(new ArrayList<>());
             return detail;
         }
     }
@@ -66,7 +69,10 @@ public class DetailService {
 
         for (Detail detail : details) {
             List<Contract> contracts = contractService.getContracts(detail.getUUID());
+            List<AccessoryDetail> accessoryDetails = accessoryDetailService.getAccessoryDetails(detail.getUUID());
+
             detail.setContracts(contracts);
+            detail.setAccessories(accessoryDetails);
         }
 
         return details;
