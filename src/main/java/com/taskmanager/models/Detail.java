@@ -21,6 +21,7 @@ public class Detail {
     private List<AccessoryDetail> list;
 
     private List<Contract> contracts;
+    private List<AccessoryDetail> accessories;
 
     public String getUUID() {
         return UUID;
@@ -60,61 +61,5 @@ public class Detail {
 
     public void setContracts(List<Contract> contracts) {
         this.contracts = contracts;
-    }
-
-    public String getMethodsOfInspection() {
-        return methodsOfInspection;
-    }
-
-    public void setMethodsOfInspection(String methodsOfInspection) {
-        this.methodsOfInspection = methodsOfInspection;
-    }
-
-    public String getTypeOfControl() {
-        return typeOfControl;
-    }
-
-    public void setTypeOfControl(String typeOfControl) {
-        this.typeOfControl = typeOfControl;
-    }
-
-    public String getMeansMeasurement() {
-        return meansMeasurement;
-    }
-
-    public void setMeansMeasurement(String meansMeasurement) {
-        this.meansMeasurement = meansMeasurement;
-    }
-
-    public String getGuarantee() {
-        return guarantee;
-    }
-
-    public void setGuarantee(String guarantee) {
-        this.guarantee = guarantee;
-    }
-
-    public String getFiatOfLabeling() {
-        return fiatOfLabeling;
-    }
-
-    public void setFiatOfLabeling(String fiatOfLabeling) {
-        this.fiatOfLabeling = fiatOfLabeling;
-    }
-
-    public String getNote() {
-        return note;
-    }
-
-    public void setNote(String note) {
-        this.note = note;
-    }
-
-    public List<AccessoryDetail> getList() {
-        return list;
-    }
-
-    public void setList(List<AccessoryDetail> list) {
-        this.list = list;
     }
 }
