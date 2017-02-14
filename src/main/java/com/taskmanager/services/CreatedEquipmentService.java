@@ -35,7 +35,6 @@ public class CreatedEquipmentService {
             equipment.setAgreement(resultSet.getString("agreement"));
             equipment.setDescription(resultSet.getString("description"));
             equipment.setNumber(resultSet.getString("number"));
-            equipment.setSteps(new ArrayList<>());
             return equipment;
         }
     }

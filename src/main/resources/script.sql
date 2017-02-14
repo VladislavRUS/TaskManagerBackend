@@ -10,7 +10,13 @@ CREATE table detail(
   uuid text NOT NULL,
   name text NOT NULL,
   description text NOT NULL,
-  expirationdate date NOT NULL
+  expirationdate date NOT NULL,
+  methods_inspection text,
+  type_control text,
+  means_measurement text,
+  guarantee text,
+  fiat_labeling text,
+  note text
 );
 
 CREATE table contract(
@@ -49,8 +55,8 @@ CREATE TABLE crtd_equipment(
 );
 
 create table accessory_detail(
-  uuid text,
-  detail_uuid text,
-  name text,
-  designation text
+  uuid text NOT NULL,
+  detail_uuid text NOT NULL,
+  name text NOT NULL,
+  designation text NOT NULL
 );

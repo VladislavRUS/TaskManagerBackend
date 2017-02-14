@@ -1,5 +1,6 @@
 package com.taskmanager.controllers;
 
+import com.taskmanager.TableOfDetailsComplexion;
 import com.taskmanager.models.Detail;
 import com.taskmanager.services.DetailService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class DetailController {
 
     @RequestMapping(value = "/api/v1/frontend-api/details", method = RequestMethod.GET)
     public ResponseEntity<List<Detail>> getDetails() {
-        return new ResponseEntity<List<Detail>>(detailService.getDetails(), HttpStatus.OK);
+        return new ResponseEntity<List<Detail>>(detailService.getAllDetails(), HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/details/{detailUUID}", method = RequestMethod.DELETE)
@@ -64,8 +66,17 @@ public class DetailController {
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/details/print", method = RequestMethod.POST)
-    public void printDetails(HttpServletResponse httpServletResponse) {
-        File file = new File("D:\\lab.docx");
+    public void printDetails(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
+        List<Detail> details = new ArrayList<>();
+        Detail detail;
+
+        for (int i = 0; i < list.getUuidList().size(); i++) {
+            detail = detailService.getDetail(list.getUuidList().get(i)).get(0);
+            if (detail != null)
+                details.add(detail);
+        }
+        TableOfDetailsComplexion table = new TableOfDetailsComplexion(details);
+        File file = new File("C:\\MajorProject\\Export.docx");
 
         try {
             byte[] bytes = Files.readAllBytes(file.toPath());
@@ -73,8 +84,8 @@ public class DetailController {
             outputStream.write(bytes);
             outputStream.close();
 
-            httpServletResponse.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() +"\""));
-            httpServletResponse.setContentLength((int)file.length());
+            httpServletResponse.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+            httpServletResponse.setContentLength((int) file.length());
         } catch (IOException e) {
             e.printStackTrace();
         }
