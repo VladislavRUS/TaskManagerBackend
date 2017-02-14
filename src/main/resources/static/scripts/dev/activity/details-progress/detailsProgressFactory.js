@@ -1,4 +1,4 @@
-function detailsProgressFactory($http, restServiceFactory, dateFactory, notificationsFactory) {
+function detailsProgressFactory($http, $rootScope, restServiceFactory, dateFactory, notificationsFactory) {
     var factory = {};
 
     var detailProgressTypeValue = 'detailsProgress',
@@ -10,8 +10,6 @@ function detailsProgressFactory($http, restServiceFactory, dateFactory, notifica
     factory.getDetails = function () {
         $http.get(restServiceFactory.detailsProgressReadAll).then(function (resp) {
 
-            console.log(resp);
-
             notificationsFactory.clearNotifications([detailProgressTypeValue, stepTypeValue]);
 
             factory.details = resp.data;
@@ -19,16 +17,17 @@ function detailsProgressFactory($http, restServiceFactory, dateFactory, notifica
             for (var i = 0; i < factory.details.length; i++) {
                 var detail = factory.details[i];
 
+                console.log(detail);
                 var steps = detail.steps;
 
                 for (var j = 0; j < steps.length; j++) {
                     var step = steps[j];
 
-                    if (new Date(step.expirationDate) > new Date()) {
+                    if (new Date(step.expirationDate).getTime() < new Date().getTime()) {
 
                         notificationsFactory.addNotification({
-                            type: { value: stepTypeValue, name: stepTypeName },
-                            text: 'Завершен этап под номером: ' + step.number + '. Оборудование НИКОРТ: ' + detail.name,
+                            type: { value: stepTypeValue, name: stepTypeName, style: '_expired' },
+                            text: stepExpired(step, detail),
                             link: detailProgressTypeValue + '?uuid=' + detail.uuid
                         });
                     }
@@ -36,6 +35,10 @@ function detailsProgressFactory($http, restServiceFactory, dateFactory, notifica
             }
         });
     };
+
+    function stepExpired(step, detail) {
+        return 'Завершен этап под номером: ' + step.number + '. Оборудование НИОКР: ' + detail.description;
+    }
 
     factory.addStepToDetail = function (detail, step) {
         $http.post(restServiceFactory.stepsCreate, step).then(function (resp) {
@@ -70,6 +73,8 @@ function detailsProgressFactory($http, restServiceFactory, dateFactory, notifica
             factory.getDetails();
         });
     };
+
+    $rootScope.$on('data:update', factory.getDetails);
 
     return factory;
 }

@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate'])
+angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate', 'duScroll'])
     .config(function($stateProvider, $urlRouterProvider) {
 
         $urlRouterProvider.otherwise('/notifications');
@@ -6,7 +6,7 @@ angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate'])
         $stateProvider
             .state('/', {
                 url: '/',
-                abstact: 'true'
+                abstract: 'true'
             })
 
             .state('events', {
@@ -54,6 +54,7 @@ angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate'])
 
 /*Controllers*/
 angular.module('app')
+    .controller('AddAccessoryDialogController', AddAccessoryDialogController)
     .controller('AddEventDialogController', AddEventDialogController)
     .controller('AddContractDialogController', AddContractDialogController)
     .controller('AddDetailDialogController', AddDetailDialogController)
@@ -66,6 +67,7 @@ angular.module('app')
     .controller('EquipmentsController', EquipmentsController)
     .controller('EquipmentsProgressController', EquipmentsProgressController)
     .controller('EditContractDialogController', EditContractDialogController)
+    .controller('EditAccessoryDialogController', EditAccessoryDialogController)
     .controller('NotificationsController', NotificationsController);
 
 
@@ -77,6 +79,9 @@ angular.module('app')
     .directive('detailItem', detailItemDirective)
     .directive('detailProgressItem', detailProgressItemDirective)
     .directive('detailContract', detailContractDirective)
+    .directive('detailContracts', detailContractsDirective)
+    .directive('detailAccessory', detailAccessoryDirective)
+    .directive('detailAccessories', detailAccessoriesDirective)
     .directive('eventsLayout', eventsLayoutDirective)
     .directive('eventItem', eventItemDirective)
     .directive('equipmentsLayout', equipmentsLayoutDirective)
@@ -94,6 +99,7 @@ angular.module('app')
     .factory('eventsFactory', eventsFactory)
     .factory('equipmentsFactory', equipmentsFactory)
     .factory('loginFactory', loginFactory)
+    .factory('printFactory', printFactory)
     .factory('restServiceFactory', restServiceFactory)
     .factory('notificationsFactory', notificationsFactory);
 

@@ -5,7 +5,13 @@ function AddDetailDialogController(dialogWrapFactory, detailsFactory) {
         var detail = {
             name: self.name,
             description: self.description,
-            expirationDate: self.expirationDate
+            expirationDate: self.expirationDate,
+            inspectionMethods: self.inspectionMethods || '-',
+            controlType: self.controlType || '-',
+            meansMeasurement: self.meansMeasurement || '-',
+            guarantee: self.guarantee || '-',
+            fiatLabeling: self.fiatLabeling || '-',
+            note: self.note || '-'
         };
 
         detailsFactory.createDetail(detail);

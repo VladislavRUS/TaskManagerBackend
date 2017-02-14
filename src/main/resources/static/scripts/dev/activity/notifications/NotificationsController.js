@@ -1,11 +1,10 @@
-function NotificationsController(notificationsFactory, $rootScope, loginFactory, detailsFactory, equipmentsFactory) {
+function NotificationsController(notificationsFactory, $rootScope, loginFactory, detailsFactory, equipmentsFactory, detailsProgressFactory) {
     var self = this;
 
     self.storage = notificationsFactory;
     self.loginFactory = loginFactory;
 
-    $rootScope.$on('user:loggedIn', function() {
-        detailsFactory.getDetails();
-        equipmentsFactory.getEquipments();
-    });
+    if (loginFactory.loggedIn) {
+        $rootScope.$emit('data:update');
+    }
 }

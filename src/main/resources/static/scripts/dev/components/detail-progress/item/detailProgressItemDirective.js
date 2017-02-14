@@ -21,7 +21,7 @@ function detailProgressItemDirective($document, $timeout, $q, dialogWrapFactory,
                 }*/
             };
 
-            self.contractStatus = function(contract) {
+            self.stepStatus = function(contract) {
                 var expiresIn = dateFactory.expiresIn(contract.quoter, contract.year);
 
                 if (expiresIn == -1) {

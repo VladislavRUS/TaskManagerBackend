@@ -1,4 +1,4 @@
-function detailsFactory($http, restServiceFactory, dateFactory, notificationsFactory) {
+function detailsFactory($http, $rootScope, printFactory, restServiceFactory, dateFactory, notificationsFactory) {
     var factory = {};
 
     var detailTypeValue = 'details',
@@ -8,6 +8,8 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
         contractTypeName = 'Договоры';
 
     factory.getDetails = function () {
+        printFactory.clear();
+
         $http.get(restServiceFactory.detailsReadAll).then(function (resp) {
 
             notificationsFactory.clearNotifications([detailTypeValue, contractTypeValue]);
@@ -21,10 +23,9 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
 
                 if (expired) {
                     notificationsFactory.addNotification({
-                        type: { value: detailTypeValue, name: detailTypeName },
-                        text: 'Истек срок действия ПИ на виброизолятор: ' + detail.name,
-                        link: detailTypeValue + '?uuid=' + detail.uuid,
-                        color: 'red'
+                        type: { value: detailTypeValue, name: detailTypeName, style: '_expired' },
+                        text: detailExpired(detail),
+                        link: detailTypeValue + '?uuid=' + detail.uuid
                     });
                 }
 
@@ -36,18 +37,16 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
 
                     if (expiresIn == -1) {
                         notificationsFactory.addNotification({
-                            type: { value: contractTypeValue, name: contractTypeName},
-                            text: 'Истек срок выполнения договора: ' + contract.agreement + '. Виброизолятор: ' + detail.name,
-                            link: detailTypeValue + '?uuid=' + detail.uuid,
-                            color: 'red'
+                            type: { value: contractTypeValue, name: contractTypeName, style: '_expired'},
+                            text: contractExpired(contract, detail),
+                            link: detailTypeValue + '?uuid=' + detail.uuid
                         });
 
                     } else if(expiresIn !== 100) {
                         notificationsFactory.addNotification({
-                            type: { value: contractTypeValue, name: contractTypeName },
-                            text: 'До выполнения обязательств по договору: ' + contract.agreement + ' осталось дней: ' + expiresIn +'. Виброизолятор: ' + detail.name,
-                            link: detailTypeValue + '?uuid=' + detail.uuid,
-                            color: 'yellow'
+                            type: { value: contractTypeValue, name: contractTypeName, style: '_soon' },
+                            text: contractSoon(contract, detail, expiresIn),
+                            link: detailTypeValue + '?uuid=' + detail.uuid
                         });
                     }
                 }
@@ -55,20 +54,43 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
         });
     };
 
+    function detailExpired(detail) {
+        return 'Истек срок действия ПИ на виброизолятор: ' + detail.name;
+    }
+
+    function contractExpired(contract, detail) {
+        return 'Истек срок выполнения договора: ' + contract.agreement + '. Виброизолятор: ' + detail.name;
+    }
+
+    function contractSoon(contract, detail, expiresIn) {
+        return 'До выполнения обязательств по договору: ' + contract.agreement + ' осталось дней: ' + expiresIn +'. Виброизолятор: ' + detail.name;
+    }
+
     factory.addContractToDetail = function (detail, contract) {
         $http.post(restServiceFactory.createContract.replace('{detailUUID}', detail.uuid), contract).then(function (resp) {
             factory.getDetails();
         })
     };
 
-    factory.deleteContractFromDetail = function (detail, contract) {
-        var url = restServiceFactory.deleteContract;
-        url = url.replace('{detailUUID}', detail.uuid);
-        url = url.replace('{UUID}', contract.uuid);
 
-        $http.delete(url).then(function (resp) {
+    factory.addAccessoryToDetail = function(accessory) {
+        $http.post(restServiceFactory.accessoriesCreate, accessory).then(function(resp) {
             factory.getDetails();
         })
+    };
+    
+    factory.deleteContract = function (detail, contract) {
+        var url = restServiceFactory.deleteContract
+            .replace('{UUID}', contract.uuid);
+
+        $http.delete(url).then(function () {
+            for (var i = 0; i < detail.contracts.length; i++) {
+                if (detail.contracts[i].uuid == contract.uuid) {
+                    detail.contracts.splice(i, 1);
+                    break;
+                }
+            }
+        });
     };
 
     factory.createDetail = function (detail) {
@@ -84,10 +106,20 @@ function detailsFactory($http, restServiceFactory, dateFactory, notificationsFac
     };
 
     factory.updateContract = function(contract) {
-        $http.put(restServiceFactory.updateContract.replace('{UUID}', contract.uuid), contract).then(function() {
+        $http.put(restServiceFactory.updateContract, contract).then(function() {
             factory.getDetails();
         });
     };
+
+    factory.updateAccessory = function(accessory) {
+        $http.put(restServiceFactory.accessoriesUpdate, accessory).then(function() {
+            factory.getDetails();
+        });
+    };
+
+    $rootScope.$on('data:update', function() {
+        factory.getDetails();
+    });
 
     return factory;
 }

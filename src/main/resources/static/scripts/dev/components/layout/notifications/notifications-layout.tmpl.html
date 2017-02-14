@@ -11,7 +11,7 @@
 
     <div class="notification"
          ng-repeat="notification in notificationsLayoutCtrl.notifications | filter : notificationsLayoutCtrl.filterType"
-         ng-style="{'background-color': notification.color}"
+         ng-class="notification.type.style"
          ng-click="notificationsLayoutCtrl.go(notification.link)">
         {{notification.text}}
     </div>

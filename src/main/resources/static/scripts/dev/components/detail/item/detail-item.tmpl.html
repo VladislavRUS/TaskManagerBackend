@@ -1,7 +1,9 @@
 <div class="item"
      id="{{detailItemCtrl.item.uuid}}"
-     ng-click="detailItemCtrl.toggleContracts()"
-     ng-class="{'_expired': detailItemCtrl.expired, '_opened': detailItemCtrl.isOpened}">
+     ng-mouseenter="detailItemCtrl.toggleShowPrint()"
+     ng-mouseleave="detailItemCtrl.toggleShowPrint()"
+     ng-click="detailItemCtrl.onClick($event)"
+     ng-class="{'_expired': detailItemCtrl.expired, '_opened': detailItemCtrl.isOpened, '_print': detailItemCtrl.print}">
 
     <div class="item__col">
         <div class="item__col-text">{{detailItemCtrl.item.name}}</div>
@@ -14,31 +16,7 @@
     </div>
 </div>
 
-<div class="item__table-wrapper tableAnimation" ng-if="detailItemCtrl.isOpened">
-    <table class="item__table" id="{{detailItemCtrl.item.uuid + '-table'}}">
-        <tr class="item__table-header">
-            <td class="item__table-header-cell">Договор</td>
-            <td class="item__table-header-cell">Заказчик</td>
-            <td class="item__table-header-cell">Кол-во изделий</td>
-            <td class="item__table-header-cell">Квартал</td>
-            <td class="item__table-header-cell">Год</td>
-            <td class="item__table-header-cell">Отм. об аванс</td>
-        </tr>
-        <tr class="item__table-row"
-            ng-repeat="contract in detailItemCtrl.item.contracts"
-            ng-class="'{{detailItemCtrl.contractStatus(contract)}}'"
-            ng-click="detailItemCtrl.editContract(contract)">
-
-            <td class="item__table-body-cell">{{contract.agreement}}</td>
-            <td class="item__table-body-cell">{{contract.customer}}</td>
-            <td class="item__table-body-cell">{{contract.amount}}</td>
-            <td class="item__table-body-cell">{{contract.quoter}}</td>
-            <td class="item__table-body-cell">{{contract.year}}</td>
-            <td class="item__table-body-cell">{{contract.prepaidNote}}</td>
-        </tr>
-    </table>
-
-    <!--<detail-contract contract="contract" ng-repeat="contract in detailItemCtrl.item.contracts"></detail-contract>-->
-
-    <div class="detail-contract__add" ng-click="detailItemCtrl.addContract()">Добавить контракт</div>
+<div class="item__detailed" ng-if="detailItemCtrl.isOpened" id="{{detailItemCtrl.item.uuid + '-table'}}">
+    <detail-accessories detail="detailItemCtrl.item"></detail-accessories>
+    <detail-contracts detail="detailItemCtrl.item"></detail-contracts>
 </div>

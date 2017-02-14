@@ -18,7 +18,7 @@ public class TableOfDetailsComplexion {
 
     public TableOfDetailsComplexion(List<com.taskmanager.models.Detail> list) throws IOException {
         document = new XWPFDocument();
-        File file = new File("C:\\MajorProject\\Export.docx");
+        File file = new File("Export.docx");
 
         if(!file.exists())
             file.createNewFile();

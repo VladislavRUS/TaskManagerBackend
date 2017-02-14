@@ -1,7 +1,7 @@
 function loginFactory($rootScope){
     var factory = {};
 
-    factory.loggedIn = false;
+    factory.loggedIn = true;
 
     factory.login = function(params) {
         //if (params.name == '' && params.password == '') {

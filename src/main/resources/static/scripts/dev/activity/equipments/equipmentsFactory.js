@@ -1,8 +1,12 @@
-function equipmentsFactory($http, restServiceFactory, notificationsFactory) {
+function equipmentsFactory($http, $rootScope, restServiceFactory, notificationsFactory) {
     var factory = {};
 
     var equipmentTypeValue = 'equipments',
         equipmentTypeName = 'Испытательное оборудование';
+
+    $rootScope.$on('data:update', function() {
+        factory.getEquipments();
+    });
 
     factory.getEquipments = function () {
         $http.get(restServiceFactory.equipmentsAll).then(function (resp) {
@@ -17,15 +21,29 @@ function equipmentsFactory($http, restServiceFactory, notificationsFactory) {
 
                 if (expired) {
                     notificationsFactory.addNotification({
-                        type: { value: equipmentTypeValue, name: equipmentTypeName },
-                        text: 'Истек срок действия аттестации на оборудование: ' + equipment.name, equipment: equipment,
-                        link: equipmentTypeValue + '?uuid=' + equipment.uuid,
-                        color: 'red'
+                        type: { value: equipmentTypeValue, name: equipmentTypeName, style: '_expired' },
+                        text: equipmentExpired(equipment),
+                        link: getEquipmentLink(equipment) + '?uuid=' + equipment.uuid
                     });
                 }
             }
         });
     };
+
+    function equipmentExpired(equipment) {
+        return 'Истек срок действия аттестации на оборудование: ' + equipment.name;
+    }
+
+    function getEquipmentLink(equipment) {
+        switch(equipment.vendor) {
+            case 'university': {
+                return 'equipments';
+            }
+            case 'progress': {
+                return 'equipmentsProgress';
+            }
+        }
+    }
 
     factory.createEquipment = function (equipment) {
         $http.post(restServiceFactory.equipmentsCreate, equipment).then(function (resp) {
@@ -38,6 +56,6 @@ function equipmentsFactory($http, restServiceFactory, notificationsFactory) {
             factory.getEquipments();
         })
     };
-
+    
     return factory;
 }

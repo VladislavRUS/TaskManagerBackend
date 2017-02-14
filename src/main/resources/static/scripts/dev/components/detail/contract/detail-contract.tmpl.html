@@ -1,10 +1,11 @@
-<div class="detail-contract">
-    <div class="detail-contract__row">
-        <div class="detail-contract__col">{{detailContractCtrl.contract.agreement}}</div>
-        <div class="detail-contract__col">{{detailContractCtrl.contract.customer}}</div>
-        <div class="detail-contract__col">{{detailContractCtrl.contract.amount}}</div>
-        <div class="detail-contract__col">{{detailContractCtrl.contract.quoter}}</div>
-        <div class="detail-contract__col">{{detailContractCtrl.contract.year}}</div>
-        <div class="detail-contract__col">{{detailContractCtrl.contract.prepaidNote}}</div>
-    </div>
-</div>
+<tr class="item__table-row"
+    ng-class="'{{detailContractCtrl.contractStatus(contract)}}'"
+    ng-click="detailContractCtrl.editContract(contract)">
+
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.agreement}}</td>
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.customer}}</td>
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.amount}}</td>
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.quoter}}</td>
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.year}}</td>
+    <td class="item__table-body-cell">{{detailContractCtrl.contract.prepaidNote}}</td>
+</tr>

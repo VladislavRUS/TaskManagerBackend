@@ -1,0 +1,21 @@
+<div class="item__inner-header" ng-click="detailAccessoriesCtrl.toggle()">Комплектующие</div>
+
+<div class="item__table-wrapper tableAnimation" ng-if="detailAccessoriesCtrl.opened">
+    <table class="item__table" id="{{detailAccessoriesCtrl.detail.uuid + '-table'}}">
+        <tr class="item__table-header">
+            <td class="item__table-header-cell">Наименование</td>
+            <td class="item__table-header-cell">Обозначение</td>
+        </tr>
+
+        <tr class="item__table-row"
+            ng-repeat="accessory in detailAccessoriesCtrl.detail.accessories"
+            ng-class="'{{detailAccessoriesCtrl.contractStatus(contract)}}'"
+            ng-click="detailAccessoriesCtrl.editAccessory(accessory)">
+
+            <td class="item__table-cell">{{accessory.name}}</td>
+            <td class="item__table-cell">{{accessory.designation}}</td>
+        </tr>
+    </table>
+
+    <div class="detail-contract__add" ng-click="detailAccessoriesCtrl.addAccessory()">Добавить комплектующее</div>
+</div>

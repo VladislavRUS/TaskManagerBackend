@@ -76,7 +76,7 @@ public class DetailController {
                 details.add(detail);
         }
         TableOfDetailsComplexion table = new TableOfDetailsComplexion(details);
-        File file = new File("C:\\MajorProject\\Export.docx");
+        File file = new File("Export.docx");
 
         try {
             byte[] bytes = Files.readAllBytes(file.toPath());

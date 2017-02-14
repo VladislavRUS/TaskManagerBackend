@@ -6,7 +6,7 @@
 
     <detail-item item="detail" ng-repeat="detail in detailsLayoutCtrl.storage.details | filter: detailsLayoutCtrl.detailSearch"></detail-item>
 
-    <div class="floating-button-wrapper">
-        <div class="floating-button" ng-click="detailsLayoutCtrl.addDetail()"></div>
-    </div>
+    <div class="floating-button _print" ng-click="detailsLayoutCtrl.print()">Печать</div>
+
+    <div class="floating-button _add" ng-click="detailsLayoutCtrl.addDetail()"></div>
 </div>

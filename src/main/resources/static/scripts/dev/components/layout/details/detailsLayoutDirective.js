@@ -1,4 +1,4 @@
-function detailsLayoutDirective(detailsFactory, dialogWrapFactory) {
+function detailsLayoutDirective(printFactory, detailsFactory, dialogWrapFactory) {
     return {
         scope: {},
         bindToController: {
@@ -11,6 +11,10 @@ function detailsLayoutDirective(detailsFactory, dialogWrapFactory) {
             self.addDetail = function() {
                 dialogWrapFactory.open('scripts/dev/components/dialog/detail/add/add-detail-dialog.tmpl.html');
             };
+
+            self.print = function() {
+                printFactory.sendToPrint('details');
+            }
         },
         controllerAs: 'detailsLayoutCtrl'
     }
