@@ -42,13 +42,16 @@ public class DetailService {
     }
 
     public void createDetail(Detail detail) {
-        String sql = "insert into detail (uuid, name, description, expirationdate) values(?, ?, ?, ?)";
-        jdbcTemplate.update(sql, UUID.randomUUID(), detail.getName(), detail.getDescription(), detail.getExpirationDate());
+        String sql = "insert into detail (uuid, name, description, expirationdate, methods_inspection, type_control, means_measurement, guarantee, fiat_labeling, note) values(?, ?, ?, ?, ?, ?, ?)";
+        jdbcTemplate.update(sql, UUID.randomUUID(), detail.getName(), detail.getDescription(), detail.getExpirationDate(),
+                detail.getMethodsOfInspection(), detail.getTypeOfControl(), detail.getMeansMeasurement(), detail.getGuarantee(), detail.getFiatOfLabeling(),
+                detail.getNote());
     }
 
     public void updateDetail(Detail detail) {
-        String sql = "update detail set name=?, description=?, expirationDate=? where uuid=?";
-        jdbcTemplate.update(sql, detail.getName(), detail.getDescription(), detail.getExpirationDate(), detail.getUUID());
+        String sql = "update detail set name=?, description=?, expirationDate=?,  methods_inspection=?, type_control=?, means_measurement=?, guarantee=?, fiat_labeling=?, note=? where uuid=?";
+        jdbcTemplate.update(sql, detail.getName(), detail.getDescription(), detail.getExpirationDate(),  detail.getMethodsOfInspection(), detail.getTypeOfControl(), detail.getMeansMeasurement(), detail.getGuarantee(), detail.getFiatOfLabeling(),
+                detail.getNote(), detail.getUUID());
     }
 
     @Transactional
