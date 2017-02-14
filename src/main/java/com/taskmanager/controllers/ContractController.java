@@ -17,9 +17,9 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
-    @RequestMapping(value = "/api/v1/frontend-api/contracts/{detailUUID}/{contractUUID}", method = RequestMethod.DELETE)
-    public ResponseEntity<Contract> deleteContract(@PathVariable String detailUUID, @PathVariable String contractUUID) {
-        contractService.deleteContract(detailUUID, contractUUID);
+    @RequestMapping(value = "/api/v1/frontend-api/contracts/{contractUUID}", method = RequestMethod.DELETE)
+    public ResponseEntity<Contract> deleteContract(@PathVariable String contractUUID) {
+        contractService.deleteContract(contractUUID);
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
@@ -31,7 +31,7 @@ public class ContractController {
 
     @RequestMapping(value = "/api/v1/frontend-api/contracts/{detailUUID}", method = RequestMethod.POST)
     public ResponseEntity<Contract> createContract(@PathVariable String detailUUID, @RequestBody Contract contract) {
-        contractService.createContract(detailUUID, contract);
-        return new ResponseEntity<>(HttpStatus.CREATED);
+        Contract c = contractService.createContract(detailUUID, contract);
+        return new ResponseEntity<>(c, HttpStatus.CREATED);
     }
 }

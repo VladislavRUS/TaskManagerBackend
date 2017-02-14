@@ -50,7 +50,7 @@ public class AccessoryDetailService {
 
     public void updateAccessoryDetail(AccessoryDetail accessoryDetail) {
         String sql = "UPDATE accessory_detail SET name=?, designation=? where uuid=?";
-        jdbcTemplate.update(sql, accessoryDetail.getName(),  accessoryDetail.getDesignation());
+        jdbcTemplate.update(sql, accessoryDetail.getName(),  accessoryDetail.getDesignation(), accessoryDetail.getUUID());
     }
 
     public void deleteAccessoryDetail(String accessoryDetailUUID) {

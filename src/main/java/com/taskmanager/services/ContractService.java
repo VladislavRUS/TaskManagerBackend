@@ -41,19 +41,29 @@ public class ContractService {
         }
     }
 
+    public Contract getContract(String uuid) {
+        String sql = "SELECT * FROM contract where uuid=?";
+        return (Contract) jdbcTemplate.query(sql, contractRowMapper, new Object[]{ uuid }).get(0);
+    }
+
     @Transactional
-    public void createContract(String detailUuid, Contract contract) {
+    public Contract createContract(String detailUuid, Contract contract) {
         String sql = "insert into contract (uuid, detailuuid, agreement, customer, amount, quoter, year, prepaidNote, isdone) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String uuid = UUID.randomUUID().toString();
+
         jdbcTemplate.update(sql,
-                UUID.randomUUID(), detailUuid,
+                uuid, detailUuid,
                 contract.getAgreement(), contract.getCustomer(),
                 contract.getAmount(), contract.getQuoter(),
                 contract.getYear(), contract.getPrepaidNote(),
                 contract.getIsDone());
+
+        contract.setUUID(uuid);
+        return contract;
     }
 
     @Transactional
-    public void deleteContract(String detailUuid, String contractUuid) {
+    public void deleteContract(String contractUuid) {
         String sql = "delete from contract where uuid=?";
         jdbcTemplate.update(sql, contractUuid);
     }
