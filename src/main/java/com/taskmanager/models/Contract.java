@@ -4,38 +4,30 @@ package com.taskmanager.models;
  * Created by User on 019 19.12.16.
  */
 public class Contract {
-    private String UUID;
-    private String detailUUID;
+    private String uuid;
+    private String damperUuid;
     private String agreement;
     private String customer;
     private int amount;
     private int quoter;
     private int year;
     private String prepaidNote;
-    private boolean isDone;
+    private boolean done;
 
-    public boolean getIsDone() {
-        return isDone;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setDone(boolean done) {
-        isDone = done;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
-    public String getUUID() {
-        return UUID;
+    public String getDamperUuid() {
+        return damperUuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
-    }
-
-    public String getDetailUUID() {
-        return detailUUID;
-    }
-
-    public void setDetailUUID(String detailUUID) {
-        this.detailUUID = detailUUID;
+    public void setDamperUuid(String damperUuid) {
+        this.damperUuid = damperUuid;
     }
 
     public String getAgreement() {
@@ -84,5 +76,26 @@ public class Contract {
 
     public void setPrepaidNote(String prepaidNote) {
         this.prepaidNote = prepaidNote;
+    }
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder
+                .append("UUID: ").append(this.getUuid()).append(", ")
+                .append("agreement: ").append(this.getAgreement()).append(", ")
+                .append("customer: ").append(this.getCustomer()).append(", ")
+                .append("amount: ").append(this.getAmount());
+
+        return builder.toString();
     }
 }

@@ -27,18 +27,36 @@ public class ContractService {
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Contract contract = new Contract();
-            contract.setUUID(resultSet.getString("uuid"));
-            contract.setDetailUUID(resultSet.getString("detailuuid"));
+            contract.setUuid(resultSet.getString("uuid"));
+            contract.setDamperUuid(resultSet.getString("damper_uuid"));
             contract.setAgreement(resultSet.getString("agreement"));
             contract.setAmount(resultSet.getInt("amount"));
             contract.setQuoter(resultSet.getInt("quoter"));
             contract.setYear(resultSet.getInt("year"));
-            contract.setPrepaidNote(resultSet.getString("prepaidnote"));
+            contract.setPrepaidNote(resultSet.getString("prepaid_note"));
             contract.setCustomer(resultSet.getString("customer"));
-            contract.setDone(resultSet.getBoolean("isdone"));
+            contract.setDone(resultSet.getBoolean("done"));
 
             return contract;
         }
+    }
+
+    @Transactional
+    public Contract createContract(String damperUuid, Contract contract) {
+        String sql = "INSERT INTO contract " +
+                "(uuid, damper_uuid, agreement, customer, amount, quoter, year, prepaid_note, done) " +
+                "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+        String uuid = UUID.randomUUID().toString();
+
+        jdbcTemplate.update(sql,
+                uuid, damperUuid,
+                contract.getAgreement(), contract.getCustomer(),
+                contract.getAmount(), contract.getQuoter(),
+                contract.getYear(), contract.getPrepaidNote(),
+                contract.isDone());
+
+        return getContract(uuid);
     }
 
     public Contract getContract(String uuid) {
@@ -46,38 +64,24 @@ public class ContractService {
         return (Contract) jdbcTemplate.query(sql, contractRowMapper, new Object[]{ uuid }).get(0);
     }
 
-    @Transactional
-    public Contract createContract(String detailUuid, Contract contract) {
-        String sql = "insert into contract (uuid, detailuuid, agreement, customer, amount, quoter, year, prepaidNote, isdone) values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        String uuid = UUID.randomUUID().toString();
-
-        jdbcTemplate.update(sql,
-                uuid, detailUuid,
-                contract.getAgreement(), contract.getCustomer(),
-                contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote(),
-                contract.getIsDone());
-
-        contract.setUUID(uuid);
-        return contract;
+    public List<Contract> getContracts(String damperUuid) {
+        String sql = "select * from contract where damper_uuid=?";
+        return jdbcTemplate.query(sql, new Object[]{ damperUuid }, contractRowMapper);
     }
 
-    @Transactional
-    public void deleteContract(String contractUuid) {
-        String sql = "delete from contract where uuid=?";
-        jdbcTemplate.update(sql, contractUuid);
-    }
-
-    public void updateContract(Contract contract) {
-        String sql = "update contract set agreement=?, amount=?, quoter=?, year=?, prepaidNote=?, isdone=? where uuid=?";
+    public Contract updateContract(Contract contract) {
+        String sql = "UPDATE contract " +
+                "SET agreement=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
+                "where uuid=?";
         jdbcTemplate.update(sql,
                 contract.getAgreement(), contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote(), contract.getIsDone(), contract.getUUID());
+                contract.getYear(), contract.getPrepaidNote(), contract.isDone(), contract.getUuid());
+
+        return getContract(contract.getUuid());
     }
 
-    public List<Contract> getContracts(String detailUuid) {
-        String sql = "select * from contract where detailuuid=?";
-        return jdbcTemplate.query(sql, new Object[]{detailUuid}, contractRowMapper);
+    public void deleteContract(String contractUuid) {
+        String sql = "DELETE FROM contract WHERE uuid=?";
+        jdbcTemplate.update(sql, contractUuid);
     }
-
 }

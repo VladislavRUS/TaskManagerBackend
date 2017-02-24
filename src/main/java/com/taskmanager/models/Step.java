@@ -6,18 +6,18 @@ import java.util.Date;
  * Created by Артём on 04.02.2017.
  */
 public class Step {
-    private String UUID;
+    private String uuid;
     private String stepEquipmentUUID;
     private int number;
 
     private Date expirationDate;
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getStepEquipmentUUID() {

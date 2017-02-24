@@ -3,30 +3,27 @@ package com.taskmanager.models;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by User on 019 19.12.16.
- */
-public class Detail {
-    private String UUID;
+public class Damper {
+    private String uuid;
     private String name;
-    private String description;
+    private String designation;
     private Date expirationDate;
-
     private String inspectionMethods;
     private String controlType;
-    private String meansMeasurement;
+    private String measurementMeans;
     private String guarantee;
     private String fiatLabeling;
     private String note;
-    private List<Contract> contracts;
-    private List<AccessoryDetail> accessories;
 
-    public String getUUID() {
-        return UUID;
+    private List<Contract> contracts;
+    private List<Accessory> accessories;
+
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getName() {
@@ -37,12 +34,12 @@ public class Detail {
         this.name = name;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDesignation() {
+        return designation;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDesignation(String designation) {
+        this.designation = designation;
     }
 
     public Date getExpirationDate() {
@@ -77,12 +74,12 @@ public class Detail {
         this.controlType = controlType;
     }
 
-    public String getMeansMeasurement() {
-        return meansMeasurement;
+    public String getMeasurementMeans() {
+        return measurementMeans;
     }
 
-    public void setMeansMeasurement(String meansMeasurement) {
-        this.meansMeasurement = meansMeasurement;
+    public void setMeasurementMeans(String measurementMeans) {
+        this.measurementMeans = measurementMeans;
     }
 
     public String getGuarantee() {
@@ -109,11 +106,23 @@ public class Detail {
         this.note = note;
     }
 
-    public List<AccessoryDetail> getAccessories() {
+    public List<Accessory> getAccessories() {
         return accessories;
     }
 
-    public void setAccessories(List<AccessoryDetail> accessories) {
+    public void setAccessories(List<Accessory> accessories) {
         this.accessories = accessories;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+
+        builder
+                .append("UUID: ").append(this.getUuid()).append(", ")
+                .append("name: ").append(this.getName()).append(", ")
+                .append("designation: ").append(this.getDesignation());
+
+        return builder.toString();
     }
 }
