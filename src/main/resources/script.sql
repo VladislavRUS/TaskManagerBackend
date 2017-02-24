@@ -33,11 +33,18 @@ create table accessory (
   designation text NOT NULL
 );
 
+CREATE TABLE research_detail (
+  uuid text NOT NULL,
+  requirements text NOT NULL,
+  contract text NOT NULL
+)
+
 create table step (
   uuid text NOT NULL,
-  equipment_uuid text NOT NULL,
+  research_detail_uuid text NOT NULL,
+  name text NOT NULL,
   number text NOT NULL,
-  time date NOT NULL
+  expiration_date date NOT NULL
 );
 
 CREATE TABLE test_equipment (

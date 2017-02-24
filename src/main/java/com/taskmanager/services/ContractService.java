@@ -27,6 +27,7 @@ public class ContractService {
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Contract contract = new Contract();
+
             contract.setUuid(resultSet.getString("uuid"));
             contract.setDamperUuid(resultSet.getString("damper_uuid"));
             contract.setAgreement(resultSet.getString("agreement"));

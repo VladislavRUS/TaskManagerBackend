@@ -45,11 +45,11 @@ public class DamperController {
 
     @RequestMapping(value = "/api/v1/frontend-api/dampers", method = RequestMethod.POST)
     public ResponseEntity<Damper> createDamper(@RequestBody Damper damper) {
-        Damper newDamper = damperService.createDamper(damper);
+        Damper d = damperService.createDamper(damper);
 
-        LOGGER.debug("Created damper: " + newDamper);
+        LOGGER.debug("Created damper: " + d);
 
-        return new ResponseEntity<>(newDamper, HttpStatus.CREATED);
+        return new ResponseEntity<>(d, HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/dampers/{uuid}/contracts", method = RequestMethod.POST)
@@ -72,11 +72,11 @@ public class DamperController {
 
     @RequestMapping(value = "/api/v1/frontend-api/dampers", method = RequestMethod.GET)
     public ResponseEntity<List<Damper>> getDetails() {
-        List<Damper> allDampers = damperService.getAllDampers();
+        List<Damper> dampers = damperService.getDampers();
 
-        LOGGER.debug("Get all dampers, list size: " + allDampers.size());
+        LOGGER.debug("Get dampers, list size: " + dampers.size());
 
-        return new ResponseEntity<>(allDampers, HttpStatus.OK);
+        return new ResponseEntity<>(dampers, HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/dampers/{uuid}", method = RequestMethod.PUT)

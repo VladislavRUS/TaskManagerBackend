@@ -7,9 +7,9 @@ import java.util.Date;
  */
 public class Step {
     private String uuid;
-    private String stepEquipmentUUID;
+    private String researchDetailUuid;
+    private String name;
     private int number;
-
     private Date expirationDate;
 
     public String getUuid() {
@@ -20,12 +20,20 @@ public class Step {
         this.uuid = uuid;
     }
 
-    public String getStepEquipmentUUID() {
-        return stepEquipmentUUID;
+    public String getName() {
+        return name;
     }
 
-    public void setStepEquipmentUUID(String stepEquipmentUUID) {
-        this.stepEquipmentUUID = stepEquipmentUUID;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getResearchDetailUuid() {
+        return researchDetailUuid;
+    }
+
+    public void setResearchDetailUuid(String researchDetailUuid) {
+        this.researchDetailUuid = researchDetailUuid;
     }
 
     public int getNumber() {

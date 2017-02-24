@@ -34,6 +34,7 @@ public class DamperService {
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Damper damper = new Damper();
+
             damper.setUuid(resultSet.getString("uuid"));
             damper.setName(resultSet.getString("name"));
             damper.setDesignation(resultSet.getString("designation"));
@@ -65,7 +66,7 @@ public class DamperService {
         return getDamper(UUID);
     }
 
-    public List<Damper> getAllDampers() {
+    public List<Damper> getDampers() {
         String sql = "SELECT * FROM damper";
         List<Damper> dampers = jdbcTemplate.query(sql, detailRowMapper);
 
