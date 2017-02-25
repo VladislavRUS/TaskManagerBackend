@@ -54,7 +54,7 @@ public class DamperService {
         String sql = "INSERT INTO damper " +
                 "(uuid, name, designation, expiration_date, inspection_methods, " +
                 "control_type, measurement_means, guarantee, fiat_labeling, note) " +
-                "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String UUID = java.util.UUID.randomUUID().toString();
 

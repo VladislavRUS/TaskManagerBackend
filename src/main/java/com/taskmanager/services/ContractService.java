@@ -46,7 +46,7 @@ public class ContractService {
     public Contract createContract(String damperUuid, Contract contract) {
         String sql = "INSERT INTO contract " +
                 "(uuid, damper_uuid, agreement, customer, amount, quoter, year, prepaid_note, done) " +
-                "values (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
@@ -61,19 +61,19 @@ public class ContractService {
     }
 
     public Contract getContract(String uuid) {
-        String sql = "SELECT * FROM contract where uuid=?";
+        String sql = "SELECT * FROM contract WHERE uuid=?";
         return (Contract) jdbcTemplate.query(sql, contractRowMapper, new Object[]{ uuid }).get(0);
     }
 
     public List<Contract> getContracts(String damperUuid) {
-        String sql = "select * from contract where damper_uuid=?";
+        String sql = "SELECT * FROM contract WHERE damper_uuid=?";
         return jdbcTemplate.query(sql, new Object[]{ damperUuid }, contractRowMapper);
     }
 
     public Contract updateContract(Contract contract) {
         String sql = "UPDATE contract " +
                 "SET agreement=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
-                "where uuid=?";
+                "WHERE uuid=?";
         jdbcTemplate.update(sql,
                 contract.getAgreement(), contract.getAmount(), contract.getQuoter(),
                 contract.getYear(), contract.getPrepaidNote(), contract.isDone(), contract.getUuid());

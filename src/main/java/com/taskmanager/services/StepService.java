@@ -39,7 +39,7 @@ public class StepService {
     public Step createStep(String researchDetailUuid, Step step) {
         String sql = "INSERT INTO step " +
                 "(uuid, research_detail_uuid, name, number, expiration_date) " +
-                "values (?, ?, ?, ?, ?)";
+                "VALUES (?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
@@ -62,8 +62,8 @@ public class StepService {
     }
 
     public Step updateStep(Step step) {
-        String sql = "update step " +
-                "set name=?, number=?, expiration_date=?" +
+        String sql = "UPDATE step " +
+                "SET name=?, number=?, expiration_date=?" +
                 "WHERE uuid=?";
 
         jdbcTemplate.update(sql,

@@ -52,7 +52,7 @@ public class EventService {
     }
 
     public void delete(String uuid) {
-        String sql = "DELETE FROM event where uuid=?";
+        String sql = "DELETE FROM event WHERE uuid=?";
         jdbcTemplate.update(sql, uuid);
     }
 }

@@ -50,7 +50,7 @@ public class TestEquipmentService {
     }
 
     public List<TestEquipment> getTestEquipments() {
-        String sql = "select * FROM test_equipment";
+        String sql = "SELECT * FROM test_equipment";
 
         return jdbcTemplate.query(sql, testEquipmentRowMapper);
     }
