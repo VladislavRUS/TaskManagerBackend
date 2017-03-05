@@ -55,3 +55,10 @@ CREATE TABLE test_equipment (
   expiration_date date NOT NULL,
   vendor text NOT NULL
 );
+
+CREATE TABLE event (
+  uuid text NOT NULL,
+  title text NOT NULL,
+  comment text NOT NULL,
+  date date NOT NULL
+);

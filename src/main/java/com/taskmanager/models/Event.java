@@ -6,17 +6,17 @@ import java.util.Date;
  * Created by User on 012 12.12.16.
  */
 public class Event implements Comparable<Event> {
-    private String UUID;
+    private String uuid;
     private String title;
     private String comment;
     private Date date;
 
-    public String getUUID() {
-        return UUID;
+    public String getUuid() {
+        return uuid;
     }
 
-    public void setUUID(String UUID) {
-        this.UUID = UUID;
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getTitle() {

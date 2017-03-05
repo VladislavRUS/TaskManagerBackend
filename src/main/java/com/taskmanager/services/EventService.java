@@ -24,7 +24,7 @@ public class EventService {
         @Override
         public Object mapRow(ResultSet resultSet, int i) throws SQLException {
             Event event = new Event();
-            event.setUUID(resultSet.getString("uuid"));
+            event.setUuid(resultSet.getString("uuid"));
             event.setTitle(resultSet.getString("title"));
             event.setComment(resultSet.getString("comment"));
             event.setDate(resultSet.getDate("date"));
@@ -48,7 +48,7 @@ public class EventService {
 
     public void update(Event event) {
         String sql = "UPDATE event SET title=?, comment=?, date=? WHERE uuid=?";
-        jdbcTemplate.update(sql, event.getTitle(), event.getComment(), event.getDate(), event.getUUID());
+        jdbcTemplate.update(sql, event.getTitle(), event.getComment(), event.getDate(), event.getUuid());
     }
 
     public void delete(String uuid) {

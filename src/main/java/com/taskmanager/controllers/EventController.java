@@ -17,16 +17,17 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @RequestMapping(value = "/api/v1/frontend-api/events", method = RequestMethod.GET)
-    public ResponseEntity<List<Event>> getAll() {
-        return new ResponseEntity<>(eventService.getAll(), HttpStatus.OK);
-    }
-
     @RequestMapping(value = "/api/v1/frontend-api/events/", method = RequestMethod.POST)
     public ResponseEntity create(@RequestBody Event event) {
         eventService.create(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+    @RequestMapping(value = "/api/v1/frontend-api/events", method = RequestMethod.GET)
+    public ResponseEntity<List<Event>> getAll() {
+        return new ResponseEntity<>(eventService.getAll(), HttpStatus.OK);
+    }
+
 
     @RequestMapping(value = "/api/v1/frontend-api/events/{uuid}", method = RequestMethod.PUT)
     public ResponseEntity update(@RequestBody Event event) {
