@@ -30,7 +30,8 @@ create table accessory (
   uuid text NOT NULL,
   damper_uuid text NOT NULL,
   name text NOT NULL,
-  designation text NOT NULL
+  designation text NOT NULL,
+  type text NOT NULL
 );
 
 CREATE TABLE research_detail (

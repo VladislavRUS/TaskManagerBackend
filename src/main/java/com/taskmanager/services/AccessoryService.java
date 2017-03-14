@@ -31,6 +31,7 @@ public class AccessoryService {
             accessory.setDamperUuid(resultSet.getString("damper_uuid"));
             accessory.setName(resultSet.getString("name"));
             accessory.setDesignation(resultSet.getString("designation"));
+            accessory.setType(resultSet.getString("type"));
 
             return accessory;
         }
@@ -38,15 +39,16 @@ public class AccessoryService {
 
     public Accessory createAccessory(String damperUuid, Accessory accessory) {
         String sql = "INSERT INTO accessory " +
-                "(uuid, damper_uuid, name, designation) " +
-                "VALUES (?, ?, ?, ?)";
+                "(uuid, damper_uuid, name, designation, type) " +
+                "VALUES (?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
         jdbcTemplate.update(sql,
                 uuid, damperUuid,
                 accessory.getName(),
-                accessory.getDesignation());
+                accessory.getDesignation(),
+                accessory.getType());
 
         return getAccessory(uuid);
     }
@@ -62,8 +64,8 @@ public class AccessoryService {
     }
 
     public Accessory updateAccessory(Accessory accessory) {
-        String sql = "UPDATE accessory SET name=?, designation=? WHERE uuid=?";
-        jdbcTemplate.update(sql, accessory.getName(),  accessory.getDesignation(), accessory.getUuid());
+        String sql = "UPDATE accessory SET name=?, designation=?, type=? WHERE uuid=?";
+        jdbcTemplate.update(sql, accessory.getName(),  accessory.getDesignation(), accessory.getType(), accessory.getUuid());
         
         return getAccessory(accessory.getUuid());
     }
