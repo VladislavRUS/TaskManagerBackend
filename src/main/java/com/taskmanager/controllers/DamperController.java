@@ -79,6 +79,19 @@ public class DamperController {
         return new ResponseEntity<>(dampers, HttpStatus.OK);
     }
 
+    @RequestMapping(value = "/api/v1/frontend-api/dampers/{uuid}", method = RequestMethod.GET)
+    public ResponseEntity<Damper> getDetail(@PathVariable String uuid) {
+        List<Damper> dampers = damperService.getDampers();
+        Damper damper = dampers.stream()
+                .filter(d -> d.getUuid().equals(uuid))
+                .findFirst()
+                .get();
+
+        LOGGER.debug("Get dampers, list size: " + dampers.size());
+
+        return new ResponseEntity<>(damper, HttpStatus.OK);
+    }
+
     @RequestMapping(value = "/api/v1/frontend-api/dampers/{uuid}", method = RequestMethod.PUT)
     public ResponseEntity<Damper> updateDetail(@RequestBody Damper damper) {
         Damper updatedDamper = damperService.updateDamper(damper);
@@ -96,30 +109,4 @@ public class DamperController {
 
         return new ResponseEntity<>(HttpStatus.OK);
     }
-
-    /*@RequestMapping(value = "/api/v1/frontend-api/details/print", method = RequestMethod.POST)
-    public void printDetails(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
-        List<Damper> details = new ArrayList<>();
-        Damper damper;
-
-        for (int i = 0; i < list.getUuidList().size(); i++) {
-            damper = damperService.getDetail(list.getUuidList().get(i)).get(0);
-            if (detail != null)
-                details.add(detail);
-        }
-        TableOfDetailsComplexion table = new TableOfDetailsComplexion(details);
-        File file = new File("Export.docx");
-
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
-            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
-            outputStream.write(bytes);
-            outputStream.close();
-
-            httpServletResponse.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
-            httpServletResponse.setContentLength((int) file.length());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 }

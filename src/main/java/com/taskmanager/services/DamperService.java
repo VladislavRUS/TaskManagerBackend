@@ -85,7 +85,7 @@ public class DamperService {
     }
 
     public Damper updateDamper(Damper damper) {
-        String sql = "UPDATE detail SET " +
+        String sql = "UPDATE damper SET " +
                 "name=?, designation=?, expiration_date=?,  inspection_methods=?, " +
                 "control_type=?, measurement_means=?, guarantee=?, fiat_labeling=?, note=? " +
                 "WHERE uuid=?";

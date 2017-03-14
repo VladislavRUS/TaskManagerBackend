@@ -17,26 +17,26 @@ public class EventController {
     @Autowired
     private EventService eventService;
 
-    @RequestMapping(value = "/api/v1/frontend-api/events/", method = RequestMethod.POST)
-    public ResponseEntity create(@RequestBody Event event) {
+    @RequestMapping(value = "/api/v1/frontend-api/events", method = RequestMethod.POST)
+    public ResponseEntity<Event> createEvent(@RequestBody Event event) {
         eventService.create(event);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/events", method = RequestMethod.GET)
-    public ResponseEntity<List<Event>> getAll() {
+    public ResponseEntity<List<Event>> getEvents() {
         return new ResponseEntity<>(eventService.getAll(), HttpStatus.OK);
     }
 
 
     @RequestMapping(value = "/api/v1/frontend-api/events/{uuid}", method = RequestMethod.PUT)
-    public ResponseEntity update(@RequestBody Event event) {
+    public ResponseEntity<Event> updateEvent(@RequestBody Event event) {
         eventService.update(event);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @RequestMapping(value = "/api/v1/frontend-api/events/{uuid}", method = RequestMethod.DELETE)
-    public ResponseEntity update(@PathVariable String uuid) {
+    public ResponseEntity<Event> deleteEvent(@PathVariable String uuid) {
         eventService.delete(uuid);
         return new ResponseEntity<>(HttpStatus.OK);
     }
