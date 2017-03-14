@@ -15,8 +15,11 @@ import java.util.List;
 public class TableOfDetailsComplexion {
     private XWPFDocument document;
     private FileOutputStream out;
+    private final String COMPONENT_TABLE = "Раздел 1. Комплектующие изделия";
+    private final String MATERIAL_TABLE = "Раздел 2. Расходный материал";
 
-    public TableOfDetailsComplexion(List<com.taskmanager.models.Damper> list) throws IOException {
+
+    public TableOfDetailsComplexion(List<com.taskmanager.models.Damper> componentList, List<com.taskmanager.models.Damper> materialList) throws IOException {
         document = new XWPFDocument();
         File file = new File("Export.docx");
 
@@ -27,8 +30,9 @@ public class TableOfDetailsComplexion {
 
         changeOrientationA4();
         createFirstPage(document);
-        XWPFTable table = createHeaderTable();
-        renderContent(table, list);
+
+        renderAllTables(componentList, materialList);
+
         createLastPage(document);
 
         finish();
@@ -38,6 +42,14 @@ public class TableOfDetailsComplexion {
         getDocument().write(out);
         getOut().close();
         System.out.println("create_table.docx written successfully");
+    }
+
+	 private void renderAllTables(List<com.taskmanager.models.Damper> componentList, List<com.taskmanager.models.Damper> materialList) {
+        XWPFTable table = createHeaderTable(COMPONENT_TABLE);
+        renderContent(table, componentList);
+
+        table = createHeaderTable(MATERIAL_TABLE);
+        renderContent(table, materialList);
     }
 
     private void createFirstPage(XWPFDocument title) {
@@ -148,7 +160,16 @@ public class TableOfDetailsComplexion {
         runLAst.setText("\t\t\t\t                                                                                       _______________________ В.Г. Никифоров");
     }
 
-    private XWPFTable createHeaderTable() {
+    private XWPFTable createHeaderTable(String title) {
+		XWPFParagraph header = getDocument().createParagraph();
+        header.setAlignment(ParagraphAlignment.CENTER);
+
+        XWPFRun titleRun = header.createRun();
+        titleRun.setFontSize(14);
+        titleRun.setFontFamily("Times New Roman");
+        titleRun.setText(title);
+        titleRun.addBreak();
+
 
         XWPFTable table = getDocument().createTable(2, 10);
         table.setCellMargins(20, 100, 50, 100); // отступы внутри ячеек таблицы
@@ -247,8 +268,8 @@ public class TableOfDetailsComplexion {
         pageSize.setOrient(STPageOrientation.LANDSCAPE);
 
         // Размеры страницы А4
-        pageSize.setW(BigInteger.valueOf(16840));
-        pageSize.setH(BigInteger.valueOf(11900));
+        pageSize.setW(BigInteger.valueOf(16840)); // стандарт А4: ширина 16840
+        pageSize.setH(BigInteger.valueOf(11900)); // стандарт А4: высота 11900
 
         CTSectPr sectPr = document.getDocument().getBody().addNewSectPr();
         CTPageMar pageMar = sectPr.addNewPgMar();
@@ -297,8 +318,6 @@ public class TableOfDetailsComplexion {
         }
 
 		XWPFRun runBreak = document.createParagraph().createRun();
-        runBreak.addBreak();
-        runBreak.addBreak();
         runBreak.addBreak();
     }
 
