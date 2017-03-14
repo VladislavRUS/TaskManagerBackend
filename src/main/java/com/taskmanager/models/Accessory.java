@@ -8,6 +8,8 @@ public class Accessory {
     private String damperUuid;
     private String name;
     private String designation;
+    private String type;
+
 
     public String getUuid() {
         return uuid;
@@ -39,6 +41,14 @@ public class Accessory {
 
     public void setDesignation(String designation) {
         this.designation = designation;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     @Override
