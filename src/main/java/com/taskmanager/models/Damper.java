@@ -19,6 +19,8 @@ public class Damper {
     private List<Contract> contracts;
     private List<Accessory> accessories;
 
+    public Damper() {}
+
     public Damper(Damper oldDamper) {
         this.uuid = oldDamper.uuid;
         this.name = oldDamper.name;
