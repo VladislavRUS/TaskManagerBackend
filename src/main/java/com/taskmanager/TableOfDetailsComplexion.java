@@ -16,7 +16,7 @@ public class TableOfDetailsComplexion {
     private XWPFDocument document;
     private FileOutputStream out;
     private final String COMPONENT_TABLE = "Раздел 1. Комплектующие изделия";
-    private final String MATERIAL_TABLE = "Раздел 2. Расходный материал";
+    private final String MATERIAL_TABLE = "Раздел 2. Расходные материалы";
 
 
     public TableOfDetailsComplexion(List<com.taskmanager.models.Damper> componentList, List<com.taskmanager.models.Damper> materialList) throws IOException {
