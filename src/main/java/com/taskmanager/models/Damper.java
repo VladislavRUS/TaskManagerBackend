@@ -1,5 +1,6 @@
 package com.taskmanager.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +18,21 @@ public class Damper {
 
     private List<Contract> contracts;
     private List<Accessory> accessories;
+
+    public Damper(Damper oldDamper) {
+        this.uuid = oldDamper.uuid;
+        this.name = oldDamper.name;
+        this.designation = oldDamper.designation;
+        this.expirationDate = oldDamper.expirationDate;
+        this.inspectionMethods = oldDamper.inspectionMethods;
+        this.controlType = oldDamper.controlType;
+        this.measurementMeans = oldDamper.measurementMeans;
+        this.guarantee = oldDamper.guarantee;
+        this.fiatLabeling = oldDamper.fiatLabeling;
+        this.note = oldDamper.note;
+        this.contracts = oldDamper.contracts;
+        this.accessories = new ArrayList<>();
+    }
 
     public String getUuid() {
         return uuid;
