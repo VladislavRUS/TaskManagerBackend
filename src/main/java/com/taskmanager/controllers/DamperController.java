@@ -1,5 +1,6 @@
 package com.taskmanager.controllers;
 
+import com.taskmanager.TableOfDetailsComplexion;
 import com.taskmanager.models.Accessory;
 import com.taskmanager.models.Contract;
 import com.taskmanager.models.Damper;
@@ -14,6 +15,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -108,5 +115,29 @@ public class DamperController {
         LOGGER.debug("Deleted damper with uuid: " + uuid);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/api/v1/frontend-api/details/print", method = RequestMethod.POST)
+    public void printDetails(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
+        List<Damper> dampers = new ArrayList<>();
+        Damper damper;
+        for (int i = 0; i < list.getUuidList().size(); i++) {
+            damper = damperService.getDamper(list.getUuidList().get(i));
+            if (damper != null)
+                dampers.add(damper);
+        }
+
+        TableOfDetailsComplexion table = new TableOfDetailsComplexion(dampers);
+        File file = new File("Export.docx");
+        try {
+            byte[] bytes = Files.readAllBytes(file.toPath());
+            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
+            outputStream.write(bytes);
+            outputStream.close();
+            httpServletResponse.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
+            httpServletResponse.setContentLength((int) file.length());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

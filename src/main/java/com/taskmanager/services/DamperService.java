@@ -75,7 +75,7 @@ public class DamperService {
         return dampers;
     }
 
-    private Damper getDamper(String uuid) {
+    public Damper getDamper(String uuid) {
         String sql = "SELECT * FROM damper WHERE uuid=?";
         List<Damper> dampers = jdbcTemplate.query(sql, new Object[]{ uuid }, detailRowMapper);
 

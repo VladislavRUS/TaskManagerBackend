@@ -37,7 +37,7 @@ CREATE TABLE research_detail (
   uuid text NOT NULL,
   requirements text NOT NULL,
   contract text NOT NULL
-)
+);
 
 create table step (
   uuid text NOT NULL,
