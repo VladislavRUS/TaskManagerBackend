@@ -1,10 +1,16 @@
 @import (inline) "../bower_components/angular/angular-csp.css";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import (inline) url('https://fonts.googleapis.com/css?family=Open+Sans');
+@import (inline) "../node_modules/fullcalendar/dist/fullcalendar.css";
 
-@import "common/normalize";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap-reboot.min.css";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import (inline) "../node_modules/tether/dist/css/tether.min.css";
+
 @import "common/input";
 @import "common/select";
 @import "common/colors";
+@import "common/my-styles";
 @import "blocks/button/floating/floating-button";
 @import "blocks/dialog/wrap/dialog-wrap";
 @import "blocks/detail/contract/detail-contract";
@@ -15,3 +21,7 @@
 @import "blocks/login/landing/login-landing";
 @import "blocks/page/page";
 @import "blocks/notification/notification";
+
+body {
+  overflow-y: scroll;
+}

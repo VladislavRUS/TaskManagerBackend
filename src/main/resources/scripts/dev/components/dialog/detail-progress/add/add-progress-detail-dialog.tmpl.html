@@ -1,0 +1,23 @@
+<div class="dialog-add jsPopup" ng-controller="AddProgressDetailDialogController as addProgressDetailDialogCtrl">
+    <div class="dialog-add__header">
+        Добавление оборудования НИОКР
+    </div>
+
+    <div class="dialog-add__body">
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addProgressDetailDialogCtrl.description" placeholder="Техзадание">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addProgressDetailDialogCtrl.agreement" placeholder="Договор">
+        </div>
+    </div>
+
+    <div class="dialog-add__actions">
+        <div class="dialog-add__actions-button _save"
+             ng-click="addProgressDetailDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="dialog-add__actions-button _cancel"
+             ng-click="addProgressDetailDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>

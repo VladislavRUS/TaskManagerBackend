@@ -1,0 +1,12 @@
+<div class="page-layout">
+
+    <div class="page-layout__search">
+        <input class="input" placeholder="Введите название детали" ng-model="detailsLayoutCtrl.detailSearch">
+    </div>
+
+    <detail-item item="detail" ng-repeat="detail in detailsLayoutCtrl.storage.details | filter: detailsLayoutCtrl.detailSearch"></detail-item>
+
+    <div class="floating-button _print" ng-click="detailsLayoutCtrl.print()">Печать</div>
+
+    <div class="floating-button _add" ng-click="detailsLayoutCtrl.addDetail()"></div>
+</div>

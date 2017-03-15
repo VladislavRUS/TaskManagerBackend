@@ -1,0 +1,25 @@
+<div class="dialog-add jsPopup" ng-controller="AddStepDialogController as addStepDetailDialogCtrl">
+    <div class="dialog-add__header">
+        Добавление виброизолятора
+    </div>
+
+    <div class="dialog-add__body">
+        <div class="dialog-add__control">
+            <input class="input" type="number" ng-model="addStepDetailDialogCtrl.number" placeholder="Номер этапа">
+        </div>
+
+        <div class="dialog-add__control">
+            <label>Срок выполнения</label>
+            <input class="input" type="date" ng-model="addStepDetailDialogCtrl.expirationDate" placeholder="Срок выполнения">
+        </div>
+
+    </div>
+
+    <div class="dialog-add__actions">
+        <div class="dialog-add__actions-button _save"
+             ng-click="addStepDetailDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="dialog-add__actions-button _cancel"
+             ng-click="addStepDetailDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>

@@ -1,0 +1,11 @@
+<div class="page-layout">
+    <div class="page-layout__search">
+        <input class="input" placeholder="Введите название" ng-model="detailsProgressLayoutCtrl.detailSearch">
+    </div>
+
+    <detail-progress-item item="detail" ng-repeat="detail in detailsProgressLayoutCtrl.storage.details | filter: detailsProgressLayoutCtrl.detailSearch"></detail-progress-item>
+
+    <div class="floating-button-wrapper">
+        <div class="floating-button" ng-click="detailsProgressLayoutCtrl.addDetail()"></div>
+    </div>
+</div>

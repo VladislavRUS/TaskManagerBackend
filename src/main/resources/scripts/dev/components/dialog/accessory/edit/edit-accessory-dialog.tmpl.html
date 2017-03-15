@@ -1,0 +1,23 @@
+<div class="dialog-add jsPopup" ng-controller="EditAccessoryDialogController as editAccessoryDialogCtrl">
+    <div class="dialog-add__header">
+        Редактирование комплектующего
+    </div>
+
+    <div class="dialog-add__body">
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="editAccessoryDialogCtrl.accessory.name" placeholder="Имя">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="editAccessoryDialogCtrl.accessory.designation" placeholder="Обозначение">
+        </div>
+    </div>
+
+    <div class="dialog-add__actions">
+        <div class="dialog-add__actions-button _save"
+             ng-click="editAccessoryDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="dialog-add__actions-button _cancel"
+             ng-click="editAccessoryDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>

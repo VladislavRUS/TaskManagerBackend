@@ -1,0 +1,31 @@
+<div class="item"
+     id="{{detailProgressItemCtrl.item.uuid}}"
+     ng-click="detailProgressItemCtrl.toggleContracts()"
+     ng-class="{'_expired': detailProgressItemCtrl.expired, '_opened': detailProgressItemCtrl.isOpened}">
+
+    <div class="item__col">
+        <div class="item__col-text">{{detailProgressItemCtrl.item.description}}</div>
+    </div>
+    <div class="item__col">
+        <div class="item__col-text">{{detailProgressItemCtrl.item.agreement}}</div>
+    </div>
+</div>
+
+<div class="item__table-wrapper tableAnimation" ng-if="detailProgressItemCtrl.isOpened">
+    <table class="item__table" id="{{detailProgressItemCtrl.item.uuid + '-table'}}">
+        <tr class="item__table-header">
+            <td class="item__table-header-cell">Номер</td>
+            <td class="item__table-header-cell">Срок выполнения</td>
+        </tr>
+        <tr class="item__table-row"
+            ng-repeat="step in detailProgressItemCtrl.item.steps"
+            ng-class="'{{detailProgressItemCtrl.contractStatus(step)}}'"
+            ng-click="detailProgressItemCtrl.editContract(step)">
+
+            <td class="item__table-body-cell">{{step.number}}</td>
+            <td class="item__table-body-cell">{{step.expirationDate}}</td>
+        </tr>
+    </table>
+
+    <div class="detail-contract__add" ng-click="detailProgressItemCtrl.addStep()">Добавить этап</div>
+</div>

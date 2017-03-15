@@ -1,0 +1,55 @@
+.event-item {
+    width: 700px;
+    height: auto;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: -1px 6px 120px -30px #404040;
+    transform: scale(0.96);
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: transform 0.4s ease;
+
+    &:hover {
+        transform: scale(1);
+        transition: all 0.4s ease;
+    }
+
+    &__title {
+        position: relative;
+        height: 50px;
+        padding-left: 20px;
+        padding-top: 0;
+        font-size: 30px;
+        opacity: 0.87;
+        line-height: 50px;
+        vertical-align: middle;
+        text-align: center;
+        color: white;
+        user-select: none;
+
+        background-color: #009688;
+
+        &._remove {
+            position: absolute;
+            right: 30px;
+            font-size: 20px;
+            height: 20px;
+            cursor: pointer;
+
+            opacity: 0.7;
+
+            &:hover {
+                opacity: 1;
+            }
+        }
+    }
+
+    &__body {
+        margin-top: 20px;
+        margin-bottom: 20px;
+        padding-left: 20px;
+        font-size: 20px;
+    }
+}

@@ -1,0 +1,33 @@
+<div class="dialog-add jsPopup" ng-controller="AddEquipmentDialogController as addEquipmentDialogCtrl">
+    <div class="dialog-add__header">
+        Добавление ИО
+    </div>
+
+    <div class="dialog-add__body">
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addEquipmentDialogCtrl.name" placeholder="Наименование">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addEquipmentDialogCtrl.type" placeholder="Тип">
+        </div>
+
+        <div class="dialog-add__control">
+            <input class="input" type="text" ng-model="addEquipmentDialogCtrl.number" placeholder="Заводской №">
+        </div>
+
+        <div class="dialog-add__control">
+            <label>Дата окончания срока аттестации</label>
+            <input class="input" type="date" ng-model="addEquipmentDialogCtrl.expirationDate" placeholder="Дата окончания срока аттестации">
+        </div>
+
+    </div>
+
+    <div class="dialog-add__actions">
+        <div class="dialog-add__actions-button _save"
+             ng-click="addEquipmentDialogCtrl.onSave()">Сохранить</div>
+
+        <div class="dialog-add__actions-button _cancel"
+             ng-click="addEquipmentDialogCtrl.onCancel()">Отмена</div>
+    </div>
+</div>
