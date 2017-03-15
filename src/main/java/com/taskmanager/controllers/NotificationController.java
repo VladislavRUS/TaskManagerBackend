@@ -34,22 +34,26 @@ public class NotificationController {
     private static final int[] quoter = {1, 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4};
     private static final int[][] quoterMonth = {{0, 1, 2}, {3, 4, 5}, {6, 7, 8}, {9, 10, 11}};
 
+    private static final String EVENT_TYPE = "eventType-События";
+    private static final String DAMPER_TYPE = "damperType-Виброизоляторы";
+    private static final String CONTRACT_TYPE = "contractType-Договоры";
+
     private static final String SUCCESS = "success";
     private static final String INFO = "info";
     private static final String WARNING = "warning";
     private static final String DANGER = "danger";
 
-    private static final String CONTRACT_NOTIFICATION_HEADING_SOON = "Выполнение обязательств по договору";
+    private static final String CONTRACT_NOTIFICATION_HEADING_SOON = "Выполнение обязательств по договору скоро прекратится";
     private static final String CONTRACT_NOTIFICATION_HEADING_EXPIRED = "Выполнение обязательств по договору прекращено";
     private static final String CONTRACT_NOTIFICATION_LINK = "#/dampers-detailed/";
     private static final String CONTRACT_NOTIFICATION_LINK_TEXT = "Перейти к договору";
     private static final String CONTRACT_NOTIFICATION_TEXT = "До выполнения обязательств по договору осталось дней: ";
 
-    private static final String DAMPER_NOTIFICATION_HEADING_SOON = "Срок действия ПИ виброизолятора";
+    private static final String DAMPER_NOTIFICATION_HEADING_SOON = "Скоро истечет срок действия ПИ виброизолятора";
     private static final String DAMPER_NOTIFICATION_HEADING_EXPIRED = "Истек срок действия ПИ виброизолятора";
-    private static final String DAMPER_NOTIFICATION_LINK = "#/dampers";
+    private static final String DAMPER_NOTIFICATION_LINK = "#/dampers-detailed/";
     private static final String DAMPER_NOTIFICATION_LINK_TEXT = "Перейти к виброизолятору";
-    private static final String DAMPER_NOTIFICATION_TEXT = "До окончания срока действия ПИ виброизолятора: ";
+    private static final String DAMPER_NOTIFICATION_TEXT = "До окончания срока действия ПИ виброизолятора {{damper}}: ";
 
     private static final String EVENT_NOTIFICATION_HEADING = "Событие";
     private static final String EVENT_NOTIFICATION_LINK = "#/calendar";
@@ -64,7 +68,7 @@ public class NotificationController {
     private EventService eventService;
 
     @RequestMapping(value = "/api/v1/frontend-api/notifications", method = RequestMethod.GET)
-    public ResponseEntity<List<Notification>> updateAccessory(@RequestBody Accessory accessory) {
+    public ResponseEntity<List<Notification>> getNotifications() {
         List<Notification> notifications = new ArrayList<>();
 
         notifications.addAll(getDampersNotifications());
@@ -123,9 +127,11 @@ public class NotificationController {
 
             if (days <= 30) {
                 Notification notification = new Notification();
-                notification.setLink(CONTRACT_NOTIFICATION_LINK);
+                notification.setLink(CONTRACT_NOTIFICATION_LINK + damper.getUuid());
                 notification.setLinkText(CONTRACT_NOTIFICATION_LINK_TEXT);
-                notification.setText(CONTRACT_NOTIFICATION_TEXT);
+                notification.setText(CONTRACT_NOTIFICATION_TEXT + days);
+                notification.setType(CONTRACT_TYPE);
+                notification.setDate(calendar.getTime());
 
                 if (days <= 0) {
                     notification.setAlertType(DANGER);
@@ -148,8 +154,10 @@ public class NotificationController {
             Notification damperNotification = new Notification();
 
             damperNotification.setLinkText(DAMPER_NOTIFICATION_LINK_TEXT);
-            damperNotification.setText(DAMPER_NOTIFICATION_TEXT);
-            damperNotification.setLink(DAMPER_NOTIFICATION_LINK);
+            damperNotification.setText(DAMPER_NOTIFICATION_TEXT.replace("{{damper}}", damper.getName() + ", " + damper.getDesignation()) + days);
+            damperNotification.setLink(DAMPER_NOTIFICATION_LINK + damper.getUuid());
+            damperNotification.setType(DAMPER_TYPE);
+            damperNotification.setDate(damper.getExpirationDate());
 
             if (days <= 0) {
                 damperNotification.setHeading(DAMPER_NOTIFICATION_HEADING_EXPIRED);
@@ -177,13 +185,16 @@ public class NotificationController {
 
             int days = Days.daysBetween(now, date).getDays();
 
-            if (days <= 7 && days > 0) {
+            if (days <= 7 && days >= 0) {
                 Notification notification = new Notification();
 
                 notification.setHeading(EVENT_NOTIFICATION_HEADING);
                 notification.setLink(EVENT_NOTIFICATION_LINK);
                 notification.setLinkText(EVENT_NOTIFICATION_LINK_TEXT);
                 notification.setText(EVENT_NOTIFICATION_TEXT.replace("{{title}}", event.getTitle()).replace("{{comment}}", event.getTitle()).replace("{{date}}", event.getDate().toString()));
+                notification.setAlertType(INFO);
+                notification.setType(EVENT_TYPE);
+                notification.setDate(event.getDate());
 
                 notifications.add(notification);
             }
@@ -198,6 +209,24 @@ public class NotificationController {
         private String linkText;
         private String text;
         private String alertType;
+        private String type;
+        private Date date;
+
+        public Date getDate() {
+            return date;
+        }
+
+        public void setDate(Date date) {
+            this.date = date;
+        }
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public String getAlertType() {
             return alertType;
