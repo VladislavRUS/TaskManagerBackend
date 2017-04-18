@@ -113,11 +113,17 @@
 <div class="d-flex justify-content-start">
     <div class="p-2">
         <h4>Договоры</h4>
+
     </div>
+
     <div class="ml-auto p-2">
-        <button type="button" class="btn btn-sm btn-success" ng-click="ctrl.addContract('createContractModal');">
+
+        <input class="form-check-input" id="hideDone" type="checkbox" ng-click="ctrl.toggleDone()">Скрыть выполненные
+
+        <button type="button" class="btn btn-sm btn-success ml-2" ng-click="ctrl.addContract('createContractModal');">
             Добавить
         </button>
+
     </div>
 </div>
 
@@ -132,10 +138,11 @@
         <th>Год</th>
         <th>Отметка о предварительном авансировании</th>
         <th>Выполнен</th>
+        <th>Отметка</th>
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="contract in ctrl.damper.contracts track by $index"
+    <tr ng-repeat="contract in ctrl.damper.contracts | filter: ctrl.filterContract track by $index"
         ng-click="ctrl.updateContract(contract, 'createContractModal');">
         <th>{{$index + 1}}</th>
         <td>{{contract.agreement}}</td>
@@ -145,6 +152,9 @@
         <td>{{contract.year}}</td>
         <td>{{contract.prepaidNote}}</td>
         <td>{{contract.done ? 'Да' : 'Нет'}}</td>
+        <td>
+            <span class="badge badge-{{ctrl.nf.getBadgeType(contract)}}">{{ctrl.nf.getBadgeText(contract)}}</span>
+        </td>
     </tr>
     </tbody>
 </table>
@@ -280,17 +290,17 @@
                     <div class="form-group" ng-if="ctrl.update">
                         <div class="col-sm-12">
                             <div class="form-check">
-                                <label class="form-check-label">
-                                    <input class="form-check-input" id="done" type="checkbox"
-                                           ng-model="ctrl.currentContract.done">Выполнен
-                                </label>
+                                <label class="form-check-label"></label>
+                                <input class="form-check-input" id="done" type="checkbox"
+                                       ng-model="ctrl.currentContract.done">Выполнен
                             </div>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+
+                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteContract()">Удалить</button>
                 <button type="button" class="btn btn-success" ng-click="ctrl.saveContract()">Сохранить</button>
             </div>
         </div>
@@ -332,7 +342,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteAccessory()">Удалить</button>
                 <button type="button" class="btn btn-success" ng-click="ctrl.saveAccessory()">Сохранить</button>
             </div>
         </div>

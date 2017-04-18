@@ -30,6 +30,7 @@ function dampersFactory($http, $q, restServiceFactory) {
             factory.dampers.forEach(function(d) {
                 d.expirationDate = new Date(d.expirationDate);
             });
+
             deferred.resolve();
         });
 
@@ -84,13 +85,15 @@ function dampersFactory($http, $q, restServiceFactory) {
         var deferred = $q.defer();
 
         $http.put(restServiceFactory.contractUpdate, contract).then(function() {
-            factory.getDampers().then(deferred.resolve);
+            factory.getDampers().then(function() {
+                factory.getDampers().then(deferred.resolve);
+            });
         });
 
         return deferred.promise;
     };
 
-    factory.deleteContract = function (detail, contract) {
+    factory.deleteContract = function (contract) {
         var deferred = $q.defer();
 
         var url = restServiceFactory.contractDelete.replace('{uuid}', contract.uuid);

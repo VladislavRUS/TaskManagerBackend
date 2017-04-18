@@ -4,4 +4,6 @@ function NotificationsController(notificationsFactory, $rootScope, loginFactory,
 
     notificationsFactory.getNotifications();
 
+    $rootScope.$emit('updateNotifications');
+
 }

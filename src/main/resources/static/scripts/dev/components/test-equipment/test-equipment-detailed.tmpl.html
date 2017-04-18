@@ -1,0 +1,58 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a ui-sref="test-equipments({vendor: ctrl.testEquipment.vendor})">Испытательное оборудование</a></li>
+    <li class="breadcrumb-item active">{{ctrl.testEquipment.name}}</li>
+</ol>
+
+<form class="form-horizontal col-sm-12 form-control" role="form">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="name">
+                Название
+            </label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="name" ng-model="ctrl.testEquipment.name">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="designation">
+                Тип
+            </label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="designation" ng-model="ctrl.testEquipment.type">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="expirationDate">
+                Дата истечения срока
+            </label>
+            <div class="col-sm-12">
+                <input type="date" class="form-control" id="expirationDate"
+                       ng-model="ctrl.testEquipment.expirationDate">
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="number">
+                Заводской номер
+            </label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="number" ng-model="ctrl.testEquipment.number">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <div class="col-sm-12">
+                <button type="button" ng-click="ctrl.onUpdate()" class="btn btn-success">Обновить</button>
+                <button type="button" ng-click="ctrl.onDelete()" class="btn btn-danger ml-auto">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">
+        <strong>Испытательное оборудование обновлено!</strong>
+    </div>
+</form>

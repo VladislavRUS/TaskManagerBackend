@@ -1,45 +1,39 @@
-function mainHeaderDirective($state, notificationsFactory) {
-    return {
-        scope: {},
-        bindToController: {},
-        templateUrl: 'scripts/dev/components/header/main/main-header.tmpl.html',
-        controller: function () {
-            var self = this;
+function mainHeaderDirective($state, $stateParams, notificationsFactory) {
+	return {
+		scope: {},
+		bindToController: {},
+		templateUrl: 'scripts/dev/components/header/main/main-header.tmpl.html',
+		controller: function () {
+			var self = this;
 
-            self.storage = notificationsFactory;
+			self.storage = notificationsFactory;
 
-            self.currentState = function () {
-                return $state.current.name;
-            };
+			self.currentState = function () {
+				return $state.current.name;
+			};
 
-            self.inState = function (dropdownName) {
-                switch (dropdownName) {
+			self.inState = function (stateNames) {
+				for (var i = 0; i < stateNames.length; i++) {
+					if (stateNames[i] == 'test-equipments') {
+						return stateNames[i + 1] == $stateParams.vendor;
 
-                    case 'university':
-                        return self.orState(['details']);
+					} else if (stateNames[i] == $state.current.name) {
+						return true;
+					}
+				}
 
-                    case 'progress': {
-                        return self.orState(['io']);
-                    }
+				return false;
+			};
 
-                    case 'calendar': {
-                        return self.orState(['calendar']);
-                    }
-                }
+			self.orState = function (states) {
+				for (var i = 0; i < states.length; i++) {
+					if (states[i] == $state.current.name) {
+						return true;
+					}
+				}
+			}
 
-
-                return false;
-            };
-
-            self.orState = function (states) {
-                for (var i = 0; i < states.length; i++) {
-                    if (states[i] == $state.current.name) {
-                        return true;
-                    }
-                }
-            }
-
-        },
-        controllerAs: 'mainHeaderCtrl'
-    }
+		},
+		controllerAs: 'mainHeaderCtrl'
+	}
 }

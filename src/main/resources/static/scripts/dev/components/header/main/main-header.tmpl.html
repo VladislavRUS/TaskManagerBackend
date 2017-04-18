@@ -3,16 +3,16 @@
         <ul class="navbar-nav mr-auto">
 
             <li class="nav-item">
-                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState('notifications')}" ui-sref="notifications">Уведомления ({{mainHeaderCtrl.storage.notifications.length}})</a>
+                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState(['notifications'])}" ui-sref="notifications">Уведомления ({{mainHeaderCtrl.storage.notifications.length}})</a>
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState('calendar')}" ui-sref="calendar">Календарь</a>
+                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState(['calendar'])}" ui-sref="calendar">Календарь</a>
             </li>
 
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle cursor-pointer"
-                      ng-class="{'active': mainHeaderCtrl.inState('university')}"
+                      ng-class="{'active': mainHeaderCtrl.inState(['dampers', 'test-equipments', 'university'])}"
                       id="dropdown01"
                       data-toggle="dropdown"
                       aria-haspopup="true"
@@ -22,20 +22,21 @@
 
                 <div class="dropdown-menu" aria-labelledby="dropdown01">
                     <a class="dropdown-item" href="#" ui-sref="dampers">Виброизоляторы</a>
-                    <a class="dropdown-item" href="#">Испытательное оборудование</a>
+                    <a class="dropdown-item" href="#" ui-sref="test-equipments({vendor: 'university'})">Испытательное оборудование</a>
                 </div>
             </li>
 
             <li class="nav-item dropdown">
                 <span class="nav-link dropdown-toggle cursor-pointer"
+                      ng-class="{'active': mainHeaderCtrl.inState(['research-details', 'test-equipments', 'progress'])}"
                       id="dropdown02"
                       data-toggle="dropdown"
                       aria-haspopup="true"
                       aria-expanded="false">АО РКЦ Прогресс</span>
 
                 <div class="dropdown-menu" aria-labelledby="dropdown02">
-                    <a class="dropdown-item" href="#" ui-sref="details">НИОКР</a>
-                    <a class="dropdown-item" href="#">Испытательное оборудование</a>
+                    <a class="dropdown-item" href="#" ui-sref="research-details">НИОКР</a>
+                    <a class="dropdown-item" href="#" ui-sref="test-equipments({vendor: 'progress'})">Испытательное оборудование</a>
                 </div>
             </li>
         </ul>

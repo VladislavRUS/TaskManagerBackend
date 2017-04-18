@@ -8,8 +8,9 @@ function eventsFactory($http, $q, restServiceFactory) {
         var deferred = $q.defer();
 
         $http.get(restServiceFactory.eventsReadAll).then(function(resp) {
-            deferred.resolve();
             factory.events = resp.data;
+
+            deferred.resolve();
         });
 
         return deferred.promise;

@@ -1,0 +1,63 @@
+<form>
+    <div class="form-group d-flex">
+        <button type="button" class="btn btn-success" ng-click="ctrl.onAdd()">Добавить НИОКР</button>
+    </div>
+</form>
+
+<table class="table table-hover">
+    <thead class="thead-inverse">
+    <tr>
+        <th>#</th>
+        <th>Техзадание</th>
+        <th>Договор</th>
+        <th>Этапов</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="researchDetail in ctrl.storage.researchDetails" ng-click="ctrl.onClick(researchDetail, $event)">
+        <th>{{$index + 1}}</th>
+        <td>{{researchDetail.requirements}}</td>
+        <td>{{researchDetail.contract}}</td>
+        <td>{{researchDetail.steps.length}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="createResearchDetailModal" tabindex="-1" role="dialog" aria-labelledby="createResearchDetailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createResearchDetailModalLabel">Добавление НИОКР</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+
+                    <div class="form-group">
+                        <label class="col-sm-12" for="name">
+                            Техзадание
+                        </label>
+                        <div class="col-sm-12">
+                            <textarea type="text" class="form-control" id="name" ng-model="ctrl.requirements"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-12" for="number">
+                            Договор
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="number" ng-model="ctrl.contract">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>

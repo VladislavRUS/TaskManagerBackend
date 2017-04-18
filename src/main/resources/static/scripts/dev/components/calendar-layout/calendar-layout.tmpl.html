@@ -5,7 +5,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="createEventModalLabel">Добавление события ({{ctrl.currentDate | date: "dd/MM/yyyy"}})</h5>
+                <h5 class="modal-title" id="createEventModalLabel">Событие ({{ctrl.currentEvent.date | date: "dd-MM-yyyy"}})</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -17,7 +17,7 @@
                             Название
                         </label>
                         <div class="col-sm-12">
-                            <input type="text" class="form-control" id="inputTitle" ng-model="ctrl.eventTitle">
+                            <textarea type="text" class="form-control" id="inputTitle" ng-model="ctrl.currentEvent.title"></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -25,52 +25,14 @@
                             Комментарий
                         </label>
                         <div class="col-sm-12">
-                            <textarea type="text" class="form-control" id="inputComment" ng-model="ctrl.eventComment"></textarea>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Сохранить</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--Detailed event modal-->
-<div class="modal fade" id="detailedEventModal" tabindex="-1" role="dialog" aria-labelledby="detailedEventModalLable" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="detailedEventModalLable">Просмотр события ({{ctrl.currentDate | date: "dd/MM/yyyy"}})</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-2" for="inputTitle">
-                            Название
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="updateTitle" ng-model="ctrl.currentEvent.title">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2" for="inputComment">
-                            Комментарий
-                        </label>
-                        <div class="col-sm-12">
-                            <textarea type="text" class="form-control" id="updateComment" ng-model="ctrl.currentEvent.comment"></textarea>
+                            <textarea type="text" class="form-control" id="inputComment" ng-model="ctrl.currentEvent.comment"></textarea>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer" ng-if="!ctrl.currentEvent.custom">
-                <button type="button" class="btn btn-danger" ng-click="ctrl.delete()">Удалить</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.update()">Обновить</button>
+                <button type="button" class="btn btn-danger" ng-click="ctrl.delete()" ng-if="ctrl.update">Удалить</button>
+                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Сохранить</button>
             </div>
         </div>
     </div>

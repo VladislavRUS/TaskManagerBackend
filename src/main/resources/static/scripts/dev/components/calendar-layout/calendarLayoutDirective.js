@@ -1,122 +1,161 @@
 function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsFactory) {
-    return {
-        scope: {},
-        bindToController: {},
-        templateUrl: 'scripts/dev/components/calendar-layout/calendar-layout.tmpl.html',
-        controller: function () {
-            var self = this;
+	return {
+		scope: {},
+		bindToController: {},
+		templateUrl: 'scripts/dev/components/calendar-layout/calendar-layout.tmpl.html',
+		controller: function () {
+			var self = this;
 
-            self.currentDate = new Date();
-            self.currentEvent = null;
+			self.currentDate = new Date();
+			self.currentEvent = null;
+			self.update = false;
 
-            self.uiConfig = {
-                calendar: {
-                    editable: false,
-                    header: {
-                        left: 'month agendaWeek agendaDay',
-                        center: 'title',
-                        right: 'today prev,next'
-                    },
-                    height: 500,
-                    dayClick: function (date) {
-                        self.currentDate = new Date(date);
-                        openModal('createEventModal');
-                    },
+			self.uiConfig = {
+				calendar: {
+					editable: false,
+					header: {
+						left: 'month agendaWeek agendaDay',
+						center: 'title',
+						right: 'today prev,next'
+					},
+					height: 500,
+					dayClick: function (date) {
+						self.currentEvent = {};
+						self.currentEvent.date = new Date(date);
+						self.update = false;
+						openModal('createEventModal');
+					},
 
-                    eventClick: function (calEvent, jsEvent, view) {
-                        self.currentEvent = calEvent;
-                        openModal('detailedEventModal');
-                    },
-                    lang: 'ru'
-                }
-            };
+					eventClick: function (calEvent, jsEvent, view) {
+						self.currentEvent = {};
+						self.currentEvent.title = calEvent.title;
+						self.currentEvent.comment = calEvent.comment;
+						self.currentEvent.uuid = calEvent.uuid;
+						self.currentEvent.date = calEvent.start._i;
+						self.currentEvent.custom = calEvent.custom || false;
+						self.update = true;
+						openModal('createEventModal');
+					},
 
-            self.eventSources = [];
+					dayRender: function (date, cell) {
+						var day = new Date(date);
+						var isWeekend = false;
 
-            eventsFactory.getEvents().then(function () {
-                self.eventSources.push(
-                    {
-                        events: eventsFactory.events
-                            .map(function (event) {
-                                return {
-                                    uuid: event.uuid,
-                                    title: event.title,
-                                    start: event.date,
-                                    comment: event.comment
-                                }
-                            })
-                    });
+						if (day.getDay() == 6 || day.getDay() == 0) {
+							isWeekend = true;
+						}
 
-                self.eventSources.push({
-                    events: notificationsFactory.notifications.filter(function(e) {
-                        return !e.type.startsWith('eventType');
-                    }).
-                    map(function(n) {
-                        return  {
-                            uuid: n.uuid,
-                            title: n.heading,
-                            start: new Date(n.date),
-                            comment: n.text,
-                            custom: true
-                        }
-                    })
-                })
-            });
+						if (isWeekend) {
+							$(cell).css({
+								'background-color': '#ffc4b7'
+							});
+						}
 
-            self.save = function () {
-                var event = {
-                    title: self.eventTitle,
-                    comment: self.eventComment,
-                    date: self.currentDate
-                };
+						$(cell).css({
+							'cursor': 'pointer'
+						});
+					},
 
-                eventsFactory.addEvent(event).then(function () {
-                    closeModal('createEventModal');
-                    reloadState();
-                });
-            };
+					lang: 'ru'
+				}
+			};
 
-            self.update = function () {
-                var event = {
-                    uuid: self.currentEvent.uuid,
-                    title: self.currentEvent.title,
-                    comment: self.currentEvent.comment,
-                    date: self.currentEvent.start._i
-                };
+			self.eventSources = [];
 
-                console.log(event);
+			eventsFactory.getEvents().then(function () {
+				self.eventSources.push(
+					{
+						events: eventsFactory.events
+							.map(function (event) {
+								console.log(event);
 
-                eventsFactory.updateEvent(event).then(function () {
-                    closeModal('detailedEventModal');
-                    reloadState();
-                });
-            };
+								return {
+									uuid: event.uuid,
+									title: event.title,
+									start: event.date,
+									comment: event.comment
+								}
+							})
+					});
 
-            self.delete = function () {
-                var event = {uuid: self.currentEvent.uuid};
+				self.eventSources.push({
+					events: notificationsFactory.notifications.filter(function (n) {
+						return n.type.split(':')[0] !== 'event'
+					})
+						.map(function (n) {
+							return {
+								uuid: n.uuid,
+								title: n.title,
+								start: n.date,
+								comment: n.text,
+								custom: true
+							}
+						})
+				})
+			});
 
-                eventsFactory.removeEvent(event).then(function () {
-                    closeModal('detailedEventModal');
-                    reloadState();
-                });
-            };
+			self.save = function () {
+				if (self.update) {
+					eventsFactory.updateEvent(self.currentEvent).then(function () {
+						closeModal('createEventModal');
+						reloadState();
+					});
 
-            function closeModal(id) {
-                var el = angular.element(document).find('#' + id);
-                el.modal('hide');
-            }
+				} else {
+					eventsFactory.addEvent(self.currentEvent).then(function () {
+						closeModal('createEventModal');
+						reloadState();
+					});
+				}
+			};
 
-            function openModal(id) {
-                var el = angular.element(document).find('#' + id);
-                el.modal('show');
-            }
+			self.delete = function () {
+				var event = {uuid: self.currentEvent.uuid};
 
-            function reloadState() {
-                $timeout(function () {
-                    $state.reload();
-                }, 500);
-            }
-        },
-        controllerAs: 'ctrl'
-    }
+				eventsFactory.removeEvent(event).then(function () {
+					closeModal('createEventModal');
+					reloadState();
+				});
+			};
+
+			function closeModal(id) {
+				var el = angular.element(document).find('#' + id);
+				el.modal('hide');
+			}
+
+			function openModal(id) {
+				var el = angular.element(document).find('#' + id);
+				el.modal('show');
+			}
+
+			function reloadState() {
+				$timeout(function () {
+					$state.reload();
+				}, 500);
+			}
+		},
+
+		link: function () {
+			$timeout(function () {
+				$('.fc-day-number').each(function (i, obj) {
+					var bgColor = $(obj).css('background-color');
+
+					$(obj).bind('mouseover', function () {
+						$(this).css({
+							'background-color': '#e5e3e3'
+						})
+					});
+
+					$(obj).bind('mouseout', function () {
+						$(this).css({
+							'background-color': bgColor
+						})
+					});
+				});
+
+			}, 1000);
+		},
+
+		controllerAs: 'ctrl'
+	}
 }

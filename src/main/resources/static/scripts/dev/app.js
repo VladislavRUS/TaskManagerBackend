@@ -39,6 +39,34 @@ angular.module('app', ['ui.router', 'ngCookies', 'ngAnimate', 'duScroll', 'ui.ca
                 controllerAs: 'notificationsCtrl',
                 templateUrl: 'scripts/dev/activity/notifications/notifictions-activity.tmpl.html'
             })
+
+            .state('test-equipments', {
+                url: '/test-equipments/:vendor',
+                controller: 'TestEquipmentsController',
+                controllerAs: 'testEquipmentsCtrl',
+                templateUrl: 'scripts/dev/activity/test-equipments/test-equipments-activity.tmpl.html'
+            })
+
+            .state('test-equipments-detailed', {
+                url: '/test-equipments-detailed/:uuid',
+                controller: 'TestEquipmentsDetailedController',
+                controllerAs: 'testEquipmentsDetailedCtrl',
+                templateUrl: 'scripts/dev/activity/test-equipments/detailed/test-equipments-detailed-activity.tmpl.html'
+            })
+
+            .state('research-details', {
+                url: '/research-details',
+                controller: 'ResearchDetailsController',
+                controllerAs: 'researchDetailsCtrl',
+                templateUrl: 'scripts/dev/activity/research-details/research-details-activity.tmpl.html'
+            })
+
+            .state('research-details-detailed', {
+                url: '/research-details-detailed/:uuid',
+                controller: 'ResearchDetailsDetailedController',
+                controllerAs: 'researchDetailsDetailedCtrl',
+                templateUrl: 'scripts/dev/activity/research-details/detailed/research-details-detailed-activity.tmpl.html'
+            })
     });
 
 /*Controllers*/
@@ -60,7 +88,11 @@ angular.module('app')
     .controller('EquipmentsProgressController', EquipmentsProgressController)
     .controller('EditContractDialogController', EditContractDialogController)
     .controller('EditAccessoryDialogController', EditAccessoryDialogController)
-    .controller('NotificationsController', NotificationsController);
+    .controller('NotificationsController', NotificationsController)
+    .controller('ResearchDetailsController', ResearchDetailsController)
+    .controller('ResearchDetailsDetailedController', ResearchDetailsDetailedController)
+    .controller('TestEquipmentsController', TestEquipmentsController)
+    .controller('TestEquipmentsDetailedController', TestEquipmentsDetailedController);
 
 
 /*Directives*/
@@ -83,7 +115,11 @@ angular.module('app')
     .directive('equipmentItem', equipmentItemDirective)
     .directive('loginLanding', loginLandingDirective)
     .directive('mainHeader', mainHeaderDirective)
-    .directive('notificationsLayout', notificationsLayoutDirective);
+    .directive('notificationsLayout', notificationsLayoutDirective)
+    .directive('researchDetailsLayout', researchDetailsLayoutDirective)
+    .directive('researchDetailDetailed', researchDetailDetailedDirective)
+    .directive('testEquipmentsLayout', testEquipmentsLayoutDirective)
+    .directive('testEquipmentDetailed', testEquipmentDetailedDirective);
 
 /*Factories*/
 angular.module('app')
@@ -95,9 +131,12 @@ angular.module('app')
     .factory('eventsFactory', eventsFactory)
     .factory('equipmentsFactory', equipmentsFactory)
     .factory('loginFactory', loginFactory)
+    .factory('modalFactory', modalFactory)
     .factory('printFactory', printFactory)
     .factory('restServiceFactory', restServiceFactory)
-    .factory('notificationsFactory', notificationsFactory);
+    .factory('notificationsFactory', notificationsFactory)
+    .factory('researchDetailsFactory', researchDetailsFactory)
+    .factory('testEquipmentsFactory', testEquipmentsFactory);
 
 /*Animations*/
 angular.module('app')

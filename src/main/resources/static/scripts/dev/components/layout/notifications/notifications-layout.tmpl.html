@@ -1,21 +1,21 @@
 <ul class="list-group col-md-6">
     <li class="list-group-item list-group-item-action justify-content-between"
-        ng-class="{'active': key==ctrl.currentType}"
-        ng-click="ctrl.setType(key)"
-        ng-repeat="(key, val) in ctrl.storage.types">
-        {{key.toString().split('-')[1]}}
-        <span class="badge badge-default badge-pill">{{ctrl.storage.types[key].length}}</span>
+        ng-class="{'active': type.designation == ctrl.currentType.designation}"
+        ng-click="ctrl.setType(type)"
+        ng-repeat="type in ctrl.storage.types">
+        {{type.name}}
+        <span class="badge badge-default badge-pill">{{ctrl.getNumberOfNotificationsByType(type.designation)}}</span>
     </li>
 </ul>
 
 <hr>
 
-<div class="alert alert-{{n.alertType}} col-md-12" role="alert"
+<div class="alert alert-{{ctrl.getNotificationAlertType(n)}} col-md-12" role="alert"
      ng-repeat="n in ctrl.notifications | filter: ctrl.typeFilter">
 
-    <h4 class="alert-heading">{{n.heading}}</h4>
+    <h4 class="alert-heading">{{n.title}}</h4>
 
-    <a href="/{{n.link}}" class="alert-link">
+    <a href="#/{{n.link}}" class="alert-link">
         {{n.linkText}}
     </a>
 

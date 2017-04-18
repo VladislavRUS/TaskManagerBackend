@@ -1,0 +1,125 @@
+<ol class="breadcrumb">
+    <li class="breadcrumb-item"><a ui-sref="research-details">НИОКР</a></li>
+</ol>
+
+<form class="form-horizontal col-sm-12 form-control" role="form">
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="name">
+                Техзадание
+            </label>
+            <div class="col-sm-12">
+                <textarea type="text" class="form-control" id="name"
+                          ng-model="ctrl.researchDetail.requirements"></textarea>
+            </div>
+        </div>
+        <div class="col-md-6 form-group">
+            <label class="col-sm-12" for="designation">
+                Договор
+            </label>
+            <div class="col-sm-12">
+                <input type="text" class="form-control" id="designation" ng-model="ctrl.researchDetail.contract">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <div class="col-sm-12">
+                <button type="button" ng-click="ctrl.onUpdate()" class="btn btn-success">Обновить</button>
+                <button type="button" ng-click="ctrl.onDelete()" class="btn btn-danger ml-auto">Удалить</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">
+        <strong>НИОКР обновлен!</strong>
+    </div>
+</form>
+
+<hr>
+
+<div class="d-flex justify-content-start">
+    <div class="p-2">
+        <h4>Этапы</h4>
+    </div>
+    <div class="ml-auto p-2">
+        <button type="button" class="btn btn-sm btn-success" ng-click="ctrl.addStep('createStepModal');">
+            Добавить
+        </button>
+    </div>
+</div>
+
+<table class="table table-hover">
+    <thead class="thead-inverse">
+    <tr>
+        <th>Номер этапа</th>
+        <th>Название</th>
+        <th>Дата истечения срока</th>
+        <th>Отметка</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr ng-repeat="step in ctrl.researchDetail.steps track by $index"
+        ng-click="ctrl.updateStep(step, 'createStepModal');">
+        <td>{{step.number}}</td>
+        <td>{{step.name}}</td>
+        <td>{{step.expirationDate | date: 'dd-MM-yyyy'}}</td>
+        <td>
+            <span class="badge badge-{{ctrl.nf.getBadgeType(step)}}">{{ctrl.nf.getBadgeText(step)}}</span>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="modal fade" id="createStepModal" tabindex="-1" role="dialog"
+     aria-labelledby="createStepModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createStepModalLabel">
+                    Этап
+                </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-12" for="stepNumber">
+                            Номер этапа
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="stepNumber"
+                                   ng-model="ctrl.currentStep.number">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12" for="stepName">
+                            Название
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="stepName"
+                                   ng-model="ctrl.currentStep.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12" for="stepExpirationDate">
+                            Дата истечения срока
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="date" class="form-control" id="stepExpirationDate"
+                                   ng-model="ctrl.currentStep.expirationDate">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteStep()">Удалить</button>
+                <button type="button" class="btn btn-success" ng-click="ctrl.saveStep()">Сохранить</button>
+            </div>
+        </div>
+    </div>
+</div>
