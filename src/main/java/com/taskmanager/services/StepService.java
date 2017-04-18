@@ -68,7 +68,7 @@ public class StepService {
 
         jdbcTemplate.update(sql,
                 step.getName(), step.getNumber(),
-                step.getExpirationDate());
+                step.getExpirationDate(), step.getUuid());
 
         return getStep(step.getUuid());
     }

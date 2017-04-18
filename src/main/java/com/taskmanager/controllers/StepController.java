@@ -19,7 +19,7 @@ public class StepController {
     @Autowired
     private StepService stepService;
 
-    @RequestMapping(value = "/api/v1/frontend-api/steps", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/v1/frontend-api/steps/{uuid}", method = RequestMethod.PUT)
     public ResponseEntity<Step> updateStep(@RequestBody Step step) {
         Step s = stepService.updateStep(step);
 
