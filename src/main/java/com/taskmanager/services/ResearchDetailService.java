@@ -52,11 +52,13 @@ public class ResearchDetailService {
 
     public ResearchDetail updateResearchDetail(ResearchDetail researchDetail) {
         String sql = "UPDATE research_detail " +
-                "SET requirements=?, contract=? " +
+                "SET requirements=?, contract=?  " +
                 "WHERE uuid=?";
 
         jdbcTemplate.update(sql, 
-                researchDetail.getRequirements(), researchDetail.getContract(), researchDetail.getUuid());
+                researchDetail.getRequirements(),
+                researchDetail.getContract(),
+                researchDetail.getUuid());
         
         return getResearchDetail(researchDetail.getUuid());
     }

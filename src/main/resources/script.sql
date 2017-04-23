@@ -63,3 +63,11 @@ CREATE TABLE event (
   comment text NOT NULL,
   date date NOT NULL
 );
+
+create table files (
+  uuid text NOT NULL,
+  object_uuid text NOT NULL,
+  name text NOT NULL,
+  data text NOT NULL,
+  extension text NOT NULL
+)
