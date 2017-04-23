@@ -30,7 +30,8 @@ public class ContractService {
 
             contract.setUuid(resultSet.getString("uuid"));
             contract.setDamperUuid(resultSet.getString("damper_uuid"));
-            contract.setAgreement(resultSet.getString("agreement"));
+            contract.setNumber(resultSet.getString("number"));
+            contract.setFromDate(resultSet.getDate("from_date"));
             contract.setAmount(resultSet.getInt("amount"));
             contract.setQuoter(resultSet.getInt("quoter"));
             contract.setYear(resultSet.getInt("year"));
@@ -45,14 +46,14 @@ public class ContractService {
     @Transactional
     public Contract createContract(String damperUuid, Contract contract) {
         String sql = "INSERT INTO contract " +
-                "(uuid, damper_uuid, agreement, customer, amount, quoter, year, prepaid_note, done) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(uuid, damper_uuid, number, from_date, customer, amount, quoter, year, prepaid_note, done) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
         jdbcTemplate.update(sql,
                 uuid, damperUuid,
-                contract.getAgreement(), contract.getCustomer(),
+                contract.getNumber(), contract.getFromDate(), contract.getCustomer(),
                 contract.getAmount(), contract.getQuoter(),
                 contract.getYear(), contract.getPrepaidNote(),
                 contract.isDone());
@@ -72,10 +73,10 @@ public class ContractService {
 
     public Contract updateContract(Contract contract) {
         String sql = "UPDATE contract " +
-                "SET agreement=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
+                "SET number=?, from_date=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
                 "WHERE uuid=?";
         jdbcTemplate.update(sql,
-                contract.getAgreement(), contract.getAmount(), contract.getQuoter(),
+                contract.getNumber(), contract.getFromDate(), contract.getAmount(), contract.getQuoter(),
                 contract.getYear(), contract.getPrepaidNote(), contract.isDone(), contract.getUuid());
 
         return getContract(contract.getUuid());

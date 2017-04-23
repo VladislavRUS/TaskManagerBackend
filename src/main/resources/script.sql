@@ -17,7 +17,8 @@ CREATE table damper (
 CREATE table contract (
   uuid text NOT NULL,
   damper_uuid text NOT NULL,
-  agreement text NOT NULL,
+  number text not null,
+  from date not null,
   customer text,
   amount int NOT NULL,
   quoter int NOT NULL,

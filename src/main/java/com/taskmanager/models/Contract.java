@@ -1,12 +1,15 @@
 package com.taskmanager.models;
 
+import java.util.Date;
+
 /**
  * Created by User on 019 19.12.16.
  */
 public class Contract {
     private String uuid;
     private String damperUuid;
-    private String agreement;
+    private String number;
+    private Date fromDate;
     private String customer;
     private int amount;
     private int quoter;
@@ -30,12 +33,20 @@ public class Contract {
         this.damperUuid = damperUuid;
     }
 
-    public String getAgreement() {
-        return agreement;
+    public String getNumber() {
+        return number;
     }
 
-    public void setAgreement(String agreement) {
-        this.agreement = agreement;
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public Date getFromDate() {
+        return fromDate;
+    }
+
+    public void setFromDate(Date fromDate) {
+        this.fromDate = fromDate;
     }
 
     public String getCustomer() {
@@ -92,7 +103,6 @@ public class Contract {
 
         builder
                 .append("UUID: ").append(this.getUuid()).append(", ")
-                .append("agreement: ").append(this.getAgreement()).append(", ")
                 .append("customer: ").append(this.getCustomer()).append(", ")
                 .append("amount: ").append(this.getAmount());
 
