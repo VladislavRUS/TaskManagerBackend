@@ -1,4 +1,4 @@
-function printFactory($http, restServiceFactory) {
+function printFactory($http, restServiceFactory, fileFactory) {
     var factory = {};
 
     factory.printArray = [];
@@ -26,8 +26,9 @@ function printFactory($http, restServiceFactory) {
                     responseType: 'arraybuffer',
                     data: { uuidList: printArray }
                 }).then(function (resp) {
-                    var date = new Date();
-                    factory.saveData(resp.data, getName());
+
+                    fileFactory.makeFile(resp.data, getName());
+
                 });
                 break;
             }
@@ -38,18 +39,6 @@ function printFactory($http, restServiceFactory) {
         var date = new Date();
         return 'report(' + date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() + '__' + date.getHours() + ':' + date.getMinutes() + ').docx';
     }
-    factory.saveData = function (data, fileName) {
-        var a = document.createElement("a");
-        document.body.appendChild(a);
-        a.style = "display: none";
-        var blob = new Blob([data], {type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"}),
-            url = window.URL.createObjectURL(blob);
-        a.href = url;
-        a.download = fileName;
-        a.click();
-        window.URL.revokeObjectURL(url);
-
-    };
 
     return factory;
 }

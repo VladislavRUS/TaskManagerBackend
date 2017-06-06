@@ -188,7 +188,7 @@ function notificationsFactory($q, $rootScope, dampersFactory, researchDetailsFac
 
 		var now = new Date();
 
-		var stepExpiredText = 'Прекращен этап';
+		var stepExpiredText = 'Этап №{number} завершен';
 		var stepSoonText = 'Скоро прекратится этап';
 		var stepExpiresIn = 'До окончания этапа {step} осталось дней: {daysBetween}.';
 
@@ -202,8 +202,8 @@ function notificationsFactory($q, $rootScope, dampersFactory, researchDetailsFac
 					notifications.push({
 						uuid: step.uuid,
 						type: 'step:danger:Этап',
-						title: stepExpiredText,
-						text: 'Этап: ' + step.name,
+						title: stepExpiredText.replace('{number}', step.number),
+						text: 'Название: ' + step.name,
 						link: 'research-details-detailed/' + researchDetail.uuid,
 						linkText: 'Перейти к этапу',
 						badge: 'Истек',
@@ -276,21 +276,22 @@ function notificationsFactory($q, $rootScope, dampersFactory, researchDetailsFac
 
 		var now = new Date();
 
-		var eventExpiredText = 'Событие {eventTitle} произошло';
-		var eventSoonText = 'Скоро произойдет событие {eventTitle}, дата: {date}';
-		var eventExpiresIn = 'До события {eventTitle} осталось дней: {daysBetween}.';
+		var eventExpiredText = 'Событие  "{eventTitle}" прошло';
+		var eventSoonText = 'Скоро произойдет событие "{eventTitle}". Дата: {date}';
+		var eventExpiresIn = 'До события "{eventTitle}" осталось дней: {daysBetween}.';
 
 		events.forEach(function (event) {
-			var eventDate = event.date;
+			var daysBetween = getDaysBetween(event.date, now);
 
-			var daysBetween = getDaysBetween(eventDate, now);
+			var eventDate = new Date(event.date);
+			var eventStr = eventDate.getDate() + '-' + (eventDate.getMonth() + 1) + '-' + eventDate.getFullYear();
 
 			if (daysBetween <= 0) {
 				notifications.push({
 					uuid: event.uuid,
 					type: 'event:danger:Событие',
 					title: eventExpiredText.replace('{eventTitle}', event.title),
-					text: 'Событие: ' + event.title + ', ' + event.comment + ', дата: ' + event.date,
+					text: 'Событие: ' + event.title + ', комментарий: ' + event.comment + '. Дата: ' + eventStr,
 					link: 'calendar',
 					linkText: 'Перейти к календарю',
 					badge: 'Прошло',
@@ -301,7 +302,7 @@ function notificationsFactory($q, $rootScope, dampersFactory, researchDetailsFac
 				notifications.push({
 					uuid: event.uuid,
 					type: 'event:warning:Событие',
-					title: eventSoonText.replace('{eventTitle}', event.title).replace('{date}', event.date),
+					title: eventSoonText.replace('{eventTitle}', event.title).replace('{date}', eventStr),
 					text: eventExpiresIn.replace('{eventTitle}', event.title).replace('{daysBetween}', daysBetween),
 					link: 'calendar',
 					linkText: 'Перейти к календарю',

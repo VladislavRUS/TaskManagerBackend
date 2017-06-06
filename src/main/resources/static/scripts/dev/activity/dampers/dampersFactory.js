@@ -29,6 +29,10 @@ function dampersFactory($http, $q, restServiceFactory) {
             factory.dampers = resp.data;
             factory.dampers.forEach(function(d) {
                 d.expirationDate = new Date(d.expirationDate);
+
+                d.contracts.forEach(function (c) {
+                    c.fromDate = new Date(c.fromDate);
+                });
             });
 
             deferred.resolve();

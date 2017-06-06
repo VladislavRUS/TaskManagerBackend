@@ -65,5 +65,10 @@ function restServiceFactory() {
     service.researchDetailsUpdateStep = service.ip + 'steps/{UUID}';
     service.researchDetailsDeleteStep = service.ip + 'steps/{UUID}';
 
+    /*Files*/
+    service.filesAll = service.ip + 'files/{object_uuid}';
+    service.filesDelete = service.ip + 'files/{UUID}';
+    service.filesCreate = service.ip + 'files';
+
     return service;
 }

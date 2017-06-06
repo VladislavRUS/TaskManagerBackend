@@ -18,7 +18,8 @@ function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsF
 						center: 'title',
 						right: 'today prev,next'
 					},
-					height: 500,
+					displayEventTime: false,
+					height: 800,
 					dayClick: function (date) {
 						self.currentEvent = {};
 						self.currentEvent.date = new Date(date);
@@ -27,12 +28,17 @@ function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsF
 					},
 
 					eventClick: function (calEvent, jsEvent, view) {
-						self.currentEvent = {};
+						/*self.currentEvent = {};
 						self.currentEvent.title = calEvent.title;
 						self.currentEvent.comment = calEvent.comment;
 						self.currentEvent.uuid = calEvent.uuid;
 						self.currentEvent.date = calEvent.start._i;
+						self.currentEvent.custom = calEvent.custom || false;*/
+
+						self.currentEvent = angular.copy(calEvent);
+						self.currentEvent.date = calEvent.start._i;
 						self.currentEvent.custom = calEvent.custom || false;
+
 						self.update = true;
 						openModal('createEventModal');
 					},
@@ -50,10 +56,6 @@ function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsF
 								'background-color': '#ffc4b7'
 							});
 						}
-
-						$(cell).css({
-							'cursor': 'pointer'
-						});
 					},
 
 					lang: 'ru'
@@ -72,8 +74,9 @@ function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsF
 								return {
 									uuid: event.uuid,
 									title: event.title,
-									start: event.date,
-									comment: event.comment
+									start: new Date(event.date),
+									comment: event.comment,
+									color: '#2196F3'
 								}
 							})
 					});
@@ -88,13 +91,38 @@ function calendarLayoutDirective($state, $timeout, eventsFactory, notificationsF
 								title: n.title,
 								start: n.date,
 								comment: n.text,
-								custom: true
+								link: n.link,
+								linkText: n.linkText,
+								custom: true,
+								color: getNotificationColor(n)
 							}
 						})
 				})
 			});
 
+			function getNotificationColor(n) {
+				var type = n.type.split(':')[1];
+
+				if (type == 'warning') {
+					return '#FFC107';
+
+				} else  if(type == 'danger') {
+					return '#F44336';
+
+				} else return 'blue';
+			}
+
+			self.go = function (link) {
+				closeModal('createEventModal');
+
+				$timeout(function () {
+					window.location.href = '#/' + link;
+				}, 500);
+			};
+
 			self.save = function () {
+				console.log(self.currentEvent);
+
 				if (self.update) {
 					eventsFactory.updateEvent(self.currentEvent).then(function () {
 						closeModal('createEventModal');

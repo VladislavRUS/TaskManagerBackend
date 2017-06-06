@@ -18,7 +18,7 @@ CREATE table contract (
   uuid text NOT NULL,
   damper_uuid text NOT NULL,
   number text not null,
-  from date not null,
+  from_date date not null,
   customer text,
   amount int NOT NULL,
   quoter int NOT NULL,
@@ -65,10 +65,12 @@ CREATE TABLE event (
   date date NOT NULL
 );
 
-create table files (
+CREATE TABLE files (
   uuid text NOT NULL,
   object_uuid text NOT NULL,
   name text NOT NULL,
   data text NOT NULL,
   extension text NOT NULL
-)
+);
+
+COMMIT;

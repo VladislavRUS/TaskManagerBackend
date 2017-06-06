@@ -15,3 +15,26 @@ body {
   overflow-y: scroll;
   font-family: 'Ubuntu', sans-serif;
 }
+
+.delete-button {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s ease;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.hoverable-item:hover .delete-button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fc-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.fc-event {
+  cursor: pointer;
+}

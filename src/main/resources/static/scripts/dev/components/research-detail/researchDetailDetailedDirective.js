@@ -1,4 +1,4 @@
-function researchDetailDetailedDirective($timeout, $state, researchDetailsFactory, modalFactory, notificationsFactory) {
+function researchDetailDetailedDirective($timeout, $state, $q, researchDetailsFactory, modalFactory, notificationsFactory, fileFactory) {
 	return {
 		scope: {},
 		bindToController: {
@@ -8,10 +8,9 @@ function researchDetailDetailedDirective($timeout, $state, researchDetailsFactor
 		controller: function () {
 			var self = this;
 			self.currentStep = {};
-
 			self.nf = notificationsFactory;
-
 			self.update = false;
+
 			var stepModal = 'createStepModal';
 
 			self.onUpdate = function () {
@@ -65,14 +64,14 @@ function researchDetailDetailedDirective($timeout, $state, researchDetailsFactor
 			};
 
 			self.deleteStep = function () {
-				researchDetailsFactory.deleteStep(self.currentStep).then(function() {
+				researchDetailsFactory.deleteStep(self.currentStep).then(function () {
 					modalFactory.closeModal(stepModal);
 
-					$timeout(function() {
+					$timeout(function () {
 						$state.reload();
 					}, 500);
 				});
-			}
+			};
 		},
 		controllerAs: 'ctrl'
 	}

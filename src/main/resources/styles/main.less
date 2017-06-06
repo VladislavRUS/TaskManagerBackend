@@ -1,27 +1,40 @@
 @import (inline) "../bower_components/angular/angular-csp.css";
-@import url('https://fonts.googleapis.com/css?family=Open+Sans');
-@import "../node_modules/fullcalendar/dist/fullcalendar.css";
+@import (inline) url('https://fonts.googleapis.com/css?family=Ubuntu');
+@import (inline) "../node_modules/fullcalendar/dist/fullcalendar.css";
 
-@import "../node_modules/bootstrap/dist/css/bootstrap-reboot.min.css";
-@import "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
-@import "../node_modules/bootstrap/dist/css/bootstrap.min.css";
-@import "../node_modules/tether/dist/css/tether.min.css";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap-reboot.min.css";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap-grid.css";
+@import (inline) "../node_modules/bootstrap/dist/css/bootstrap.min.css";
+@import (inline) "../node_modules/tether/dist/css/tether.min.css";
 
-@import "common/input";
-@import "common/select";
-@import "common/colors";
-@import "common/my-styles";
-@import "blocks/button/floating/floating-button";
-@import "blocks/dialog/wrap/dialog-wrap";
-@import "blocks/detail/contract/detail-contract";
-@import "blocks/dialog/dialog-add";
-@import "blocks/event/item/event-item";
-@import "blocks/header/main-header";
-@import "blocks/item/item";
-@import "blocks/login/landing/login-landing";
-@import "blocks/page/page";
-@import "blocks/notification/notification";
+.cursor-pointer {
+  cursor: pointer;
+}
 
 body {
   overflow-y: scroll;
+  font-family: 'Ubuntu', sans-serif;
+}
+
+.delete-button {
+  visibility: hidden;
+  opacity: 0;
+  transition: opacity .2s ease;
+  cursor: pointer;
+  margin-right: 10px;
+}
+
+.hoverable-item:hover .delete-button {
+  visibility: visible;
+  opacity: 1;
+}
+
+.fc-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+}
+
+.fc-event {
+  cursor: pointer;
 }

@@ -128,12 +128,10 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/activity/notifications/notifictions-activity.tmpl.html',
+  $templateCache.put('scripts/dev/activity/research-details/research-details-activity.tmpl.html',
     '<div class="container">\n' +
     '    <main-header></main-header>\n' +
-    '    <notifications-layout\n' +
-    '            notifications="notificationsCtrl.storage.notifications">\n' +
-    '    </notifications-layout>\n' +
+    '    <research-details-layout></research-details-layout>\n' +
     '    <dialog-wrap></dialog-wrap>\n' +
     '</div>');
 }]);
@@ -146,10 +144,12 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/activity/research-details/research-details-activity.tmpl.html',
+  $templateCache.put('scripts/dev/activity/notifications/notifictions-activity.tmpl.html',
     '<div class="container">\n' +
     '    <main-header></main-header>\n' +
-    '    <research-details-layout></research-details-layout>\n' +
+    '    <notifications-layout\n' +
+    '            notifications="notificationsCtrl.storage.notifications">\n' +
+    '    </notifications-layout>\n' +
     '    <dialog-wrap></dialog-wrap>\n' +
     '</div>');
 }]);
@@ -194,7 +194,7 @@ module.run(['$templateCache', function($templateCache) {
     '            <div class="modal-body">\n' +
     '                <form class="form-horizontal" role="form">\n' +
     '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-2" for="inputTitle">\n' +
+    '                        <label class="col-sm-12" for="inputTitle">\n' +
     '                            Название\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
@@ -202,11 +202,18 @@ module.run(['$templateCache', function($templateCache) {
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-2" for="inputComment">\n' +
+    '                        <label class="col-sm-12" for="inputComment">\n' +
     '                            Комментарий\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
     '                            <textarea type="text" class="form-control" id="inputComment" ng-model="ctrl.currentEvent.comment"></textarea>\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div class="form-group" ng-if="ctrl.currentEvent.link">\n' +
+    '                        <label class="col-sm-12">\n' +
+    '                        </label>\n' +
+    '                        <div class="col-sm-12">\n' +
+    '                            <button class="btn btn-info btn-sm form-control" ng-click="ctrl.go(ctrl.currentEvent.link)">{{ctrl.currentEvent.linkText}}</button>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                </form>\n' +
@@ -228,90 +235,39 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/components/research-detail/research-detail-detailed.tmpl.html',
-    '<ol class="breadcrumb">\n' +
-    '    <li class="breadcrumb-item"><a ui-sref="research-details">НИОКР</a></li>\n' +
-    '</ol>\n' +
+  $templateCache.put('scripts/dev/components/files/files.tmpl.html',
+    '<h3>{{ctrl.files.length == 0 ? \'Документов нет\' : \'Документы: \'}}</h3>\n' +
     '\n' +
-    '<form class="form-horizontal col-sm-12 form-control" role="form">\n' +
-    '    <div class="row">\n' +
-    '        <div class="col-md-6 form-group">\n' +
-    '            <label class="col-sm-12" for="name">\n' +
-    '                Техзадание\n' +
-    '            </label>\n' +
-    '            <div class="col-sm-12">\n' +
-    '                <textarea type="text" class="form-control" id="name"\n' +
-    '                          ng-model="ctrl.researchDetail.requirements"></textarea>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '        <div class="col-md-6 form-group">\n' +
-    '            <label class="col-sm-12" for="designation">\n' +
-    '                Договор\n' +
-    '            </label>\n' +
-    '            <div class="col-sm-12">\n' +
-    '                <input type="text" class="form-control" id="designation" ng-model="ctrl.researchDetail.contract">\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '    </div>\n' +
     '\n' +
-    '    <div class="row">\n' +
-    '        <div class="col-md-6 form-group">\n' +
-    '            <div class="col-sm-12">\n' +
-    '                <button type="button" ng-click="ctrl.onUpdate()" class="btn btn-success">Обновить</button>\n' +
-    '                <button type="button" ng-click="ctrl.onDelete()" class="btn btn-danger ml-auto">Удалить</button>\n' +
-    '            </div>\n' +
-    '        </div>\n' +
-    '    </div>\n' +
+    '<div class="list-group">\n' +
+    '    <a class="list-group-item list-group-item-action justify-content-between hoverable-item"\n' +
+    '       ng-click="ctrl.onOpen(file); $event.preventDefault();"\n' +
+    '       ng-repeat="file in ctrl.files">\n' +
     '\n' +
-    '    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">\n' +
-    '        <strong>НИОКР обновлен!</strong>\n' +
-    '    </div>\n' +
-    '</form>\n' +
+    '        <div>\n' +
+    '            <span class="btn btn-danger btn-sm delete-button"\n' +
+    '                  ng-click="ctrl.onDelete(file); $event.stopPropagation()">x</span>\n' +
+    '\n' +
+    '            {{file.name}}\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <span class="badge badge-default badge-pill">\n' +
+    '            {{file.extension}}\n' +
+    '        </span>\n' +
+    '    </a>\n' +
+    '</div>\n' +
     '\n' +
     '<hr>\n' +
     '\n' +
-    '<div class="d-flex justify-content-start">\n' +
-    '    <div class="p-2">\n' +
-    '        <h4>Этапы</h4>\n' +
-    '    </div>\n' +
-    '    <div class="ml-auto p-2">\n' +
-    '        <button type="button" class="btn btn-sm btn-success" ng-click="ctrl.addStep(\'createStepModal\');">\n' +
-    '            Добавить\n' +
-    '        </button>\n' +
-    '    </div>\n' +
-    '</div>\n' +
+    '<button type="button" class="btn btn-info btn-sm " ng-click="ctrl.onAdd()">Добавить файл</button>\n' +
     '\n' +
-    '<table class="table table-hover">\n' +
-    '    <thead class="thead-inverse">\n' +
-    '    <tr>\n' +
-    '        <th>Номер этапа</th>\n' +
-    '        <th>Название</th>\n' +
-    '        <th>Дата истечения срока</th>\n' +
-    '        <th>Отметка</th>\n' +
-    '    </tr>\n' +
-    '    </thead>\n' +
-    '    <tbody>\n' +
-    '    <tr ng-repeat="step in ctrl.researchDetail.steps track by $index"\n' +
-    '        ng-click="ctrl.updateStep(step, \'createStepModal\');">\n' +
-    '        <td>{{step.number}}</td>\n' +
-    '        <td>{{step.name}}</td>\n' +
-    '        <td>{{step.expirationDate | date: \'dd-MM-yyyy\'}}</td>\n' +
-    '        <td>\n' +
-    '            <span class="badge badge-{{ctrl.nf.getBadgeType(step)}}">{{ctrl.nf.getBadgeText(step)}}</span>\n' +
-    '        </td>\n' +
-    '    </tr>\n' +
-    '    </tbody>\n' +
-    '</table>\n' +
-    '\n' +
-    '<div class="modal fade" id="createStepModal" tabindex="-1" role="dialog"\n' +
-    '     aria-labelledby="createStepModalLabel"\n' +
+    '<div class="modal fade" id="createFileModal" tabindex="-1" role="dialog"\n' +
+    '     aria-labelledby="createFileModalLabel"\n' +
     '     aria-hidden="true">\n' +
     '    <div class="modal-dialog" role="document">\n' +
     '        <div class="modal-content">\n' +
     '            <div class="modal-header">\n' +
-    '                <h5 class="modal-title" id="createStepModalLabel">\n' +
-    '                    Этап\n' +
-    '                </h5>\n' +
+    '                <h5 class="modal-title" id="createFileModalLabel">Добавление файла</h5>\n' +
     '                <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
     '                    <span aria-hidden="true">&times;</span>\n' +
     '                </button>\n' +
@@ -319,37 +275,38 @@ module.run(['$templateCache', function($templateCache) {
     '            <div class="modal-body">\n' +
     '                <form class="form-horizontal" role="form">\n' +
     '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-12" for="stepNumber">\n' +
-    '                            Номер этапа\n' +
-    '                        </label>\n' +
-    '                        <div class="col-sm-12">\n' +
-    '                            <input type="text" class="form-control" id="stepNumber"\n' +
-    '                                   ng-model="ctrl.currentStep.number">\n' +
-    '                        </div>\n' +
-    '                    </div>\n' +
-    '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-12" for="stepName">\n' +
+    '                        <label class="col-sm-12" for="name">\n' +
     '                            Название\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
-    '                            <input type="text" class="form-control" id="stepName"\n' +
-    '                                   ng-model="ctrl.currentStep.name">\n' +
+    '                            <input type="text" class="form-control" id="name"\n' +
+    '                                   ng-model="ctrl.name">\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-12" for="stepExpirationDate">\n' +
-    '                            Дата истечения срока\n' +
+    '                        <label class="col-sm-12" for="file">\n' +
+    '                            Выберите файл\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
-    '                            <input type="date" class="form-control" id="stepExpirationDate"\n' +
-    '                                   ng-model="ctrl.currentStep.expirationDate">\n' +
+    '                            <input type="file" class="form-control" id="file"\n' +
+    '                                   ng-model="ctrl.file">\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '\n' +
+    '                    <div class="form-group" ng-if="ctrl.animated">\n' +
+    '                        <div class="progress slideDown">\n' +
+    '                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                </form>\n' +
+    '\n' +
+    '                <div class="alert alert-danger slideAnimation" ng-if="ctrl.errShow" role="alert">\n' +
+    '                    <strong>{{ctrl.errMessage}}</strong>\n' +
+    '                </div>\n' +
+    '\n' +
     '            </div>\n' +
     '            <div class="modal-footer">\n' +
-    '                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteStep()">Удалить</button>\n' +
-    '                <button type="button" class="btn btn-success" ng-click="ctrl.saveStep()">Сохранить</button>\n' +
+    '                <button type="button" class="btn btn-success" ng-click="ctrl.addFile()">Добавить</button>\n' +
     '            </div>\n' +
     '        </div>\n' +
     '    </div>\n' +
@@ -422,7 +379,162 @@ module.run(['$templateCache', function($templateCache) {
     '    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">\n' +
     '        <strong>Испытательное оборудование обновлено!</strong>\n' +
     '    </div>\n' +
+    '\n' +
+    '    <div class="row">\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <div class="col-sm-12">\n' +
+    '                <files object="ctrl.testEquipment"></files>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
     '</form>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('HtmlTemplates');
+} catch (e) {
+  module = angular.module('HtmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('scripts/dev/components/research-detail/research-detail-detailed.tmpl.html',
+    '<ol class="breadcrumb">\n' +
+    '    <li class="breadcrumb-item"><a ui-sref="research-details">НИОКР</a></li>\n' +
+    '</ol>\n' +
+    '\n' +
+    '<form class="form-horizontal col-sm-12 form-control" role="form">\n' +
+    '    <div class="row">\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <label class="col-md-12" for="name">\n' +
+    '                Техзадание\n' +
+    '            </label>\n' +
+    '            <div class="col-md-12">\n' +
+    '                <textarea type="text" class="form-control" id="name"\n' +
+    '                          ng-model="ctrl.researchDetail.requirements"></textarea>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <label class="col-md-12" for="designation">\n' +
+    '                Договор\n' +
+    '            </label>\n' +
+    '            <div class="col-md-12">\n' +
+    '                <textarea type="text" class="form-control" id="designation"\n' +
+    '                          ng-model="ctrl.researchDetail.contract"></textarea>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '    <div class="row">\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <div class="col-sm-12">\n' +
+    '                <button type="button" ng-click="ctrl.onUpdate()" class="btn btn-success">Обновить</button>\n' +
+    '                <button type="button" ng-click="ctrl.onDelete()" class="btn btn-danger ml-auto">Удалить</button>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">\n' +
+    '        <strong>НИОКР обновлен!</strong>\n' +
+    '    </div>\n' +
+    '\n' +
+    '    <div class="row">\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <div class="col-sm-12">\n' +
+    '                <files object="ctrl.researchDetail"></files>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '\n' +
+    '</form>\n' +
+    '\n' +
+    '<hr>\n' +
+    '\n' +
+    '<div class="d-flex justify-content-start">\n' +
+    '    <div class="p-2">\n' +
+    '        <h4>Этапы</h4>\n' +
+    '    </div>\n' +
+    '    <div class="ml-auto p-2">\n' +
+    '        <button type="button" class="btn btn-sm btn-success" ng-click="ctrl.addStep(\'createStepModal\');">\n' +
+    '            Добавить\n' +
+    '        </button>\n' +
+    '    </div>\n' +
+    '</div>\n' +
+    '\n' +
+    '<table class="table table-hover">\n' +
+    '    <thead class="thead-inverse">\n' +
+    '    <tr>\n' +
+    '        <th>Номер этапа</th>\n' +
+    '        <th>Название</th>\n' +
+    '        <th>Срок выполнения</th>\n' +
+    '        <th>Отметка</th>\n' +
+    '    </tr>\n' +
+    '    </thead>\n' +
+    '    <tbody>\n' +
+    '    <tr ng-repeat="step in ctrl.researchDetail.steps track by $index"\n' +
+    '        ng-click="ctrl.updateStep(step, \'createStepModal\');">\n' +
+    '        <td>{{step.number}}</td>\n' +
+    '        <td>{{step.name}}</td>\n' +
+    '        <td>{{step.expirationDate | date: \'dd-MM-yyyy\'}}</td>\n' +
+    '        <td>\n' +
+    '            <span class="badge badge-{{ctrl.nf.getBadgeType(step)}}">{{ctrl.nf.getBadgeText(step)}}</span>\n' +
+    '        </td>\n' +
+    '    </tr>\n' +
+    '    </tbody>\n' +
+    '</table>\n' +
+    '\n' +
+    '<div class="modal fade" id="createStepModal" tabindex="-1" role="dialog"\n' +
+    '     aria-labelledby="createStepModalLabel"\n' +
+    '     aria-hidden="true">\n' +
+    '    <div class="modal-dialog" role="document">\n' +
+    '        <div class="modal-content">\n' +
+    '            <div class="modal-header">\n' +
+    '                <h5 class="modal-title" id="createStepModalLabel">\n' +
+    '                    Этап\n' +
+    '                </h5>\n' +
+    '                <button type="button" class="close" data-dismiss="modal" aria-label="Close">\n' +
+    '                    <span aria-hidden="true">&times;</span>\n' +
+    '                </button>\n' +
+    '            </div>\n' +
+    '            <div class="modal-body">\n' +
+    '                <form class="form-horizontal" role="form">\n' +
+    '                    <div class="form-group">\n' +
+    '                        <label class="col-sm-12" for="stepNumber">\n' +
+    '                            Номер этапа (число)\n' +
+    '                        </label>\n' +
+    '                        <div class="col-sm-12">\n' +
+    '                            <input type="text" class="form-control" id="stepNumber"\n' +
+    '                                   ng-model="ctrl.currentStep.number">\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div class="form-group">\n' +
+    '                        <label class="col-sm-12" for="stepName">\n' +
+    '                            Название\n' +
+    '                        </label>\n' +
+    '                        <div class="col-sm-12">\n' +
+    '                            <input type="text" class="form-control" id="stepName"\n' +
+    '                                   ng-model="ctrl.currentStep.name">\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div class="form-group">\n' +
+    '                        <label class="col-sm-12" for="stepExpirationDate">\n' +
+    '                            Срок выполнения\n' +
+    '                        </label>\n' +
+    '                        <div class="col-sm-12">\n' +
+    '                            <input type="date" class="form-control" id="stepExpirationDate"\n' +
+    '                                   ng-model="ctrl.currentStep.expirationDate">\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                </form>\n' +
+    '            </div>\n' +
+    '            <div class="modal-footer">\n' +
+    '                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteStep()">Удалить\n' +
+    '                </button>\n' +
+    '                <button type="button" class="btn btn-success" ng-click="ctrl.saveStep()">Сохранить</button>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
+    '</div>');
 }]);
 })();
 
@@ -510,7 +622,7 @@ module.run(['$templateCache', function($templateCache) {
     '    <div class="row">\n' +
     '        <div class="col-md-6 form-group">\n' +
     '            <label class="col-sm-12" for="expirationDate">\n' +
-    '                Дата истечения срока\n' +
+    '                Срок действия ПИ\n' +
     '            </label>\n' +
     '            <div class="col-sm-12">\n' +
     '                <input type="date" class="form-control" id="expirationDate" ng-model="ctrl.damper.expirationDate">\n' +
@@ -590,6 +702,14 @@ module.run(['$templateCache', function($templateCache) {
     '    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">\n' +
     '        <strong>Виброизолятор обновлен!</strong>\n' +
     '    </div>\n' +
+    '\n' +
+    '    <div class="row">\n' +
+    '        <div class="col-md-6 form-group">\n' +
+    '            <div class="col-sm-12">\n' +
+    '                <files object="ctrl.damper"></files>\n' +
+    '            </div>\n' +
+    '        </div>\n' +
+    '    </div>\n' +
     '</form>\n' +
     '\n' +
     '<hr>\n' +
@@ -615,12 +735,13 @@ module.run(['$templateCache', function($templateCache) {
     '    <thead class="thead-inverse">\n' +
     '    <tr>\n' +
     '        <th>#</th>\n' +
-    '        <th>Соглашение</th>\n' +
+    '        <th>Номер</th>\n' +
+    '        <th>От</th>\n' +
     '        <th>Заказчик</th>\n' +
     '        <th>Кол-во</th>\n' +
     '        <th>Квартал</th>\n' +
     '        <th>Год</th>\n' +
-    '        <th>Отметка о предварительном авансировании</th>\n' +
+    '        <th>Авансирование</th>\n' +
     '        <th>Выполнен</th>\n' +
     '        <th>Отметка</th>\n' +
     '    </tr>\n' +
@@ -629,7 +750,8 @@ module.run(['$templateCache', function($templateCache) {
     '    <tr ng-repeat="contract in ctrl.damper.contracts | filter: ctrl.filterContract track by $index"\n' +
     '        ng-click="ctrl.updateContract(contract, \'createContractModal\');">\n' +
     '        <th>{{$index + 1}}</th>\n' +
-    '        <td>{{contract.agreement}}</td>\n' +
+    '        <td>{{contract.number}}</td>\n' +
+    '        <td>{{contract.fromDate | date : \'dd-MM-yyyy\'}}</td>\n' +
     '        <td>{{contract.customer}}</td>\n' +
     '        <td>{{contract.amount}}</td>\n' +
     '        <td>{{contract.quoter}}</td>\n' +
@@ -718,12 +840,21 @@ module.run(['$templateCache', function($templateCache) {
     '            <div class="modal-body">\n' +
     '                <form class="form-horizontal" role="form">\n' +
     '                    <div class="form-group">\n' +
-    '                        <label class="col-sm-12" for="name">\n' +
-    '                            Соглашение о поставке\n' +
+    '                        <label class="col-sm-12" for="number">\n' +
+    '                            Номер договора\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
-    '                            <input type="text" class="form-control" id="agreement"\n' +
-    '                                   ng-model="ctrl.currentContract.agreement">\n' +
+    '                            <input type="text" class="form-control" id="number"\n' +
+    '                                   ng-model="ctrl.currentContract.number">\n' +
+    '                        </div>\n' +
+    '                    </div>\n' +
+    '                    <div class="form-group">\n' +
+    '                        <label class="col-sm-12" for="fromDate">\n' +
+    '                            От даты\n' +
+    '                        </label>\n' +
+    '                        <div class="col-sm-12">\n' +
+    '                            <input type="date" class="form-control" id="fromDate"\n' +
+    '                                   ng-model="ctrl.currentContract.fromDate">\n' +
     '                        </div>\n' +
     '                    </div>\n' +
     '                    <div class="form-group">\n' +
@@ -764,7 +895,7 @@ module.run(['$templateCache', function($templateCache) {
     '                    </div>\n' +
     '                    <div class="form-group">\n' +
     '                        <label class="col-sm-12" for="expirationDate">\n' +
-    '                            Заметка об авансировании\n' +
+    '                            Авансирование\n' +
     '                        </label>\n' +
     '                        <div class="col-sm-12">\n' +
     '                            <input type="text" class="form-control" id="prepaidNote"\n' +
@@ -1039,25 +1170,6 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/components/dialog/wrap/dialog-wrap.tmpl.html',
-    '<div class="dialog-wrap"\n' +
-    '     ng-show="dialogWrapCtrl.show()"\n' +
-    '     ng-click="dialogWrapCtrl.close()">\n' +
-    '\n' +
-    '    <div class="dialog-wrap__body">\n' +
-    '        <div ng-include="dialogWrapCtrl.getTemplateUrl()" ng-click="$event.stopPropagation()"></div>\n' +
-    '    </div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('HtmlTemplates');
-} catch (e) {
-  module = angular.module('HtmlTemplates', []);
-}
-module.run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/dev/components/equipment/item/equipment-item.tmpl.html',
     '<div class="item"\n' +
     '     id="{{equipmentItemCtrl.item.uuid}}"\n' +
@@ -1087,6 +1199,25 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('scripts/dev/components/dialog/wrap/dialog-wrap.tmpl.html',
+    '<div class="dialog-wrap"\n' +
+    '     ng-show="dialogWrapCtrl.show()"\n' +
+    '     ng-click="dialogWrapCtrl.close()">\n' +
+    '\n' +
+    '    <div class="dialog-wrap__body">\n' +
+    '        <div ng-include="dialogWrapCtrl.getTemplateUrl()" ng-click="$event.stopPropagation()"></div>\n' +
+    '    </div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('HtmlTemplates');
+} catch (e) {
+  module = angular.module('HtmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/dev/components/event/item/event-item.tmpl.html',
     '<div class="event-item">\n' +
     '    <div class="event-item__title">\n' +
@@ -1097,6 +1228,32 @@ module.run(['$templateCache', function($templateCache) {
     '    </div>\n' +
     '    <div class="event-item__body">\n' +
     '        <div class="event-item__body _comment">{{eventItemCtrl.item.comment}}</div>\n' +
+    '    </div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('HtmlTemplates');
+} catch (e) {
+  module = angular.module('HtmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('scripts/dev/components/login/landing/login-landing.tmpl.html',
+    '<div class="login-landing">\n' +
+    '\n' +
+    '    <div class="login-landing__form">\n' +
+    '        <div class="login-landing__form-input">\n' +
+    '            <input class="input" type="text" placeholder="Введите логин" ng-model="loginLandingCtrl.name">\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <div class="login-landing__form-input">\n' +
+    '            <input class="input" type="password" placeholder="Введите пароль" ng-model="loginLandingCtrl.password">\n' +
+    '        </div>\n' +
+    '\n' +
+    '        <div class="login-landing__form-button" ng-click="loginLandingCtrl.login()">Войти</div>\n' +
+    '\n' +
     '    </div>\n' +
     '</div>');
 }]);
@@ -1178,8 +1335,8 @@ module.run(['$templateCache', function($templateCache) {
     '            <th>#</th>\n' +
     '            <th>Название</th>\n' +
     '            <th>Обозначение</th>\n' +
-    '            <th>Дата истечения строка</th>\n' +
-    '            <th>Контрактов</th>\n' +
+    '            <th>Срок действия ПИ</th>\n' +
+    '            <th>Договоров</th>\n' +
     '            <th>Отметка</th>\n' +
     '        </tr>\n' +
     '    </thead>\n' +
@@ -1308,6 +1465,28 @@ try {
   module = angular.module('HtmlTemplates', []);
 }
 module.run(['$templateCache', function($templateCache) {
+  $templateCache.put('scripts/dev/components/layout/details-progress/details-progress-layout.tmpl.html',
+    '<div class="page-layout">\n' +
+    '    <div class="page-layout__search">\n' +
+    '        <input class="input" placeholder="Введите название" ng-model="detailsProgressLayoutCtrl.detailSearch">\n' +
+    '    </div>\n' +
+    '\n' +
+    '    <detail-progress-item item="detail" ng-repeat="detail in detailsProgressLayoutCtrl.storage.details | filter: detailsProgressLayoutCtrl.detailSearch"></detail-progress-item>\n' +
+    '\n' +
+    '    <div class="floating-button-wrapper">\n' +
+    '        <div class="floating-button" ng-click="detailsProgressLayoutCtrl.addDetail()"></div>\n' +
+    '    </div>\n' +
+    '</div>');
+}]);
+})();
+
+(function(module) {
+try {
+  module = angular.module('HtmlTemplates');
+} catch (e) {
+  module = angular.module('HtmlTemplates', []);
+}
+module.run(['$templateCache', function($templateCache) {
   $templateCache.put('scripts/dev/components/layout/details/details-layout.tmpl.html',
     '<div class="page-layout">\n' +
     '\n' +
@@ -1320,28 +1499,6 @@ module.run(['$templateCache', function($templateCache) {
     '    <div class="floating-button _print" ng-click="detailsLayoutCtrl.print()">Печать</div>\n' +
     '\n' +
     '    <div class="floating-button _add" ng-click="detailsLayoutCtrl.addDetail()"></div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('HtmlTemplates');
-} catch (e) {
-  module = angular.module('HtmlTemplates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/components/layout/details-progress/details-progress-layout.tmpl.html',
-    '<div class="page-layout">\n' +
-    '    <div class="page-layout__search">\n' +
-    '        <input class="input" placeholder="Введите название" ng-model="detailsProgressLayoutCtrl.detailSearch">\n' +
-    '    </div>\n' +
-    '\n' +
-    '    <detail-progress-item item="detail" ng-repeat="detail in detailsProgressLayoutCtrl.storage.details | filter: detailsProgressLayoutCtrl.detailSearch"></detail-progress-item>\n' +
-    '\n' +
-    '    <div class="floating-button-wrapper">\n' +
-    '        <div class="floating-button" ng-click="detailsProgressLayoutCtrl.addDetail()"></div>\n' +
-    '    </div>\n' +
     '</div>');
 }]);
 })();
@@ -1585,32 +1742,6 @@ module.run(['$templateCache', function($templateCache) {
     '                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Добавить</button>\n' +
     '            </div>\n' +
     '        </div>\n' +
-    '    </div>\n' +
-    '</div>');
-}]);
-})();
-
-(function(module) {
-try {
-  module = angular.module('HtmlTemplates');
-} catch (e) {
-  module = angular.module('HtmlTemplates', []);
-}
-module.run(['$templateCache', function($templateCache) {
-  $templateCache.put('scripts/dev/components/login/landing/login-landing.tmpl.html',
-    '<div class="login-landing">\n' +
-    '\n' +
-    '    <div class="login-landing__form">\n' +
-    '        <div class="login-landing__form-input">\n' +
-    '            <input class="input" type="text" placeholder="Введите логин" ng-model="loginLandingCtrl.name">\n' +
-    '        </div>\n' +
-    '\n' +
-    '        <div class="login-landing__form-input">\n' +
-    '            <input class="input" type="password" placeholder="Введите пароль" ng-model="loginLandingCtrl.password">\n' +
-    '        </div>\n' +
-    '\n' +
-    '        <div class="login-landing__form-button" ng-click="loginLandingCtrl.login()">Войти</div>\n' +
-    '\n' +
     '    </div>\n' +
     '</div>');
 }]);

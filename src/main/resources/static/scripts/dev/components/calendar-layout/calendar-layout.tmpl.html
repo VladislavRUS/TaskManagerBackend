@@ -13,7 +13,7 @@
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label class="col-sm-2" for="inputTitle">
+                        <label class="col-sm-12" for="inputTitle">
                             Название
                         </label>
                         <div class="col-sm-12">
@@ -21,11 +21,18 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-2" for="inputComment">
+                        <label class="col-sm-12" for="inputComment">
                             Комментарий
                         </label>
                         <div class="col-sm-12">
                             <textarea type="text" class="form-control" id="inputComment" ng-model="ctrl.currentEvent.comment"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group" ng-if="ctrl.currentEvent.link">
+                        <label class="col-sm-12">
+                        </label>
+                        <div class="col-sm-12">
+                            <button class="btn btn-info btn-sm form-control" ng-click="ctrl.go(ctrl.currentEvent.link)">{{ctrl.currentEvent.linkText}}</button>
                         </div>
                     </div>
                 </form>

@@ -1,0 +1,75 @@
+<h3>{{ctrl.files.length == 0 ? 'Документов нет' : 'Документы: '}}</h3>
+
+
+<div class="list-group">
+    <a class="list-group-item list-group-item-action justify-content-between hoverable-item"
+       ng-click="ctrl.onOpen(file); $event.preventDefault();"
+       ng-repeat="file in ctrl.files">
+
+        <div>
+            <span class="btn btn-danger btn-sm delete-button"
+                  ng-click="ctrl.onDelete(file); $event.stopPropagation()">x</span>
+
+            {{file.name}}
+        </div>
+
+        <span class="badge badge-default badge-pill">
+            {{file.extension}}
+        </span>
+    </a>
+</div>
+
+<hr>
+
+<button type="button" class="btn btn-info btn-sm " ng-click="ctrl.onAdd()">Добавить файл</button>
+
+<div class="modal fade" id="createFileModal" tabindex="-1" role="dialog"
+     aria-labelledby="createFileModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="createFileModalLabel">Добавление файла</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label class="col-sm-12" for="name">
+                            Название
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="name"
+                                   ng-model="ctrl.name">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-12" for="file">
+                            Выберите файл
+                        </label>
+                        <div class="col-sm-12">
+                            <input type="file" class="form-control" id="file"
+                                   ng-model="ctrl.file">
+                        </div>
+                    </div>
+
+                    <div class="form-group" ng-if="ctrl.animated">
+                        <div class="progress slideDown">
+                            <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%"></div>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="alert alert-danger slideAnimation" ng-if="ctrl.errShow" role="alert">
+                    <strong>{{ctrl.errMessage}}</strong>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-success" ng-click="ctrl.addFile()">Добавить</button>
+            </div>
+        </div>
+    </div>
+</div>

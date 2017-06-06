@@ -5,20 +5,21 @@
 <form class="form-horizontal col-sm-12 form-control" role="form">
     <div class="row">
         <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="name">
+            <label class="col-md-12" for="name">
                 Техзадание
             </label>
-            <div class="col-sm-12">
+            <div class="col-md-12">
                 <textarea type="text" class="form-control" id="name"
                           ng-model="ctrl.researchDetail.requirements"></textarea>
             </div>
         </div>
         <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="designation">
+            <label class="col-md-12" for="designation">
                 Договор
             </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="designation" ng-model="ctrl.researchDetail.contract">
+            <div class="col-md-12">
+                <textarea type="text" class="form-control" id="designation"
+                          ng-model="ctrl.researchDetail.contract"></textarea>
             </div>
         </div>
     </div>
@@ -35,6 +36,15 @@
     <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">
         <strong>НИОКР обновлен!</strong>
     </div>
+
+    <div class="row">
+        <div class="col-md-6 form-group">
+            <div class="col-sm-12">
+                <files object="ctrl.researchDetail"></files>
+            </div>
+        </div>
+    </div>
+
 </form>
 
 <hr>
@@ -55,7 +65,7 @@
     <tr>
         <th>Номер этапа</th>
         <th>Название</th>
-        <th>Дата истечения срока</th>
+        <th>Срок выполнения</th>
         <th>Отметка</th>
     </tr>
     </thead>
@@ -89,7 +99,7 @@
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
                         <label class="col-sm-12" for="stepNumber">
-                            Номер этапа
+                            Номер этапа (число)
                         </label>
                         <div class="col-sm-12">
                             <input type="text" class="form-control" id="stepNumber"
@@ -107,7 +117,7 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-12" for="stepExpirationDate">
-                            Дата истечения срока
+                            Срок выполнения
                         </label>
                         <div class="col-sm-12">
                             <input type="date" class="form-control" id="stepExpirationDate"
@@ -117,7 +127,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteStep()">Удалить</button>
+                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteStep()">Удалить
+                </button>
                 <button type="button" class="btn btn-success" ng-click="ctrl.saveStep()">Сохранить</button>
             </div>
         </div>
