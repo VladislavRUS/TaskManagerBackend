@@ -23,7 +23,7 @@ CREATE table contract (
   amount int NOT NULL,
   quoter int NOT NULL,
   year int NOT NULL,
-  prepaid_note text NOT NULL,
+  prepaid_note text,
   done BOOL NOT NULL
 );
 
