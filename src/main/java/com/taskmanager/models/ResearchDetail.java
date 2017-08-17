@@ -10,6 +10,10 @@ public class ResearchDetail {
     private String requirements;
     private String contract;
     private List<Step> steps;
+    private String name;
+    private String vendor;
+    private String customer;
+    private String head;
 
     public String getUuid() {
         return uuid;
@@ -41,5 +45,37 @@ public class ResearchDetail {
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
     }
 }

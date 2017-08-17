@@ -15,6 +15,9 @@ public class Damper {
     private String guarantee;
     private String fiatLabeling;
     private String note;
+    private String vendor;
+    private String head;
+    private String contract;
 
     private List<Contract> contracts;
     private List<Accessory> accessories;
@@ -130,6 +133,30 @@ public class Damper {
 
     public void setAccessories(List<Accessory> accessories) {
         this.accessories = accessories;
+    }
+
+    public String getVendor() {
+        return vendor;
+    }
+
+    public void setVendor(String vendor) {
+        this.vendor = vendor;
+    }
+
+    public String getHead() {
+        return head;
+    }
+
+    public void setHead(String head) {
+        this.head = head;
+    }
+
+    public String getContract() {
+        return contract;
+    }
+
+    public void setContract(String contract) {
+        this.contract = contract;
     }
 
     @Override

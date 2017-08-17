@@ -31,6 +31,10 @@ public class ResearchDetailService {
             researchDetail.setUuid(resultSet.getString("uuid"));
             researchDetail.setRequirements(resultSet.getString("requirements"));
             researchDetail.setContract(resultSet.getString("contract"));
+            researchDetail.setName(resultSet.getString("name"));
+            researchDetail.setVendor(resultSet.getString("vendor"));
+            researchDetail.setCustomer(resultSet.getString("customer"));
+            researchDetail.setHead(resultSet.getString("head"));
 
             return researchDetail;
         }
@@ -38,26 +42,31 @@ public class ResearchDetailService {
     @Transactional
     public ResearchDetail createResearchDetail(ResearchDetail researchDetail) {
         String sql = "INSERT INTO research_detail " +
-                "(uuid, requirements, contract) " +
-                "VALUES (?, ?, ?)";
+                "(uuid, requirements, contract, name, vendor, customer, head) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?)";
         
         String uuid = UUID.randomUUID().toString();
         
         jdbcTemplate.update(sql, 
                 uuid, researchDetail.getRequirements(),
-                researchDetail.getContract());
+                researchDetail.getContract(), researchDetail.getName(),
+                researchDetail.getVendor(), researchDetail.getCustomer(), researchDetail.getHead());
 
         return getResearchDetail(uuid);
     }
 
     public ResearchDetail updateResearchDetail(ResearchDetail researchDetail) {
         String sql = "UPDATE research_detail " +
-                "SET requirements=?, contract=?  " +
+                "SET requirements=?, contract=? , name=?, vendor=?, customer=?, head=? " +
                 "WHERE uuid=?";
 
         jdbcTemplate.update(sql, 
                 researchDetail.getRequirements(),
                 researchDetail.getContract(),
+                researchDetail.getName(),
+                researchDetail.getVendor(),
+                researchDetail.getCustomer(),
+                researchDetail.getHead(),
                 researchDetail.getUuid());
         
         return getResearchDetail(researchDetail.getUuid());

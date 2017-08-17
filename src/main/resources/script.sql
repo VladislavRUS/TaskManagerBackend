@@ -11,7 +11,10 @@ CREATE table damper (
   measurement_means text,
   guarantee text,
   fiat_labeling text,
-  note text
+  note text,
+  vendor text,
+  head text,
+  contact text
 );
 
 CREATE table contract (
@@ -37,8 +40,12 @@ create table accessory (
 
 CREATE TABLE research_detail (
   uuid text NOT NULL,
+  name text NOT NULL,
   requirements text NOT NULL,
-  contract text NOT NULL
+  contract text NOT NULL,
+  vendor text,
+  customer text,
+  head text
 );
 
 create table step (
