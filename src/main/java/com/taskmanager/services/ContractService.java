@@ -73,11 +73,12 @@ public class ContractService {
 
     public Contract updateContract(Contract contract) {
         String sql = "UPDATE contract " +
-                "SET number=?, from_date=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
+                "SET number=?, from_date=?, customer=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
                 "WHERE uuid=?";
         jdbcTemplate.update(sql,
-                contract.getNumber(), contract.getFromDate(), contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote(), contract.isDone(), contract.getUuid());
+                contract.getNumber(), contract.getFromDate(), contract.getCustomer(),
+                contract.getAmount(), contract.getQuoter(), contract.getYear(),
+                contract.getPrepaidNote(), contract.isDone(), contract.getUuid());
 
         return getContract(contract.getUuid());
     }

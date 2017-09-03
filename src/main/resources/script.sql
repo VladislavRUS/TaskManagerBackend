@@ -14,7 +14,7 @@ CREATE table damper (
   note text,
   vendor text,
   head text,
-  contact text
+  contract text
 );
 
 CREATE table contract (
@@ -41,8 +41,8 @@ create table accessory (
 CREATE TABLE research_detail (
   uuid text NOT NULL,
   name text NOT NULL,
-  requirements text NOT NULL,
-  contract text NOT NULL,
+  requirements text,
+  contract text,
   vendor text,
   customer text,
   head text

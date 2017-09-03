@@ -38,18 +38,6 @@ public class DamperController {
     @Autowired
     private AccessoryService accessoryService;
 
-    private static class UuidList {
-        private List<String> uuidList;
-
-        public List<String> getUuidList() {
-            return uuidList;
-        }
-
-        public void setUuidList(List<String> uuidList) {
-            this.uuidList = uuidList;
-        }
-    }
-
     @RequestMapping(value = "/api/v1/frontend-api/dampers", method = RequestMethod.POST)
     public ResponseEntity<Damper> createDamper(@RequestBody Damper damper) {
         Damper d = damperService.createDamper(damper);
@@ -115,51 +103,5 @@ public class DamperController {
         LOGGER.debug("Deleted damper with uuid: " + uuid);
 
         return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/api/v1/frontend-api/details/print", method = RequestMethod.POST)
-    public void printDetails(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
-        List<Damper> components = new ArrayList<>();
-        List<Damper> materials = new ArrayList<>();
-        Damper damper;
-
-        // List-ы c определёнными Accessories
-        Damper damperComponents;
-        Damper damperMaterials;
-
-        for (int i = 0; i < list.getUuidList().size(); i++) {
-            damper = damperService.getDamper(list.getUuidList().get(i));
-            if (damper != null) {
-                // создаём клоны текущего damper-a по образу и подобию
-                damperComponents = new Damper(damper);
-                damperMaterials = new Damper(damper);
-
-                // для каждого Accessory проверяем type и записываем в нужный damper
-                for (int j = 0; j < damper.getAccessories().size(); j++)
-                    if (damper.getAccessories().get(j).getType().equals("component"))
-                        damperComponents.getAccessories().add(damper.getAccessories().get(j));
-                    else
-                        damperMaterials.getAccessories().add(damper.getAccessories().get(j));
-
-                if(damperComponents.getAccessories().size() != 0)
-                    components.add(damperComponents);
-                if(damperMaterials.getAccessories().size() != 0)
-                    materials.add(damperMaterials);
-            }
-
-        }
-
-        TableOfDetailsComplexion table = new TableOfDetailsComplexion(components, materials);
-        File file = new File("Export.docx");
-        try {
-            byte[] bytes = Files.readAllBytes(file.toPath());
-            ServletOutputStream outputStream = httpServletResponse.getOutputStream();
-            outputStream.write(bytes);
-            outputStream.close();
-            httpServletResponse.setHeader("Content-Disposition", String.format("inline; filename=\"" + file.getName() + "\""));
-            httpServletResponse.setContentLength((int) file.length());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
