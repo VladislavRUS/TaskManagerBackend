@@ -1,7 +1,10 @@
 package com.taskmanager.controllers;
 
+import com.taskmanager.DetailsComplexionTable;
+import com.taskmanager.NomenclatureTable;
 import com.taskmanager.TableOfDetailsComplexion;
 import com.taskmanager.models.Damper;
+import com.taskmanager.models.ResearchDetail;
 import com.taskmanager.services.ContractService;
 import com.taskmanager.services.DamperService;
 import com.taskmanager.services.ResearchDetailService;
@@ -19,6 +22,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by User on 03.09.2017.
@@ -78,8 +82,29 @@ public class PrintController {
 
         }
 
-        TableOfDetailsComplexion table = new TableOfDetailsComplexion(components, materials);
-        File file = new File("Export.docx");
+        new DetailsComplexionTable(components, materials);
+        sendFile("detail_complexion_table.docx", httpServletResponse);
+    }
+
+    @RequestMapping(value = "/api/v1/frontend-api/print/nomenclature", method = RequestMethod.POST)
+    public void printNomenclature(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
+        List<Damper> dampers = damperService.getDampers();
+        List<ResearchDetail> researchDetails = researchDetailService.getResearchDetails();
+
+        dampers = dampers.stream()
+                .filter(damper -> list.getUuidList().stream().anyMatch(uuid -> damper.getUuid().equals(uuid)))
+                .collect(Collectors.toList());
+
+        researchDetails = researchDetails.stream()
+                .filter(researchDetail -> list.getUuidList().stream().anyMatch(uuid -> researchDetail.getUuid().equals(uuid)))
+                .collect(Collectors.toList());
+
+        new NomenclatureTable(dampers, researchDetails);
+        sendFile("nomenclature_table.docx", httpServletResponse);
+    }
+
+    private void sendFile(String fileName, HttpServletResponse httpServletResponse) {
+        File file = new File(fileName);
         try {
             byte[] bytes = Files.readAllBytes(file.toPath());
             ServletOutputStream outputStream = httpServletResponse.getOutputStream();
@@ -90,10 +115,5 @@ public class PrintController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    @RequestMapping(value = "/api/v1/frontend-api/print/nomenclature", method = RequestMethod.POST)
-    public void printNomenclature(HttpServletResponse httpServletResponse, @RequestBody UuidList list) throws IOException {
-        list.getUuidList().forEach(System.out::println);
     }
 }

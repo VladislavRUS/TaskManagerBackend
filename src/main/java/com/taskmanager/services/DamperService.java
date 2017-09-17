@@ -48,6 +48,7 @@ public class DamperService {
             damper.setVendor(resultSet.getString("vendor"));
             damper.setHead(resultSet.getString("head"));
             damper.setContract(resultSet.getString("contract"));
+            damper.setCustomer(resultSet.getString("customer"));
 
             return damper;
         }
@@ -56,8 +57,8 @@ public class DamperService {
     public Damper createDamper(Damper damper) {
         String sql = "INSERT INTO damper " +
                 "(uuid, name, designation, expiration_date, inspection_methods, " +
-                "control_type, measurement_means, guarantee, fiat_labeling, note, vendor, head, contract) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "control_type, measurement_means, guarantee, fiat_labeling, note, vendor, head, contract, customer) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String UUID = java.util.UUID.randomUUID().toString();
 
@@ -65,7 +66,7 @@ public class DamperService {
                 UUID, damper.getName(), damper.getDesignation(), damper.getExpirationDate(),
                 damper.getInspectionMethods(), damper.getControlType(), damper.getMeasurementMeans(),
                 damper.getGuarantee(), damper.getFiatLabeling(), damper.getNote(), damper.getVendor(),
-                damper.getHead(), damper.getContract());
+                damper.getHead(), damper.getContract(), damper.getCustomer());
 
         return getDamper(UUID);
     }
@@ -91,14 +92,14 @@ public class DamperService {
     public Damper updateDamper(Damper damper) {
         String sql = "UPDATE damper SET " +
                 "name=?, designation=?, expiration_date=?,  inspection_methods=?, " +
-                "control_type=?, measurement_means=?, guarantee=?, fiat_labeling=?, note=?, vendor=?, head=?, contract=?" +
+                "control_type=?, measurement_means=?, guarantee=?, fiat_labeling=?, note=?, vendor=?, head=?, contract=?, customer=?" +
                 "WHERE uuid=?";
 
         jdbcTemplate.update(sql,
                 damper.getName(), damper.getDesignation(), damper.getExpirationDate(),
                 damper.getInspectionMethods(), damper.getControlType(), damper.getMeasurementMeans(),
                 damper.getGuarantee(), damper.getFiatLabeling(), damper.getNote(),
-                damper.getVendor(), damper.getHead(), damper.getContract(),
+                damper.getVendor(), damper.getHead(), damper.getContract(), damper.getCustomer(),
                 damper.getUuid());
 
         return getDamper(damper.getUuid());

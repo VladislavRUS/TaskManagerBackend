@@ -13,6 +13,7 @@ CREATE table damper (
   fiat_labeling text,
   note text,
   vendor text,
+  customer text,
   head text,
   contract text
 );

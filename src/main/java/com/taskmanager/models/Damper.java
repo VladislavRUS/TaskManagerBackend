@@ -14,6 +14,7 @@ public class Damper {
     private String measurementMeans;
     private String guarantee;
     private String fiatLabeling;
+    private String customer;
     private String note;
     private String vendor;
     private String head;
@@ -32,6 +33,7 @@ public class Damper {
         this.inspectionMethods = oldDamper.inspectionMethods;
         this.controlType = oldDamper.controlType;
         this.measurementMeans = oldDamper.measurementMeans;
+        this.customer = oldDamper.customer;
         this.guarantee = oldDamper.guarantee;
         this.fiatLabeling = oldDamper.fiatLabeling;
         this.note = oldDamper.note;
@@ -157,6 +159,14 @@ public class Damper {
 
     public void setContract(String contract) {
         this.contract = contract;
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 
     @Override
