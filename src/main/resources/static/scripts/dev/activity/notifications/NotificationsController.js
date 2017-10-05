@@ -1,9 +1,5 @@
-function NotificationsController(notificationsFactory, $rootScope, loginFactory, detailsFactory, equipmentsFactory, detailsProgressFactory) {
+function NotificationsController(notificationsFactory) {
     var self = this;
-    self.storage = notificationsFactory;
 
     notificationsFactory.getNotifications();
-
-    $rootScope.$emit('updateNotifications');
-
 }

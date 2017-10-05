@@ -1,5 +1,6 @@
 function researchDetailsFactory($http, $q, restServiceFactory) {
 	var factory = {};
+	factory.researchDetails = [];
 
 	factory.createResearchDetail = function (researchDetail) {
 		var deferred = $q.defer();
@@ -20,8 +21,8 @@ function researchDetailsFactory($http, $q, restServiceFactory) {
 		$http.get(restServiceFactory.researchDetailsAll).then(function (resp) {
 			factory.researchDetails = resp.data;
 
-			factory.researchDetails.forEach(function(detail) {
-				detail.steps.forEach(function(s) {
+			factory.researchDetails.forEach(function (detail) {
+				detail.steps.forEach(function (s) {
 					s.expirationDate = new Date(s.expirationDate);
 				});
 			});
@@ -82,11 +83,11 @@ function researchDetailsFactory($http, $q, restServiceFactory) {
 	factory.createStep = function (researchDetail, step) {
 		var deferred = $q.defer();
 
-		$http.post(restServiceFactory.researchDetailsCreateStep.replace('{UUID}', researchDetail.uuid), step).then(function() {
+		$http.post(restServiceFactory.researchDetailsCreateStep.replace('{UUID}', researchDetail.uuid), step).then(function () {
 
 			factory.getResearchDetails().then(deferred.resolve);
 
-		}, function() {
+		}, function () {
 			deferred.reject();
 		});
 
@@ -96,11 +97,13 @@ function researchDetailsFactory($http, $q, restServiceFactory) {
 	factory.updateStep = function (step) {
 		var deferred = $q.defer();
 
-		$http.put(restServiceFactory.researchDetailsUpdateStep.replace('{UUID}', step.uuid), step).then(function() {
+		$http.put(restServiceFactory.researchDetailsUpdateStep.replace('{UUID}', step.uuid), step).then(function () {
 
-			factory.getResearchDetails().then(deferred.resolve);
+			factory.getResearchDetails().then(function () {
+				deferred.resolve();
+			});
 
-		}, function() {
+		}, function () {
 			deferred.reject();
 		});
 
@@ -110,15 +113,23 @@ function researchDetailsFactory($http, $q, restServiceFactory) {
 	factory.deleteStep = function (step) {
 		var deferred = $q.defer();
 
-		$http.delete(restServiceFactory.researchDetailsDeleteStep.replace('{UUID}', step.uuid), step).then(function() {
+		$http.delete(restServiceFactory.researchDetailsDeleteStep.replace('{UUID}', step.uuid), step).then(function () {
 
 			factory.getResearchDetails().then(deferred.resolve);
 
-		}, function() {
+		}, function () {
 			deferred.reject();
 		});
 
 		return deferred.promise;
+	};
+
+	factory.findResearchDetail = function (uuid) {
+		for (var i = 0; i < factory.researchDetails.length; i++) {
+			if (factory.researchDetails[i].uuid === uuid) {
+				return factory.researchDetails[i];
+			}
+		}
 	};
 
 	return factory;

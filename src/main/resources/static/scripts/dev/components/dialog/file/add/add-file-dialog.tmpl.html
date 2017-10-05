@@ -1,0 +1,26 @@
+<div class="ui container segment" ng-controller="AddFileDialogController as ctrl">
+
+    <form class="ui form">
+        <div class="required field">
+            <label>Название</label>
+            <input type="text" ng-model="ctrl.name">
+        </div>
+
+        <div class="required field">
+            <label>Выберите файл</label>
+            <input type="file" id="file" ng-model="ctrl.file">
+        </div>
+
+        <div class="ui deny black button" ng-click="ctrl.onCancel()">
+            Отмена
+        </div>
+
+        <div class="ui positive right labeled icon button" ng-click="ctrl.addFile()">
+            Добавить
+            <i class="checkmark icon"></i>
+        </div>
+    </form>
+
+    <div class="ui active centered inline loader" ng-if="ctrl.animated"></div>
+
+</div>

@@ -1,0 +1,24 @@
+<div class="ui container segment" ng-controller="AddResearchDetailDialogController as ctrl">
+
+    <h1>Добавление НИОКР</h1>
+
+    <div class="content">
+        <form class="ui form">
+
+            <div class="required field">
+                <label>Название</label>
+                <input type="text" ng-model="ctrl.researchDetail.name">
+            </div>
+
+            <div class="ui black deny button" ng-click="ctrl.onCancel()">
+                Отмена
+            </div>
+
+            <div class="ui positive right labeled icon button" ng-click="ctrl.onSave()">
+                Сохранить
+                <i class="checkmark icon"></i>
+            </div>
+
+        </form>
+    </div>
+</div>

@@ -1,60 +1,31 @@
-function testEquipmentsLayoutDirective($stateParams, $timeout, $state, testEquipmentsFactory, notificationsFactory) {
-	return {
-		scope: {},
-		bindToController: {},
-		templateUrl: 'scripts/dev/components/layout/test-equipments/test-equipments-layout.tmpl.html',
-		controller: function() {
-			var self = this;
+function testEquipmentsLayoutDirective($stateParams, $timeout, $state,
+    testEquipmentsFactory, notificationsFactory, dialogWrapFactory, toastFactory) {
+    return {
+        scope: {},
+        bindToController: {},
+        templateUrl: 'scripts/dev/components/layout/test-equipments/test-equipments-layout.tmpl.html',
+        controller: function() {
+            var self = this;
 
-			self.storage = testEquipmentsFactory;
-			self.vendor = $stateParams.vendor;
-			self.nf = notificationsFactory;
+            self.storage = testEquipmentsFactory;
+            self.vendor = $stateParams.vendor;
+            self.nf = notificationsFactory;
 
-			self.onAdd = function() {
-				openModal('createTestEquipmentModal');
-			};
+            self.onAdd = function() {
+                dialogWrapFactory.openDialog('scripts/dev/components/dialog/test-equipment/add/add-test-equipment-dialog.tmpl.html', {
+                    vendor: self.vendor
+                });
 
-			self.save = function() {
-				var testEquipment = {
-					name: self.name,
-                    number: self.number,
-                    type: self.type,
-					expirationDate: self.expirationDate,
-					vendor: self.vendor
-				};
+            };
 
-				testEquipmentsFactory.createTestEquipment(testEquipment).then(function() {
-					self.nf.getNotifications().then(function () {
-						closeModal('createTestEquipmentModal');
-						reloadState();
-					});
-				});
-			};
+            self.vendorFilter = function(testEquipment) {
+                return testEquipment.vendor === self.vendor;
+            };
 
-			self.vendorFilter = function(testEquipment) {
-				return testEquipment.vendor == self.vendor;
-			};
-
-			self.onClick = function(testEquipment) {
+            self.onClick = function(testEquipment) {
                 $state.go('test-equipments-detailed', { uuid: testEquipment.uuid });
-			};
-
-			function closeModal(id) {
-				var el = angular.element(document).find('#' + id);
-				el.modal('hide');
-			}
-
-			function openModal(id) {
-				var el = angular.element(document).find('#' + id);
-				el.modal('show');
-			}
-
-			function reloadState() {
-				$timeout(function () {
-					$state.reload();
-				}, 500);
-			}
-		},
-		controllerAs: 'ctrl'
-	}
+            };
+        },
+        controllerAs: 'ctrl'
+    }
 }

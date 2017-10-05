@@ -28,7 +28,6 @@ function fileFactory($q, $http, restServiceFactory) {
 		$http.delete(url).then(function() {
 			deferred.resolve();
 
-
 		}, function (err) {
 			console.log(err);
 			deferred.reject();
@@ -111,7 +110,7 @@ function fileFactory($q, $http, restServiceFactory) {
 		for (var i = fileName.length - 1; i >= 0; i--) {
 			ext += fileName[i];
 
-			if (fileName[i] == '.') {
+			if (fileName[i] === '.') {
 				return ext.split("").reverse().join("");
 			}
 		}

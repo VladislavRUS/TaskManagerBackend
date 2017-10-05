@@ -1,0 +1,61 @@
+body {
+    position: relative;
+    font-family: 'Open Sans', sans-serif !important;
+    padding-top: 30px;
+}
+
+.item._active {
+    background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.ui.dropdown.item._active {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.fc-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: white;
+}
+
+.fc-event {
+    cursor: pointer;
+}
+
+.fc-day-number {
+    pointer-events: none;
+}
+
+.fc-today {
+    font-weight: bold;
+    background-color: #00B5AD !important;
+} 
+
+
+.fc-event {
+    line-height: 1.5 !important;
+}
+
+.dialog-wrap {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    opacity: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    transition: opacity .5s ease;
+    z-index: 900;
+
+    &__content {
+        position: relative;
+        min-width: 800px;
+        opacity: 0;
+        transform: scale(0);
+        transition: transform .5s ease, opacity .5s ease;
+        z-index: 1000;
+    }
+}

@@ -3,9 +3,13 @@ function ResearchDetailsDetailedController($rootScope, $stateParams, researchDet
 
     var uuid = $stateParams.uuid;
 
-    researchDetailsFactory.getResearchDetail(uuid).then(function (r) {
-        self.researchDetail = r;
-    });
+    if (researchDetailsFactory.researchDetails.length === 0) {
+        researchDetailsFactory.getResearchDetails();
+    }
+
+    self.getResearchDetail = function () {
+        return researchDetailsFactory.findResearchDetail(uuid);
+	};
 
     $rootScope.$emit('updateNotifications');
 }

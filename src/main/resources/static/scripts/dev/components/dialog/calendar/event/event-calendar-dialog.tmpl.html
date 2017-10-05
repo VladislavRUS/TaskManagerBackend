@@ -1,0 +1,34 @@
+<div class="ui container segment" ng-controller="EventCalendarDialogController as ctrl">
+
+    <h1>Событие {{ctrl.event.date | date: 'dd.MM.yyyy'}}</h1>
+
+    <form class="ui form">
+        <div class="required field">
+            <label>Название</label>
+            <input type="text" ng-model="ctrl.event.title">
+        </div>
+
+        <div class="required field">
+            <label>Комментарий</label>
+            <textarea row="2" ng-model="ctrl.event.comment"></textarea>
+        </div>
+
+        <div class="ui black deny button" ng-click="ctrl.onCancel()">
+            Отмена
+        </div>
+
+        <button class="ui right labeled icon button" ng-if="ctrl.event.custom" ng-click="ctrl.onGo(ctrl.event.link)">
+            <i class="right arrow icon"></i>
+            {{ctrl.event.linkText}}
+        </button>
+
+        <div class="ui positive right labeled icon button" ng-if="!ctrl.event.custom" ng-click="ctrl.onSave()">
+            Сохранить
+            <i class="checkmark icon"></i>
+        </div>
+
+        <div class="ui red button" ng-if="ctrl.update && !ctrl.event.custom" ng-click="ctrl.onDelete()">
+            Удалить
+        </div>
+    </form>
+</div>

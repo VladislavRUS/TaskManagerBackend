@@ -1,0 +1,4 @@
+function confirmFactory() {
+    var factory = {};
+
+}

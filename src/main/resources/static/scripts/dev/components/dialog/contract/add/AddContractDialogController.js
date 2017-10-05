@@ -1,30 +1,44 @@
-function AddContractDialogController(dialogWrapFactory, detailsFactory) {
+function AddContractDialogController(dialogWrapFactory, dampersFactory, toastFactory) {
     var self = this;
 
-    self.years = [];
+    self.update = dialogWrapFactory.getParams().update;
+    self.damper = dialogWrapFactory.getParams().damper;
 
-    var currentYear = new Date().getUTCFullYear();
+    if (self.update) {
+        self.contract = dialogWrapFactory.getParams().contract;
 
-    for (var i = currentYear; i < currentYear + 50; i++) {
-        self.years.push(i);
+    } else {
+        self.contract = {
+            amount: 1,
+            quoter: 1,
+            year: new Date().getFullYear()
+        };
     }
 
     self.onSave = function() {
-        var contract = {
-            agreement: self.agreement,
-            customer: self.customer,
-            amount: self.amount,
-            quoter: self.quoter,
-            year: self.year,
-            prepaidNote: self.prepaidNote
-        };
+        if (self.update) {
+            dampersFactory.updateContract(self.contract).then(function() {
+                toastFactory.successToast('Договор обновлен!')
+            });
 
-        var detail = dialogWrapFactory.getParams().detail;
-        detailsFactory.addContractToDetail(detail, contract);
-        dialogWrapFactory.close();
-    };
+        } else {
+            dampersFactory.addContractToDamper(self.damper, self.contract).then(function() {
+                toastFactory.successToast('Договор создан!')
+            });
+        }
+
+        dialogWrapFactory.closeDialog();
+    }
+
+    self.onDelete = function() {
+        dampersFactory.deleteContract(self.contract).then(function() {
+            toastFactory.successToast('Договор удален!')
+        });
+
+        dialogWrapFactory.closeDialog();
+    }
 
     self.onCancel = function() {
-        dialogWrapFactory.close();
+        dialogWrapFactory.closeDialog();
     }
 }

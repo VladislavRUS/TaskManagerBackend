@@ -16,7 +16,6 @@ function restServiceFactory() {
     service.detailsCreate = service.ip + 'details';
     service.detailsUpdate = service.ip + 'details/{UUID}';
     service.detailsDelete = service.ip + 'details/{UUID}';
-    service.detailsPrint = service.ip + 'details/print';
 
     /*Dampers*/
     service.dampersCreate = service.ip + 'dampers';
@@ -70,5 +69,9 @@ function restServiceFactory() {
     service.filesDelete = service.ip + 'files/{UUID}';
     service.filesCreate = service.ip + 'files';
 
-    return service;
+    /*Print*/
+    service.printList = service.ip + 'print/list';
+    service.printNomenclature = service.ip + 'print/nomenclature';
+
+	return service;
 }

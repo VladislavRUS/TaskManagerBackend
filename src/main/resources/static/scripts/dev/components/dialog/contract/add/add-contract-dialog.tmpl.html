@@ -1,50 +1,59 @@
-<div class="dialog-add jsPopup" ng-controller="AddContractDialogController as addContractDialogCtrl">
-    <div class="dialog-add__header">
-        Добавление контракта
-    </div>
+<div class="ui container segment" ng-controller="AddContractDialogController as ctrl">
 
-    <div class="dialog-add__body">
-        <div class="dialog-add__control">
-            <input class="input" type="text" ng-model="addContractDialogCtrl.agreement" placeholder="Договор поставки, доп. соглашение">
+    <form class="ui form">
+        <div class="required field">
+            <label>Номер договора</label>
+            <input type="text" ng-model="ctrl.contract.number">
         </div>
 
-        <div class="dialog-add__control">
-            <input class="input" type="text" ng-model="addContractDialogCtrl.customer" placeholder="Заказчик">
+        <div class="required field">
+            <label>От даты</label>
+            <input type="date" ng-model="ctrl.contract.fromDate">
         </div>
 
-        <div class="dialog-add__control">
-            <input class="input" type="number" ng-model="addContractDialogCtrl.amount" placeholder="Количество изделий">
+        <div class="required field">
+            <label>Заказчик</label>
+            <input type="text" ng-model="ctrl.contract.customer">
         </div>
 
-        <div class="dialog-add__control">
-            Выберите квартал:
-            <select class="select"
-                    ng-model="addContractDialogCtrl.quoter">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-            </select>
+        <div class="required field">
+            <label>Количество</label>
+            <input type="number" min="1" step="1" ng-model="ctrl.contract.amount" value="1">
         </div>
 
-        <div class="dialog-add__control">
-            Выберите год:
-            <select class="select"
-                    ng-model="addContractDialogCtrl.year">
-                <option ng-repeat="year in addContractDialogCtrl.years">{{year}}</option>
-            </select>
+        <div class="required field">
+            <label>Квартал</label>
+            <input type="number" min="1" max="4" step="1" ng-model="ctrl.contract.quoter" value="1">
         </div>
 
-        <div class="dialog-add__control">
-            <input class="input" type="text" ng-model="addContractDialogCtrl.prepaidNote" placeholder="Отметка об авансировании">
+        <div class="required field">
+            <label>Год</label>
+            <input type="number" min="2000" step="1" ng-model="ctrl.contract.year">
         </div>
-    </div>
 
-    <div class="dialog-add__actions">
-        <div class="dialog-add__actions-button _save"
-             ng-click="addContractDialogCtrl.onSave()">Сохранить</div>
+        <div class="field">
+            <label>Авансирование</label>
+            <input type="text" ng-model="ctrl.contract.prepaidNote">
+        </div>
 
-        <div class="dialog-add__actions-button _cancel"
-             ng-click="addContractDialogCtrl.onCancel()">Отмена</div>
-    </div>
+        <div class="field" ng-if="ctrl.update">
+            <div class="ui checkbox">
+                <input type="checkbox" ng-model="ctrl.contract.done">
+                <label>Выполнен</label>
+            </div>
+        </div>
+
+        <div class="ui deny black button" ng-click="ctrl.onCancel()">
+            Отмена
+        </div>
+
+        <div class="ui positive right labeled icon button" ng-click="ctrl.onSave()">
+            Сохранить
+            <i class="checkmark icon"></i>
+        </div>
+
+        <div class="ui red button" ng-if="ctrl.update" ng-click="ctrl.onDelete()">
+            Удалить
+        </div>
+    </form>
 </div>

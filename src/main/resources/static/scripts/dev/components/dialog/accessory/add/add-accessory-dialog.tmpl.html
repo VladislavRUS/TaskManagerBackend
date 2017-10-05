@@ -1,23 +1,27 @@
-<div class="dialog-add jsPopup" ng-controller="AddAccessoryDialogController as addAccessoryDialogCtrl">
-    <div class="dialog-add__header">
-        Добавление комплектующего
-    </div>
+<div class="ui container segment" ng-controller="AddAccessoryDialogController as ctrl">
 
-    <div class="dialog-add__body">
-        <div class="dialog-add__control">
-            <input class="input" type="text" ng-model="addAccessoryDialogCtrl.name" placeholder="Наименование">
+    <form class="ui form">
+        <div class="required field">
+            <label>Наименование</label>
+            <input type="text" ng-model="ctrl.accessory.name">
         </div>
 
-        <div class="dialog-add__control">
-            <input class="input" type="text" ng-model="addAccessoryDialogCtrl.designation" placeholder="Обозначение">
+        <div class="required field">
+            <label>Обозначение основных КД, ТД, стандартов и ТУ</label>
+            <input type="text" ng-model="ctrl.accessory.designation">
         </div>
-    </div>
 
-    <div class="dialog-add__actions">
-        <div class="dialog-add__actions-button _save"
-             ng-click="addAccessoryDialogCtrl.onSave()">Сохранить</div>
+        <div class="ui deny black button" ng-click="ctrl.onCancel()">
+            Отмена
+        </div>
 
-        <div class="dialog-add__actions-button _cancel"
-             ng-click="addAccessoryDialogCtrl.onCancel()">Отмена</div>
-    </div>
+        <div class="ui positive right labeled icon button" ng-click="ctrl.onSave()">
+            Сохранить
+            <i class="checkmark icon"></i>
+        </div>
+
+        <div class="ui red button" ng-if="ctrl.update" ng-click="ctrl.onDelete()">
+            Удалить
+        </div>
+    </form>
 </div>

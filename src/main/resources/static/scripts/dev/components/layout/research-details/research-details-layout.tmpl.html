@@ -1,63 +1,59 @@
-<form>
-    <div class="form-group d-flex">
-        <button type="button" class="btn btn-success" ng-click="ctrl.onAdd()">Добавить НИОКР</button>
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <button class="ui labeled icon positive button" ng-click="ctrl.onAdd()">
+                <i class="add circle icon"></i>
+                Добавить НИОКР
+            </button>
+        </div>
     </div>
-</form>
+</div>
 
-<table class="table table-hover">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Техзадание</th>
-        <th>Договор</th>
-        <th>Этапов</th>
-    </tr>
+<div class="ui input">
+    <input type="text" placeholder="Поиск" ng-model="ctrl.searchStr">
+  </div>
+
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Этапов</th>
+        </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="researchDetail in ctrl.storage.researchDetails" ng-click="ctrl.onClick(researchDetail, $event)">
-        <th>{{$index + 1}}</th>
-        <td>{{researchDetail.requirements}}</td>
-        <td>{{researchDetail.contract}}</td>
-        <td>{{researchDetail.steps.length}}</td>
-    </tr>
+        <tr ng-repeat="researchDetail in ctrl.storage.researchDetails | filter: { name: ctrl.searchStr } | orderBy: 'name' track by $index" ng-click="ctrl.onClick(researchDetail, $event)">
+            <td>{{$index + 1}}</td>
+            <td>{{researchDetail.name}}</td>
+            <td>{{researchDetail.steps.length}}</td>
+        </tr>
     </tbody>
 </table>
 
-<div class="modal fade" id="createResearchDetailModal" tabindex="-1" role="dialog" aria-labelledby="createResearchDetailModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createResearchDetailModalLabel">Добавление НИОКР</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
+<div class="ui modal" id="createResearchDetailModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Добавление НИОКР
+    </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-12" for="name">
-                            Техзадание
-                        </label>
-                        <div class="col-sm-12">
-                            <textarea type="text" class="form-control" id="name" ng-model="ctrl.requirements"></textarea>
-                        </div>
-                    </div>
+    <div class="content">
+        <form class="ui form">
 
-                    <div class="form-group">
-                        <label class="col-sm-12" for="number">
-                            Договор
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="number" ng-model="ctrl.contract">
-                        </div>
-                    </div>
-                </form>
+            <div class="required field">
+                <label>Название</label>
+                <input type="text" ng-model="ctrl.name">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Добавить</button>
-            </div>
+
+        </form>
+    </div>
+
+    <div class="actions">
+        <div class="ui black deny button">
+            Отмена
+        </div>
+        <div class="ui positive right labeled icon button" ng-click="ctrl.save()">
+            Сохранить
+            <i class="checkmark icon"></i>
         </div>
     </div>
 </div>

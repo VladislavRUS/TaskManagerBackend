@@ -1,4 +1,4 @@
-function testEquipmentDetailedDirective($state, $timeout, testEquipmentsFactory) {
+function testEquipmentDetailedDirective($state, toastFactory, testEquipmentsFactory) {
 	return {
 		scope: {},
 		bindToController: {
@@ -10,11 +10,7 @@ function testEquipmentDetailedDirective($state, $timeout, testEquipmentsFactory)
 
 			self.onUpdate = function () {
 				testEquipmentsFactory.updateTestEquipment(self.testEquipment).then(function () {
-					self.showAlert = true;
-
-					$timeout(function () {
-						self.showAlert = false;
-					}, 3000);
+					toastFactory.successToast('Испытательное оборудование успешно обновлено!')
 				});
 			};
 

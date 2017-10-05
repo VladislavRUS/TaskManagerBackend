@@ -1,7 +1,52 @@
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a ui-sref="test-equipments({vendor: ctrl.testEquipment.vendor})">Испытательное оборудование</a></li>
-    <li class="breadcrumb-item active">{{ctrl.testEquipment.name}}</li>
-</ol>
+<div class="ui large breadcrumb">
+    <a class="section"
+       ui-sref="test-equipments({vendor: ctrl.testEquipment.vendor})">Испытательное оборудование</a>
+    <i class="right chevron icon divider"></i>
+    <div class="active section">{{ctrl.testEquipment.name}}</div>
+</div>
+
+<div class="ui segment">
+    <form class="ui form">
+
+        <div class="field">
+            <label>Название</label>
+            <input type="text" ng-model="ctrl.testEquipment.name">
+        </div>
+
+        <div class="field">
+            <label>Тип</label>
+            <input type="text" ng-model="ctrl.testEquipment.type">
+        </div>
+
+        <div class="field">
+            <label>Дата истечения срока</label>
+            <input type="date" ng-model="ctrl.testEquipment.expirationDate">
+        </div>
+
+        <div class="field">
+            <label>Заводской номер</label>
+            <input type="text" ng-model="ctrl.testEquipment.number">
+        </div>
+
+        <div class="fields">
+            <div class="field">
+                <div class="ui positive right labeled icon button" ng-click="ctrl.onUpdate()">
+                    Обновить
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="ui red button" ng-click="ctrl.onDelete()">
+                    Удалить
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<files object="ctrl.testEquipment"></files>
+<!--
 
 <form class="form-horizontal col-sm-12 form-control" role="form">
     <div class="row">
@@ -63,4 +108,4 @@
             </div>
         </div>
     </div>
-</form>
+</form>-->

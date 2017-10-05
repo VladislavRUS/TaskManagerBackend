@@ -3,9 +3,13 @@ function DampersDetailedController($rootScope, $stateParams, dampersFactory) {
 
     var uuid = $stateParams.uuid;
 
-    dampersFactory.getDamper(uuid).then(function(d) {
-        self.damper = d;
-    });
+    if (dampersFactory.dampers.length === 0) {
+        dampersFactory.getDampers();
+    }
+
+    self.getDamper = function () {
+        return dampersFactory.findDamper(uuid);
+    };
 
     $rootScope.$emit('updateNotifications');
 }

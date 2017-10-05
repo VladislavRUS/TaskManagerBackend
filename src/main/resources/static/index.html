@@ -1,14 +1,27 @@
 <!DOCTYPE html>
 <html ng-app="app">
+
 <head>
     <title>Task Manager</title>
-    <link href="styles/main.css" rel="stylesheet">
+    <link href="styles/vendor-styles.css" rel="stylesheet">
+    <link href="styles/my-styles.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <meta charset="utf-8">
     <script src="scripts/main.js"></script>
 </head>
-<body style="padding-top: 5em">
 
-<div ui-view class="main-view"></div>
+<body>
+
+    <main-header></main-header>
+
+    <div class="ui divider"></div>
+
+    <div class="ui container">
+        <div ui-view class="main-view"></div>
+    </div>
+
+    <dialog-wrap></dialog-wrap>
 
 </body>
+
 </html>

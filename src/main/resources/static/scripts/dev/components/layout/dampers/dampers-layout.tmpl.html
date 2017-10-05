@@ -1,133 +1,93 @@
-<form>
-    <div class="form-group d-flex">
-        <button type="button" class="btn btn-success" ng-click="ctrl.onAdd()">Добавить виброизолятор</button>
-        <button type="button" class="btn btn-info ml-auto" ng-click="ctrl.onPrint()">Печать ({{ctrl.print.length}})</button>
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <button class="ui labeled icon positive button" ng-click="ctrl.onAdd()">
+                <i class="add circle icon"></i>
+                Добавить виброизолятор
+            </button>
+        </div>
     </div>
-</form>
+</div>
 
-<table class="table table-hover">
-    <thead class="thead-inverse">
+<div class="ui input">
+    <input type="text" placeholder="Поиск" ng-model="ctrl.searchStr">
+  </div>
+
+<table class="ui selectable striped celled table">
+
+    <thead>
         <tr>
             <th>#</th>
-            <th>Название</th>
-            <th>Обозначение</th>
+            <th ng-click="ctrl.order = name">Наименование</th>
+            <th>Обозначение КД</th>
             <th>Срок действия ПИ</th>
             <th>Договоров</th>
             <th>Отметка</th>
         </tr>
     </thead>
+
     <tbody>
-        <tr ng-repeat="damper in ctrl.storage.dampers track by $index" ng-style="ctrl.inPrint(damper.uuid) && {'font-weight': 'bolder', 'text-decoration': 'underline'}" ng-click="ctrl.onClick(damper, $event)">
-            <th>{{$index + 1}}</th>
+        <tr ng-repeat="damper in ctrl.storage.dampers | filter: { name : ctrl.searchStr } | orderBy: 'name' track by $index" ng-class="{'active': ctrl.inPrint(damper.uuid)}" ng-click="ctrl.onClick(damper, $event)">
+
+            <td>{{$index + 1}}</td>
             <td>{{damper.name}}</td>
             <td>{{damper.designation}}</td>
             <td>{{damper.expirationDate | date: 'dd-MM-yyyy'}}</td>
             <td>{{damper.contracts.length}}</td>
             <td>
-                <span class="badge badge-{{ctrl.nf.getBadgeType(damper)}}">{{ctrl.nf.getBadgeText(damper)}}</span>
+                <a class="ui label" ng-class="ctrl.nf.getBadgeType(damper)">
+                {{ctrl.nf.getBadgeText(damper)}}
+            </a>
             </td>
         </tr>
     </tbody>
 </table>
 
-<div class="modal fade" id="createDamperModal" tabindex="-1" role="dialog" aria-labelledby="createDamperModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createDamperModalLabel">Добавление виброизолятора</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
+<div class="ui modal" id="createDamperModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Добавление виброизолятора
+    </div>
+
+    <div class="content">
+
+        <div class="ui error message slideAnimation" ng-if="ctrl.error">
+            <i class="close icon" ng-click="ctrl.error = false;"></i>
+            <div class="header">
+                Пожалуйста, заполните обязательные поля:
             </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
+            <ul class="list">
+                <li>Наименование</li>
+                <li>Обозначение КД</li>
+                <li>Дата истечения срока действия ПИ</li>
+            </ul>
+        </div>
 
-                    <div class="form-group">
-                        <label class="col-sm-12" for="name">
-                            Наименование, обозначение
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="name" ng-model="ctrl.name">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="designation">
-                            Обозначение КД
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="designation" ng-model="ctrl.designation">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="expirationDate">
-                            Дата истечения срока действия ПИ
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="date" class="form-control" id="expirationDate" ng-model="ctrl.expirationDate">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="inspectionMethods">
-                            Состав контролируемых параметров изделий
-                        </label>
-                        <div class="col-sm-12">
-                            <textarea type="text" class="form-control" id="inspectionMethods" ng-model="ctrl.inspectionMethods"></textarea>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="controlType">
-                            Вид контроля, объем выборки, контрольные нормативы и правила выборочного контроля
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="controlType" ng-model="ctrl.controlType">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="measurementMeans">
-                            Средства измерений необходимые для контроля параметров изделий
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="measurementMeans" ng-model="ctrl.measurementMeans">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="guarantee">
-                            Гарантийный срок хранения
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="guarantee" ng-model="ctrl.guarantee">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="fiatLabeling">
-                            Указания о маркировке изделий по результатам входного контроля
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="fiatLabeling" ng-model="ctrl.fiatLabeling">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="col-sm-12" for="note">
-                            Примечание
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="note" ng-model="ctrl.note">
-                        </div>
-                    </div>
-                </form>
+        <form class="ui form">
+            <div class="required field">
+                <label>Наименование</label>
+                <input type="text" ng-model="ctrl.name">
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.save()">Добавить</button>
+
+            <div class="required field">
+                <label>Обозначение КД</label>
+                <input type="text" ng-model="ctrl.designation">
             </div>
+
+            <div class="required field">
+                <label>Дата истечения срока действия ПИ</label>
+                <input type="date" ng-model="ctrl.expirationDate">
+            </div>
+        </form>
+    </div>
+
+    <div class="actions">
+        <div class="ui black deny button" ng-click="ctrl.onCancel()">
+            Отмена
+        </div>
+        <div class="ui positive right labeled icon button" ng-click="ctrl.save()">
+            Сохранить
+            <i class="checkmark icon"></i>
         </div>
     </div>
 </div>

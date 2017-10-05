@@ -1,23 +1,40 @@
-<ul class="list-group col-md-6">
-    <li class="list-group-item list-group-item-action justify-content-between"
-        ng-class="{'active': type.designation == ctrl.currentType.designation}"
-        ng-click="ctrl.setType(type)"
-        ng-repeat="type in ctrl.storage.types">
-        {{type.name}}
-        <span class="badge badge-default badge-pill">{{ctrl.getNumberOfNotificationsByType(type.designation)}}</span>
-    </li>
-</ul>
-
-<hr>
-
-<div class="alert alert-{{ctrl.getNotificationAlertType(n)}} col-md-12" role="alert"
-     ng-repeat="n in ctrl.notifications | filter: ctrl.typeFilter">
-
-    <h4 class="alert-heading">{{n.title}}</h4>
-
-    <a href="#/{{n.link}}" class="alert-link">
-        {{n.linkText}}
+<div class="ui compact menu" ng-if="ctrl.storage.notifications.length">
+    <a class="item"
+       ng-class="{'active': type === ctrl.currentType}"
+       ng-click="ctrl.setType('')">
+        Все
+        <div class="ui red label">{{ctrl.storage.notifications.length}}</div>
     </a>
 
-    <p>{{n.text}}</p>
+    <a class="item"
+       ng-class="{'active': type === ctrl.currentType}"
+       ng-repeat="type in ctrl.storage.types track by $index"
+       ng-click="ctrl.setType(type)">
+
+        {{type.name}}
+        <div class="ui teal  label">{{ctrl.getNumberOfNotificationsByType(type.designation)}}</div>
+    </a>
 </div>
+
+<div class="ui divider"></div>
+
+<table class="ui selectable compact table">
+    <tbody>
+        <tr ng-repeat="n in ctrl.storage.notifications | filter: ctrl.typeFilter" ng-class="ctrl.getRowClass(n);">
+            <td>
+                <i class="warning sign icon" ng-if="ctrl.getRowClass(n) === 'negative'"></i>
+
+                <strong> {{n.title}} </strong>
+            </td>
+
+            <td>{{n.text}}</td>
+
+            <td>
+                <a href="#/{{n.link}}">
+                    {{n.linkText}}
+                </a>
+            </td>
+
+        </tr>
+    </tbody>
+</table>

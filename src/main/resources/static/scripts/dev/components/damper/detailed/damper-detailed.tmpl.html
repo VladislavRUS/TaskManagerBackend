@@ -1,369 +1,275 @@
-<ol class="breadcrumb">
-    <li class="breadcrumb-item"><a ui-sref="dampers">Виброизоляторы</a></li>
-    <li class="breadcrumb-item active">{{ctrl.damper.name}}</li>
-</ol>
+<div class="ui large breadcrumb">
+    <a class="section" ui-sref="dampers">Виброизоляторы</a>
+    <i class="right chevron icon divider"></i>
+    <div class="active section">{{ctrl.damper.name}}</div>
+</div>
 
-<form class="form-horizontal col-sm-12 form-control" role="form">
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="name">
-                Название
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="name" ng-model="ctrl.damper.name">
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="designation">
-                Обозначение
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="designation" ng-model="ctrl.damper.designation">
-            </div>
-        </div>
-    </div>
+<div class="ui segment">
 
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="expirationDate">
-                Срок действия ПИ
-            </label>
-            <div class="col-sm-12">
-                <input type="date" class="form-control" id="expirationDate" ng-model="ctrl.damper.expirationDate">
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="inspectionMethods">
-                Состав контролируемых изделий
-            </label>
-            <div class="col-sm-12">
-                <textarea type="text" class="form-control" id="inspectionMethods"
-                          ng-model="ctrl.damper.inspectionMethods"></textarea>
-            </div>
-        </div>
-    </div>
+    <form class="ui form">
 
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="controlType">
-                Вид контроля, объем выборки, контрольные нормативы
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="controlType" ng-model="ctrl.damper.controlType">
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="measurementMeans">
-                Необходимые средства измерений
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="measurementMeans" ng-model="ctrl.damper.measurementMeans">
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="guarantee">
-                Гарантийный срок хранения
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="guarantee" ng-model="ctrl.damper.guarantee">
-            </div>
-        </div>
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="fiatLabeling">
-                Указания о маркировке изделий
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="fiatLabeling" ng-model="ctrl.damper.fiatLabeling">
-            </div>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="note">
-                Примечание
-            </label>
-            <div class="col-sm-12">
-                <input type="text" class="form-control" id="note" ng-model="ctrl.damper.note">
-            </div>
+        <div class="field">
+            <label>Наименование, обозначение</label>
+            <input type="text" ng-model="ctrl.damper.name">
         </div>
 
-        <div class="col-md-6 form-group">
-            <label class="col-sm-12" for="note">
-                &nbsp;
-            </label>
+        <div class="field">
+            <label>Обозначение КД</label>
+            <input type="text" ng-model="ctrl.damper.designation">
+        </div>
 
-            <div class="col-sm-12 d-flex">
-                <button type="button" ng-click="ctrl.onUpdate()" class="btn btn-success">Обновить</button>
-                <button type="button" ng-click="ctrl.onDelete()" class="btn btn-danger ml-auto">Удалить</button>
+        <div class="field">
+            <label>Дата истечения срока действия ПИ</label>
+            <input type="date" ng-model="ctrl.damper.expirationDate">
+        </div>
+
+        <div class="field">
+            <label>Договор</label>
+            <textarea rows="2" ng-model="ctrl.damper.contract"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Состав контролируемых параметров изделий</label>
+            <textarea rows="2" ng-model="ctrl.damper.inspectionMethods"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Указания о маркировке изделий по результатам входного контроля</label>
+            <textarea rows="2" ng-model="ctrl.damper.fiatLabeling"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Вид контроля, объем выборки, контрольные нормативы и правила выборочного контроля</label>
+            <textarea rows="2" ng-model="ctrl.damper.controlType"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Средства измерений, необходимые для контроля параметров изделий</label>
+            <textarea rows="2" ng-model="ctrl.damper.measurementMeans"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Гарантийный срок хранения</label>
+            <input type="text" ng-model="ctrl.damper.guarantee">
+        </div>
+
+        <div class="field">
+            <label>Предприятие-изготовитель</label>
+            <textarea rows="2" ng-model="ctrl.damper.vendor"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Генеральный заказчик</label>
+            <textarea rows="2" ng-model="ctrl.damper.customer"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Предприятие, являющееся головным</label>
+            <textarea rows="2" ng-model="ctrl.damper.head"></textarea>
+        </div>
+
+        <div class="field">
+            <label>Примечание</label>
+            <textarea rows="2" ng-model="ctrl.damper.note"></textarea>
+        </div>
+
+        <div class="fields">
+            <div class="field">
+                <div class="ui positive right labeled icon button" ng-click="ctrl.onUpdate()">
+                    Обновить
+                    <i class="checkmark icon"></i>
+                </div>
+            </div>
+
+            <div class="field">
+                <div class="ui red button" ng-click="ctrl.onDelete()">
+                    Удалить
+                </div>
             </div>
         </div>
-    </div>
+    </form>
+</div>
 
-    <div id="updateAlert" class="alert alert-success slideAnimation" ng-if="ctrl.showAlert" role="alert">
-        <strong>Виброизолятор обновлен!</strong>
-    </div>
+<files object="ctrl.damper"></files>
 
-    <div class="row">
-        <div class="col-md-6 form-group">
-            <div class="col-sm-12">
-                <files object="ctrl.damper"></files>
-            </div>
+<div class="ui divider"></div>
+
+<div class="ui form">
+    <div class="fields">
+        <div class="fourteen wide field">
+            <div class="ui huge header">Договоры</div>
         </div>
-    </div>
-</form>
 
-<hr>
+        <div class="two wide field">
 
-<div class="d-flex justify-content-start">
-    <div class="p-2">
-        <h4>Договоры</h4>
+            <button class="ui labeled icon positive mini button" ng-click="ctrl.addContract('createContractModal');">
+                <i class="plus icon"></i>
+                Добавить
+            </button>
 
-    </div>
-
-    <div class="ml-auto p-2">
-
-        <input class="form-check-input" id="hideDone" type="checkbox" ng-click="ctrl.toggleDone()">Скрыть выполненные
-
-        <button type="button" class="btn btn-sm btn-success ml-2" ng-click="ctrl.addContract('createContractModal');">
-            Добавить
-        </button>
-
+        </div>
     </div>
 </div>
 
-<table class="table table-hover">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Номер</th>
-        <th>От</th>
-        <th>Заказчик</th>
-        <th>Кол-во</th>
-        <th>Квартал</th>
-        <th>Год</th>
-        <th>Авансирование</th>
-        <th>Выполнен</th>
-        <th>Отметка</th>
-    </tr>
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <div class="ui checkbox">
+                <input type="checkbox" ng-click="ctrl.toggleDone()">
+                <label>Скрыть выполненные</label>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="ui selectable striped celled table">
+
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Номер</th>
+            <th>От</th>
+            <th>Заказчик</th>
+            <th>Кол-во</th>
+            <th>Квартал</th>
+            <th>Год</th>
+            <th>Авансирование</th>
+            <th>Выполнен</th>
+            <th>Отметка</th>
+        </tr>
     </thead>
+
     <tbody>
-    <tr ng-repeat="contract in ctrl.damper.contracts | filter: ctrl.filterContract track by $index"
-        ng-click="ctrl.updateContract(contract, 'createContractModal');">
-        <th>{{$index + 1}}</th>
-        <td>{{contract.number}}</td>
-        <td>{{contract.fromDate | date : 'dd-MM-yyyy'}}</td>
-        <td>{{contract.customer}}</td>
-        <td>{{contract.amount}}</td>
-        <td>{{contract.quoter}}</td>
-        <td>{{contract.year}}</td>
-        <td>{{contract.prepaidNote}}</td>
-        <td>{{contract.done ? 'Да' : 'Нет'}}</td>
-        <td>
-            <span class="badge badge-{{ctrl.nf.getBadgeType(contract)}}">{{ctrl.nf.getBadgeText(contract)}}</span>
-        </td>
-    </tr>
+        <tr ng-repeat="contract in ctrl.damper.contracts | filter: ctrl.filterContract track by $index" ng-click="ctrl.updateContract(contract, 'createContractModal');">
+            <td>{{$index + 1}}</td>
+            <td>{{contract.number}}</td>
+            <td>{{contract.fromDate | date : 'dd-MM-yyyy'}}</td>
+            <td>{{contract.customer}}</td>
+            <td>{{contract.amount}}</td>
+            <td>{{contract.quoter}}</td>
+            <td>{{contract.year}}</td>
+            <td>{{contract.prepaidNote}}</td>
+            <td>{{contract.done ? 'Да' : 'Нет'}}</td>
+            <td>
+                <a class="ui {{ctrl.nf.getBadgeType(contract)}} label">
+                {{ctrl.nf.getBadgeText(contract)}}
+            </a>
+            </td>
+        </tr>
     </tbody>
 </table>
 
-<hr>
+<!--Комплектующие-->
+<div class="ui divider"></div>
 
-<div class="d-flex justify-content-start">
-    <div class="p-2">
-        <h4>Комплектующие</h4>
-    </div>
-    <div class="ml-auto p-2">
-        <button type="button" class="btn btn-sm btn-success"
-                ng-click="ctrl.addAccessory('createAccessoryModal', 'component');">Добавить
-        </button>
-    </div>
-</div>
+<div class="ui form">
+    <div class="fields">
+        <div class="fourteen wide field">
+            <div class="ui huge header">Комплектующие</div>
+        </div>
 
-<table class="table table-hover">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Наименование, обозначение</th>
-        <th>Обозначение КД, ТД и ТУ</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="accessory in ctrl.damper.accessories | filter: { type: 'component' }"
-        ng-click="ctrl.updateAccessory(accessory, 'createAccessoryModal');">
-        <th>{{$index + 1}}</th>
-        <td>{{accessory.name}}</td>
-        <td>{{accessory.designation}}</td>
-    </tr>
-    </tbody>
-</table>
+        <div class="two wide field">
 
-<hr>
+            <button class="ui labeled icon positive mini button" ng-click="ctrl.addAccessory('component');">
+                <i class="plus icon"></i>
+                Добавить
+            </button>
 
-<div class="d-flex justify-content-start">
-    <div class="p-2">
-        <h4>Расходные материалы</h4>
-    </div>
-    <div class="ml-auto p-2">
-        <button type="button" class="btn btn-sm btn-success"
-                ng-click="ctrl.addAccessory('createAccessoryModal', 'material');">Добавить
-        </button>
-    </div>
-</div>
-
-<table class="table table-hover">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Наименование, обозначение</th>
-        <th>Обозначение КД, ТД и ТУ</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr ng-repeat="accessory in ctrl.damper.accessories | filter: { type: 'material' }"
-        ng-click="ctrl.updateAccessory(accessory, 'createAccessoryModal');">
-        <th>{{$index + 1}}</th>
-        <td>{{accessory.name}}</td>
-        <td>{{accessory.designation}}</td>
-    </tr>
-    </tbody>
-</table>
-
-<div class="modal fade" id="createContractModal" tabindex="-1" role="dialog" aria-labelledby="createContractModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createContractModalLabel">Договор</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-12" for="number">
-                            Номер договора
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="number"
-                                   ng-model="ctrl.currentContract.number">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="fromDate">
-                            От даты
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="date" class="form-control" id="fromDate"
-                                   ng-model="ctrl.currentContract.fromDate">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="designation">
-                            Заказчик
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="customer"
-                                   ng-model="ctrl.currentContract.customer">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="expirationDate">
-                            Количество
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="number" min="1" step="1" class="form-control" id="amount"
-                                   ng-model="ctrl.currentContract.amount">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="expirationDate">
-                            Квартал
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="number" min="1" max="4" step="1" class="form-control" id="quoter"
-                                   ng-model="ctrl.currentContract.quoter">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="expirationDate">
-                            Год
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="number" min="2000" step="1" class="form-control" id="year"
-                                   ng-model="ctrl.currentContract.year">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="expirationDate">
-                            Авансирование
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="prepaidNote"
-                                   ng-model="ctrl.currentContract.prepaidNote">
-                        </div>
-                    </div>
-                    <div class="form-group" ng-if="ctrl.update">
-                        <div class="col-sm-12">
-                            <div class="form-check">
-                                <label class="form-check-label"></label>
-                                <input class="form-check-input" id="done" type="checkbox"
-                                       ng-model="ctrl.currentContract.done">Выполнен
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-
-                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteContract()">Удалить</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.saveContract()">Сохранить</button>
-            </div>
         </div>
     </div>
 </div>
 
-<div class="modal fade" id="createAccessoryModal" tabindex="-1" role="dialog"
-     aria-labelledby="createAccessoryModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="createAccessoryModalLabel">
-                    {{ctrl.accessoryTypes[ctrl.currentAccessory.type]}}</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form class="form-horizontal" role="form">
-                    <div class="form-group">
-                        <label class="col-sm-12" for="accessoryName">
-                            Наименование
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="accessoryName"
-                                   ng-model="ctrl.currentAccessory.name">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-12" for="accessoryDesignation">
-                            Обозначение основных КД, ТД, стандартов и ТУ
-                        </label>
-                        <div class="col-sm-12">
-                            <input type="text" class="form-control" id="accessoryDesignation"
-                                   ng-model="ctrl.currentAccessory.designation">
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" ng-if="ctrl.update" ng-click="ctrl.deleteAccessory()">Удалить</button>
-                <button type="button" class="btn btn-success" ng-click="ctrl.saveAccessory()">Сохранить</button>
-            </div>
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Наименование, обозначение</th>
+            <th>Обозначение КД, ТД и ТУ</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="accessory in ctrl.damper.accessories | filter: { type: 'component' }" ng-click="ctrl.updateAccessory(accessory, 'createAccessoryModal');">
+            <td>{{$index + 1}}</td>
+            <td>{{accessory.name}}</td>
+            <td>{{accessory.designation}}</td>
+        </tr>
+    </tbody>
+</table>
+
+
+<!--Расходные материалы-->
+<div class="ui divider"></div>
+
+<div class="ui form">
+    <div class="fields">
+        <div class="fourteen wide field">
+            <div class="ui huge header">Расходные материалы</div>
+        </div>
+
+        <div class="two wide field">
+
+            <button class="ui labeled icon positive mini button" ng-click="ctrl.addAccessory('material');">
+                <i class="plus icon"></i>
+                Добавить
+            </button>
+
         </div>
     </div>
 </div>
+
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Наименование, обозначение</th>
+            <th>Обозначение КД, ТД и ТУ</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <tr ng-repeat="accessory in ctrl.damper.accessories | filter: { type: 'material' }" ng-click="ctrl.updateAccessory(accessory, 'createAccessoryModal');">
+            <td>{{$index + 1}}</td>
+            <td>{{accessory.name}}</td>
+            <td>{{accessory.designation}}</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="ui modal" id="createAccessoryModal">
+    <i class="close icon"></i>
+    <div class="header">
+        {{ctrl.accessoryTypes[ctrl.currentAccessory.type]}}
+    </div>
+
+    <div class="content">
+        <form class="ui form">
+            <div class="required field">
+                <label>Наименование</label>
+                <input type="text" ng-model="ctrl.currentAccessory.name">
+            </div>
+
+            <div class="required field">
+                <label>Обозначение основных КД, ТД, стандартов и ТУ</label>
+                <input type="text" ng-model="ctrl.currentAccessory.designation">
+            </div>
+        </form>
+    </div>
+
+    <div class="actions">
+        <div class="ui red button" ng-if="ctrl.update" ng-click="ctrl.deleteAccessory()">
+            Удалить
+        </div>
+
+        <div class="ui deny black button" ng-if="!ctrl.update">
+            Отмена
+        </div>
+
+        <div class="ui positive right labeled icon button" ng-click="ctrl.saveAccessory()">
+            Сохранить
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div>
+
+<div class="ui divider"></div>

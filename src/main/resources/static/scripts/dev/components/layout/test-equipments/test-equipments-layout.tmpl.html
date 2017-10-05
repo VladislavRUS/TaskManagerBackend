@@ -1,35 +1,101 @@
-<form>
-    <div class="form-group d-flex">
-        <button type="button" class="btn btn-success" ng-click="ctrl.onAdd()">Добавить испытательное оборудование</button>
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <button class="ui labeled icon positive button" ng-click="ctrl.onAdd()">
+                <i class="add circle icon"></i>
+                Добавить испытательное оборудование
+            </button>
+        </div>
     </div>
-</form>
+</div>
 
-<table class="table table-hover">
-    <thead class="thead-inverse">
-    <tr>
-        <th>#</th>
-        <th>Название</th>
-        <th>Заводской номер</th>
-        <th>Тип</th>
-        <th>Дата истечения строка</th>
-        <th>Отметка</th>
-    </tr>
+<div class="ui input">
+    <input type="text" placeholder="Поиск" ng-model="ctrl.searchStr">
+  </div>
+
+<table class="ui selectable striped celled table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Название</th>
+            <th>Заводской номер</th>
+            <th>Тип</th>
+            <th>Дата истечения строка</th>
+            <th>Отметка</th>
+        </tr>
     </thead>
+
     <tbody>
-    <tr ng-repeat="testEquipment in ctrl.storage.testEquipments | filter: { vendor: ctrl.vendor }" ng-click="ctrl.onClick(testEquipment, $event)">
-        <th>{{$index + 1}}</th>
-        <td>{{testEquipment.name}}</td>
-        <td>{{testEquipment.number}}</td>
-        <td>{{testEquipment.type}}</td>
-        <td>{{testEquipment.expirationDate | date: 'dd-MM-yyyy'}}</td>
-        <td>
-            <span class="badge badge-{{ctrl.nf.getBadgeType(testEquipment)}}">{{ctrl.nf.getBadgeText(testEquipment)}}</span>
-        </td>
-    </tr>
+        <tr ng-repeat="testEquipment in ctrl.storage.testEquipments | filter: { vendor: ctrl.vendor, name: ctrl.searchStr } | orderBy: 'name' track by $index" ng-click="ctrl.onClick(testEquipment, $event)">
+            <td>{{$index + 1}}</td>
+            <td>{{testEquipment.name}}</td>
+            <td>{{testEquipment.number}}</td>
+            <td>{{testEquipment.type}}</td>
+            <td>{{testEquipment.expirationDate | date: 'dd-MM-yyyy'}}</td>
+            <td>
+                <a class="ui label" ng-class="ctrl.nf.getBadgeType(testEquipment)">{{ctrl.nf.getBadgeText(testEquipment)}}</a>
+            </td>
+        </tr>
     </tbody>
 </table>
 
-<div class="modal fade" id="createTestEquipmentModal" tabindex="-1" role="dialog" aria-labelledby="createTestEquipmentModalLabel" aria-hidden="true">
+<!-- <div class="ui modal" id="createTestEquipmentModal">
+    <i class="close icon"></i>
+    <div class="header">
+        Добавление испытательного оборудования
+    </div>
+
+    <div class="content">
+
+        <div class="ui error message slideAnimation" ng-if="ctrl.error">
+            <i class="close icon" ng-click="ctrl.error = false;"></i>
+            <div class="header">
+                Пожалуйста, заполните обязательные поля:
+            </div>
+            <ul class="list">
+                <li>Наименование, обозначение</li>
+                <li>Обозначение КД</li>
+                <li>Дата истечения срока действия ПИ</li>
+            </ul>
+        </div>
+
+        <form class="ui form">
+            <div class="required field">
+                <label>Наименование</label>
+                <input type="text" ng-model="ctrl.testEquipment.name">
+            </div>
+
+            <div class="required field">
+                <label>Заводской номер</label>
+                <input type="text" ng-model="ctrl.testEquipment.number">
+            </div>
+
+            <div class="required field">
+                <label>Дата истечения срока</label>
+                <input type="date" ng-model="ctrl.testEquipment.expirationDate">
+            </div>
+
+            <div class="required field">
+                <label>Тип</label>
+                <input type="text" ng-model="ctrl.testEquipment.type">
+            </div>
+        </form>
+    </div>
+
+    <div class="actions">
+        <div class="ui black deny button">
+            Отмена
+        </div>
+        <div class="ui positive right labeled icon button" ng-click="ctrl.save()">
+            Сохранить
+            <i class="checkmark icon"></i>
+        </div>
+    </div>
+</div> -->
+<!--
+
+<div class="modal fade" id="createTestEquipmentModal" tabindex="-1" role="dialog"
+     aria-labelledby="createTestEquipmentModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -84,4 +150,4 @@
             </div>
         </div>
     </div>
-</div>
+</div>-->

@@ -1,5 +1,6 @@
 function testEquipmentsFactory($http, $q, restServiceFactory) {
 	var factory = {};
+	factory.testEquipments = [];
 
 	factory.createTestEquipment = function (testEquipment) {
 		var deferred = $q.defer();

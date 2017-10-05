@@ -1,43 +1,39 @@
-function printFactory($http, restServiceFactory, fileFactory) {
+function printFactory($http, $timeout, restServiceFactory, fileFactory) {
     var factory = {};
+    factory.printing = false;
 
-    factory.printArray = [];
-
-    factory.addToPrintArray = function (item) {
-        factory.printArray.push(item);
+    factory.printList = function(printArray) {
+        factory.print(restServiceFactory.printList, printArray);
     };
 
-    factory.clear = function() {
-        factory.printArray = [];
+    factory.printNomenclature = function(printArray) {
+        factory.print(restServiceFactory.printNomenclature, printArray);
     };
 
-    factory.removeFromPrintArray = function (item) {
-        factory.printArray = factory.printArray.filter(function (obj) {
-            return obj.uuid != item.uuid;
-        });
-    };
+    factory.print = function(url, printArray) {
+        factory.printing = true;
 
-    factory.sendToPrint = function (page, printArray) {
-        switch (page) {
-            case 'dampers': {
-                $http({
-                    method: 'POST',
-                    url: restServiceFactory.detailsPrint,
-                    responseType: 'arraybuffer',
-                    data: { uuidList: printArray }
-                }).then(function (resp) {
+        $timeout(function() {
+            $http({
+                method: 'POST',
+                url: url,
+                responseType: 'arraybuffer',
+                data: { uuidList: printArray }
+            }).then(function(resp) {
 
-                    fileFactory.makeFile(resp.data, getName());
+                fileFactory.makeFile(resp.data, getName());
+                factory.printing = false;
 
-                });
-                break;
-            }
-        }
+            }, function() {
+                factory.printing = false;
+                alert('Произошла неизвестная ошибка!');
+            });
+        }, 1500);
     };
 
     function getName() {
         var date = new Date();
-        return 'report(' + date.getDate() + '.' + (date.getMonth()+1) + '.' + date.getFullYear() + '__' + date.getHours() + ':' + date.getMinutes() + ').docx';
+        return 'report(' + date.getDate() + '.' + (date.getMonth() + 1) + '.' + date.getFullYear() + '__' + date.getHours() + ':' + date.getMinutes() + ').docx';
     }
 
     return factory;

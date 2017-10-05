@@ -34,6 +34,9 @@ function mainHeaderDirective($state, $stateParams, notificationsFactory) {
 			}
 
 		},
-		controllerAs: 'mainHeaderCtrl'
+		controllerAs: 'mainHeaderCtrl',
+		link: function() {
+			$('.ui.dropdown').dropdown()
+		}
 	}
 }

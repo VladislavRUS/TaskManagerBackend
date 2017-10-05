@@ -1,4 +1,4 @@
-function AddEventDialogController(dialogWrapFactory, eventsFactory) {
+function AddEventDialogController(dialogWrapFactory, eventsFactory, toastFactory) {
     var self = this;
 
     self.onSave = function() {
@@ -8,8 +8,14 @@ function AddEventDialogController(dialogWrapFactory, eventsFactory) {
             date: self.date
         };
 
-        eventsFactory.addEvent(event);
-        dialogWrapFactory.close();
+        eventsFactory.addEvent(event).then(function() {
+            toastFactory.successToast('Событие добавлено!');
+            dialogWrapFactory.close();
+            
+        }, function() {
+            alert('Ошибка!');
+        })
+        
     };
 
     self.onCancel = function() {

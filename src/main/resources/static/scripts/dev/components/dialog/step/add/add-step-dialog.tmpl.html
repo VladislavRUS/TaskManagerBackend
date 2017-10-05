@@ -1,25 +1,38 @@
-<div class="dialog-add jsPopup" ng-controller="AddStepDialogController as addStepDetailDialogCtrl">
-    <div class="dialog-add__header">
-        Добавление виброизолятора
-    </div>
+<div class="ui container segment" ng-controller="AddStepDialogController as ctrl">
 
-    <div class="dialog-add__body">
-        <div class="dialog-add__control">
-            <input class="input" type="number" ng-model="addStepDetailDialogCtrl.number" placeholder="Номер этапа">
-        </div>
+    <h1>{{ ctrl.update ? 'Редактирование' : 'Добавление' }} этапа</h1>
 
-        <div class="dialog-add__control">
-            <label>Срок выполнения</label>
-            <input class="input" type="date" ng-model="addStepDetailDialogCtrl.expirationDate" placeholder="Срок выполнения">
-        </div>
+    <div class="content">
+        <form class="ui form">
 
-    </div>
+            <div class="required field">
+                <label>Номер этапа (число)</label>
+                <input type="number" min="1" step="1" ng-model="ctrl.step.number">
+            </div>
 
-    <div class="dialog-add__actions">
-        <div class="dialog-add__actions-button _save"
-             ng-click="addStepDetailDialogCtrl.onSave()">Сохранить</div>
+            <div class="required field">
+                <label>Название</label>
+                <input type="text" ng-model="ctrl.step.name">
+            </div>
 
-        <div class="dialog-add__actions-button _cancel"
-             ng-click="addStepDetailDialogCtrl.onCancel()">Отмена</div>
+            <div class="required field">
+                <label>Срок выполнения</label>
+                <input type="date" min="1" step="1" ng-model="ctrl.step.expirationDate">
+            </div>
+
+            <div class="ui black deny button" ng-click="ctrl.onCancel()">
+                Отмена
+            </div>
+
+            <div class="ui positive right labeled icon button" ng-click="ctrl.onSave()">
+                Сохранить
+                <i class="checkmark icon"></i>
+            </div>
+
+            <div class="ui red button" ng-if="ctrl.update" ng-click="ctrl.onDelete()">
+                Удалить
+            </div>
+
+        </form>
     </div>
 </div>

@@ -1,78 +1,45 @@
-function researchDetailDetailedDirective($timeout, $state, $q, researchDetailsFactory, modalFactory, notificationsFactory, fileFactory) {
-	return {
-		scope: {},
-		bindToController: {
-			researchDetail: '<'
-		},
-		templateUrl: 'scripts/dev/components/research-detail/research-detail-detailed.tmpl.html',
-		controller: function () {
-			var self = this;
-			self.currentStep = {};
-			self.nf = notificationsFactory;
-			self.update = false;
+function researchDetailDetailedDirective($timeout, $state, researchDetailsFactory,
+    modalFactory, notificationsFactory, toastFactory, dialogWrapFactory) {
+    return {
+        scope: {},
+        bindToController: {
+            researchDetail: '<'
+        },
+        templateUrl: 'scripts/dev/components/research-detail/research-detail-detailed.tmpl.html',
+        controller: function() {
+            var self = this;
+            self.nf = notificationsFactory;
+            self.update = false;
 
-			var stepModal = 'createStepModal';
+            var stepModal = 'createStepModal';
 
-			self.onUpdate = function () {
-				researchDetailsFactory.updateResearchDetail(self.researchDetail).then(function () {
-					self.showAlert = true;
+            self.onUpdate = function() {
+                researchDetailsFactory.updateResearchDetail(self.researchDetail).then(function() {
+                    toastFactory.successToast('НИОКР успешно обновлен!')
+                });
+            };
 
-					$timeout(function () {
-						self.showAlert = false;
-					}, 3000);
-				});
-			};
+            self.addStep = function() {
+                dialogWrapFactory.openDialog('scripts/dev/components/dialog/step/add/add-step-dialog.tmpl.html', {
+                    update: false,
+                    detail: self.researchDetail
+                });
+            };
 
-			self.addStep = function () {
-				self.update = false;
-				modalFactory.openModal(stepModal);
-			};
+            self.updateStep = function(step) {
+                dialogWrapFactory.openDialog('scripts/dev/components/dialog/step/add/add-step-dialog.tmpl.html', {
+                    update: true,
+                    step: angular.copy(step),
+                    detail: self.researchDetail
+                });
+            };
 
-			self.saveStep = function () {
-				if (self.update) {
-					researchDetailsFactory.updateStep(self.currentStep).then(function () {
-						self.currentStep = {};
-						modalFactory.closeModal(stepModal);
-
-						$timeout(function () {
-							$state.reload();
-						}, 500);
-					});
-				} else {
-					researchDetailsFactory.createStep(self.researchDetail, self.currentStep).then(function () {
-						self.currentStep = {};
-						modalFactory.closeModal(stepModal);
-
-						$timeout(function () {
-							$state.reload();
-						}, 500);
-					});
-				}
-			};
-
-			self.updateStep = function (step) {
-				self.update = true;
-
-				self.currentStep = angular.copy(step);
-				modalFactory.openModal(stepModal);
-			};
-
-			self.onDelete = function () {
-				researchDetailsFactory.deleteResearchDetail(self.researchDetail).then(function () {
-					$state.go('research-details');
-				});
-			};
-
-			self.deleteStep = function () {
-				researchDetailsFactory.deleteStep(self.currentStep).then(function () {
-					modalFactory.closeModal(stepModal);
-
-					$timeout(function () {
-						$state.reload();
-					}, 500);
-				});
-			};
-		},
-		controllerAs: 'ctrl'
-	}
+            self.onDelete = function() {
+                researchDetailsFactory.deleteResearchDetail(self.researchDetail).then(function() {
+                    $state.go('research-details');
+                });
+            };
+        },
+        controllerAs: 'ctrl'
+    }
 }

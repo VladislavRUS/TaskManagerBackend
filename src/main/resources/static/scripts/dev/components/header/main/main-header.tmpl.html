@@ -1,44 +1,41 @@
-<nav class="navbar navbar-toggleable-md navbar-inverse bg-inverse fixed-top">
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
+<div class="ui top fixed fluid five item menu">
 
-            <li class="nav-item">
-                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState(['notifications'])}" ui-sref="notifications">Уведомления ({{mainHeaderCtrl.storage.notifications.length}})</a>
-            </li>
+    <a class="item" ui-sref="notifications" ng-class="{'_active': mainHeaderCtrl.inState(['notifications'])}">
+        Уведомления
+        <div class="ui teal left pointing label">{{mainHeaderCtrl.storage.notifications.length}}</div>
+    </a>
 
-            <li class="nav-item">
-                <a class="nav-link" ng-class="{'active': mainHeaderCtrl.inState(['calendar'])}" ui-sref="calendar">Календарь</a>
-            </li>
+    <a class="item" ui-sref="calendar" ui-sref-opts="{reload: true, notify: true}" ng-class="{'_active': mainHeaderCtrl.inState(['calendar'])}">
+        <i class="calendar icon"></i> Календарь
+    </a>
 
-            <li class="nav-item dropdown">
-                <span class="nav-link dropdown-toggle cursor-pointer"
-                      ng-class="{'active': mainHeaderCtrl.inState(['dampers', 'test-equipments', 'university'])}"
-                      id="dropdown01"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">
-                    Самарский университет
-                </span>
+    <div class="ui dropdown item" ng-class="{'_active': mainHeaderCtrl.inState(['dampers', 'research-details', 'test-equipments', 'university'])}">
+        <i class="university icon"></i> Самарский университет
+        <i class="dropdown icon"></i>
 
-                <div class="dropdown-menu" aria-labelledby="dropdown01">
-                    <a class="dropdown-item" href="#" ui-sref="dampers">Виброизоляторы</a>
-                    <a class="dropdown-item" href="#" ui-sref="test-equipments({vendor: 'university'})">Испытательное оборудование</a>
-                </div>
-            </li>
-
-            <li class="nav-item dropdown">
-                <span class="nav-link dropdown-toggle cursor-pointer"
-                      ng-class="{'active': mainHeaderCtrl.inState(['research-details', 'test-equipments', 'progress'])}"
-                      id="dropdown02"
-                      data-toggle="dropdown"
-                      aria-haspopup="true"
-                      aria-expanded="false">АО РКЦ Прогресс</span>
-
-                <div class="dropdown-menu" aria-labelledby="dropdown02">
-                    <a class="dropdown-item" href="#" ui-sref="research-details">НИОКР</a>
-                    <a class="dropdown-item" href="#" ui-sref="test-equipments({vendor: 'progress'})">Испытательное оборудование</a>
-                </div>
-            </li>
-        </ul>
+        <div class="menu">
+            <a class="item" ui-sref="dampers">Виброизоляторы</a>
+            <a class="item" ui-sref="test-equipments({vendor: 'university'})">Испытательное оборудование</a>
+            <a class="item" ui-sref="research-details">НИОКР</a>
+        </div>
     </div>
-</nav>
+
+    <div class="ui dropdown item" ng-class="{'_active': mainHeaderCtrl.inState(['test-equipments', 'progress'])}">
+        <i class="space shuttle icon"></i> АО РКЦ Прогресс
+        <i class="dropdown icon"></i>
+
+        <div class="menu">
+            <a class="item" ui-sref="test-equipments({vendor: 'progress'})">Испытательное оборудование</a>
+        </div>
+    </div>
+
+    <div class="ui dropdown item" ng-class="{'_active': mainHeaderCtrl.inState(['print'])}">
+        <i class="print icon"></i> Печать
+        <i class="dropdown icon"></i>
+
+        <div class="menu">
+            <a class="item" ui-sref="print({type: 'list'})">Перечень</a>
+            <a class="item" ui-sref="print({type: 'nomenclature'})">Номенклатура</a>
+        </div>
+    </div>
+</div>
