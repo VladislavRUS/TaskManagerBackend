@@ -92,13 +92,20 @@ public class NomenclatureTable extends DetailsComplexionTable {
             ResearchDetail currentResearchDetail = researchDetails.get(i);
             currentRow = table.getRow(4 + i);
 
-            setFont(currentRow.getCell(0), String.valueOf(i + 1), 14);
+            //setFont(currentRow.getCell(0), String.valueOf(i + 1), 14);
+            setFontWithAlignment(currentRow.getCell(0), false, false, String.valueOf(i + 1), 14, null);
+            //setSingleLineSpacing(currentRow.getCell(0).getParagraphs().get(0));
+
             setFont(currentRow.getCell(1), currentResearchDetail.getName(), 14);
             setFont(currentRow.getCell(2), currentResearchDetail.getVendor(), 14);
             setFont(currentRow.getCell(3), currentResearchDetail.getCustomer(), 14);
             setFont(currentRow.getCell(4), currentResearchDetail.getHead(), 14);
             setFont(currentRow.getCell(5), currentResearchDetail.getContract(), 14);
             setFont(currentRow.getCell(6), currentResearchDetail.getRequirements(), 14);
+
+            for (int j = 0; j < 7; j++) {
+                setSingleLineSpacing(currentRow.getCell(j).getParagraphs().get(0));
+            }
         }
 
         table.createRow();
@@ -118,9 +125,15 @@ public class NomenclatureTable extends DetailsComplexionTable {
             table.createRow();
 
             Damper currentDamper = dampers.get(i);
+
+            System.out.println(currentDamper.getName());
+
             currentRow = table.getRow(6 + researchDetails.size() + i);
 
-            setFont(currentRow.getCell(0), String.valueOf(i + 1), 14);
+            //setFont(currentRow.getCell(0), String.valueOf(i + 1), 14);
+
+            setFontWithAlignment(currentRow.getCell(0), false, false, String.valueOf(i + 1), 14, null);
+
             setFont(currentRow.getCell(1), currentDamper.getName(), 14);
             setFont(currentRow.getCell(2), currentDamper.getVendor(), 14);
             setFont(currentRow.getCell(3), currentDamper.getCustomer(), 14);
@@ -128,7 +141,7 @@ public class NomenclatureTable extends DetailsComplexionTable {
             setFont(currentRow.getCell(5), currentDamper.getContract(), 14);
             setFont(currentRow.getCell(6), currentDamper.getDesignation(), 14);
 
-            for (int j = 0; i < 7; i++) {
+            for (int j = 0; j < 7; j++) {
                 setSingleLineSpacing(currentRow.getCell(j).getParagraphs().get(0));
             }
         }
