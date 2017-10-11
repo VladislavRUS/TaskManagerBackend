@@ -12,8 +12,7 @@ public class Contract {
     private Date fromDate;
     private String customer;
     private int amount;
-    private int quoter;
-    private int year;
+    private Date expirationDate;
     private String prepaidNote;
     private boolean done;
 
@@ -65,20 +64,12 @@ public class Contract {
         this.amount = amount;
     }
 
-    public int getQuoter() {
-        return quoter;
+    public Date getExpirationDate() {
+        return expirationDate;
     }
 
-    public void setQuoter(int quoter) {
-        this.quoter = quoter;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public void setYear(int year) {
-        this.year = year;
+    public void setExpirationDate(Date expirationDate) {
+        this.expirationDate = expirationDate;
     }
 
     public String getPrepaidNote() {

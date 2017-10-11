@@ -30,7 +30,6 @@
             <th>Обозначение</th>
             <th>Срок действия ПИ</th>
             <th>Договоров</th>
-            <th>Отметка</th>
         </tr>
     </thead>
 
@@ -40,13 +39,15 @@
             <td>{{$index + 1}}</td>
             <td>{{damper.name}}</td>
             <td>{{damper.designation}}</td>
-            <td>{{damper.expirationDate | date: 'dd-MM-yyyy'}}</td>
-            <td>{{damper.contracts.length}}</td>
-            <td>
-                <a class="ui label" ng-class="ctrl.nf.getBadgeType(damper)">
-                {{ctrl.nf.getBadgeText(damper)}}
-            </a>
+            <td>{{damper.expirationDate | date: 'dd-MM-yyyy'}}
+
+                <a class="ui label" style="float:right" ng-class="ctrl.nf.getBadgeType(damper)">
+                    {{ctrl.nf.getBadgeText(damper)}}
+                </a>
+
             </td>
+            <td>{{damper.contracts.length}}</td>
+
         </tr>
     </tbody>
 </table>

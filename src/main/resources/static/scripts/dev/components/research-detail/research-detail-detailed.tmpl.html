@@ -13,7 +13,7 @@
         </div>
 
         <div class="field">
-            <label>Предприятие-изготовитель</label>
+            <label>Исполнитель</label>
             <textarea rows="2" ng-model="ctrl.researchDetail.vendor"></textarea>
         </div>
 
@@ -75,23 +75,40 @@
     </div>
 </div>
 
+<div class="ui form">
+    <div class="fields">
+        <div class="field">
+            <div class="ui checkbox">
+                <input type="checkbox" ng-click="ctrl.toggleDone()">
+                <label>Скрыть выполненные</label>
+            </div>
+        </div>
+    </div>
+</div>
+
 <table class="ui selectable striped celled table">
     <thead>
         <tr>
             <th>Номер этапа</th>
             <th>Название</th>
             <th>Срок выполнения</th>
-            <th>Отметка</th>
         </tr>
     </thead>
 
     <tbody>
-        <tr ng-repeat="step in ctrl.researchDetail.steps track by $index" ng-click="ctrl.updateStep(step);">
+        <tr ng-repeat="step in ctrl.researchDetail.steps | filter: ctrl.stepFilter | orderBy: 'number' track by $index" ng-click="ctrl.updateStep(step);">
             <td>{{step.number}}</td>
             <td>{{step.name}}</td>
-            <td>{{step.expirationDate | date: 'dd-MM-yyyy'}}</td>
-            <td>
-                <a class="ui label" ng-class="ctrl.nf.getBadgeType(step)">{{ctrl.nf.getBadgeText(step)}}</a>
+            <td>{{step.expirationDate | date: 'dd-MM-yyyy'}}
+
+                <a class="ui {{ctrl.nf.getBadgeType(step)}} label" style="float: right" ng-if="!step.done && ctrl.nf.getBadgeType(step) !== 'green'">
+                    {{ctrl.nf.getBadgeText(step)}}
+                </a>
+
+                <a class="ui green label" style="float: right" ng-if="step.done">
+                    Выполнен
+                </a>
+
             </td>
         </tr>
     </tbody>

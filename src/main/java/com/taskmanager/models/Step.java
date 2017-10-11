@@ -11,6 +11,15 @@ public class Step {
     private String name;
     private int number;
     private Date expirationDate;
+    private boolean done;
+
+    public boolean isDone() {
+        return done;
+    }
+
+    public void setDone(boolean done) {
+        this.done = done;
+    }
 
     public String getUuid() {
         return uuid;

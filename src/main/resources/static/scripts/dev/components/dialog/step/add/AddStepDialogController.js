@@ -3,7 +3,9 @@ function AddStepDialogController(dialogWrapFactory, researchDetailsFactory, toas
     var self = this;
 
     self.detail = dialogWrapFactory.getParams().detail;
-    self.step = dialogWrapFactory.getParams().step || {};
+    self.step = dialogWrapFactory.getParams().step || {
+        done: false
+    };
     self.update = dialogWrapFactory.getParams().update;
 
     self.onSave = function() {

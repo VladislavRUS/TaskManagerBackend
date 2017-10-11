@@ -22,13 +22,8 @@
         </div>
 
         <div class="required field">
-            <label>Квартал</label>
-            <input type="number" min="1" max="4" step="1" ng-model="ctrl.contract.quoter" value="1">
-        </div>
-
-        <div class="required field">
-            <label>Год</label>
-            <input type="number" min="2000" step="1" ng-model="ctrl.contract.year">
+            <label>Срок исполнения</label>
+            <input type="date" ng-model="ctrl.contract.expirationDate">
         </div>
 
         <div class="field">

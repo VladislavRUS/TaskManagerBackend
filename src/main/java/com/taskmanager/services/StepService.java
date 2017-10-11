@@ -30,6 +30,7 @@ public class StepService {
             step.setName(resultSet.getString("name"));
             step.setNumber(resultSet.getInt("number"));
             step.setExpirationDate(resultSet.getDate("expiration_date"));
+            step.setDone(resultSet.getBoolean("done"));
 
             return step;
         }
@@ -38,15 +39,15 @@ public class StepService {
     @Transactional
     public Step createStep(String researchDetailUuid, Step step) {
         String sql = "INSERT INTO step " +
-                "(uuid, research_detail_uuid, name, number, expiration_date) " +
-                "VALUES (?, ?, ?, ?, ?)";
+                "(uuid, research_detail_uuid, name, number, expiration_date, done) " +
+                "VALUES (?, ?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
         jdbcTemplate.update(sql,
                 uuid, researchDetailUuid,
                 step.getName(), step.getNumber(),
-                step.getExpirationDate());
+                step.getExpirationDate(), step.isDone());
 
         return getStep(uuid);
     }
@@ -63,12 +64,13 @@ public class StepService {
 
     public Step updateStep(Step step) {
         String sql = "UPDATE step " +
-                "SET name=?, number=?, expiration_date=?" +
+                "SET name=?, number=?, expiration_date=?, done=? " +
                 "WHERE uuid=?";
 
         jdbcTemplate.update(sql,
                 step.getName(), step.getNumber(),
-                step.getExpirationDate(), step.getUuid());
+                step.getExpirationDate(), step.isDone(),
+                step.getUuid());
 
         return getStep(step.getUuid());
     }

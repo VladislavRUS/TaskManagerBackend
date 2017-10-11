@@ -22,7 +22,7 @@ function calendarLayoutDirective($timeout, $q, $window, $state, $rootScope, uiCa
                         right: 'today prev,next'
                     },
                     displayEventTime: false,
-                    height: 600,
+                    height: window.innerHeight * 3 / 4,
                     dayClick: function(date) {
 
                         dialogWrapFactory.openDialog('scripts/dev/components/dialog/calendar/event/event-calendar-dialog.tmpl.html', {
@@ -112,10 +112,10 @@ function calendarLayoutDirective($timeout, $q, $window, $state, $rootScope, uiCa
                 var type = n.type.split(':')[1];
 
                 if (type === 'yellow') {
-                    return '#FFC107';
+                    return '#EAAE00';
 
                 } else if (type === 'red') {
-                    return '#F44336';
+                    return '#D01919';
 
                 } else return 'blue';
             }

@@ -2,26 +2,26 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
     var factory = {};
     factory.dampers = [];
 
-    factory.createDamper = function (damper) {
+    factory.createDamper = function(damper) {
         var deferred = $q.defer();
 
         var url = restServiceFactory.dampersCreate;
 
-        $http.post(url, damper).then(function (resp) {
+        $http.post(url, damper).then(function(resp) {
 
             factory.getDampers().then(deferred.resolve);
 
-        }, function () {
+        }, function() {
             deferred.reject();
         });
 
         return deferred.promise;
     };
 
-    factory.deleteDamper = function (damper) {
+    factory.deleteDamper = function(damper) {
         var deferred = $q.defer();
 
-        $http.delete(restServiceFactory.dampersDelete.replace('{uuid}', damper.uuid)).then(function (data) {
+        $http.delete(restServiceFactory.dampersDelete.replace('{uuid}', damper.uuid)).then(function(data) {
             factory.getDampers().then(deferred.resolve);
         });
 
@@ -29,17 +29,18 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
     };
 
 
-    factory.getDampers = function () {
+    factory.getDampers = function() {
         var deferred = $q.defer();
 
-        $http.get(restServiceFactory.dampersAll).then(function (resp) {
+        $http.get(restServiceFactory.dampersAll).then(function(resp) {
 
             factory.dampers = resp.data;
             factory.dampers.forEach(function(d) {
                 d.expirationDate = new Date(d.expirationDate);
 
-                d.contracts.forEach(function (c) {
+                d.contracts.forEach(function(c) {
                     c.fromDate = new Date(c.fromDate);
+                    c.expirationDate = new Date(c.expirationDate);
                 });
             });
 
@@ -49,12 +50,12 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
         return deferred.promise;
     };
 
-    factory.updateDamper = function (damper) {
+    factory.updateDamper = function(damper) {
         var deferred = $q.defer();
 
         var url = restServiceFactory.dampersUpdate.replace('{uuid}', damper.uuid);
 
-        $http.put(url, damper).then(function (resp) {
+        $http.put(url, damper).then(function(resp) {
             factory.getDampers().then(deferred.resolve);
         });
 
@@ -76,12 +77,12 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
         return deferred.promise;
     };
 
-    factory.addContractToDamper = function (damper, contract) {
+    factory.addContractToDamper = function(damper, contract) {
         var deferred = $q.defer();
 
         var url = restServiceFactory.dampersCreateContract.replace('{uuid}', damper.uuid);
 
-        $http.post(url, contract).then(function (resp) {
+        $http.post(url, contract).then(function(resp) {
 
             factory.getDampers().then(function() {
                 deferred.resolve();
@@ -106,12 +107,12 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
         return deferred.promise;
     };
 
-    factory.deleteContract = function (contract) {
+    factory.deleteContract = function(contract) {
         var deferred = $q.defer();
 
         var url = restServiceFactory.contractDelete.replace('{uuid}', contract.uuid);
 
-        $http.delete(url).then(function () {
+        $http.delete(url).then(function() {
 
             factory.getDampers().then(function() {
                 deferred.resolve();
@@ -159,7 +160,7 @@ function dampersFactory($http, $q, $rootScope, constantsFactory, restServiceFact
 
         $http.delete(url, accessory).then(function() {
 
-            factory.getDampers().then(function () {
+            factory.getDampers().then(function() {
                 deferred.resolve();
             });
 

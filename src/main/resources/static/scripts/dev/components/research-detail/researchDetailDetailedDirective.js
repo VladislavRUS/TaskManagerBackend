@@ -10,8 +10,17 @@ function researchDetailDetailedDirective($timeout, $state, researchDetailsFactor
             var self = this;
             self.nf = notificationsFactory;
             self.update = false;
+            self.doneFilter = false;
 
             var stepModal = 'createStepModal';
+
+            self.toggleDone = function() {
+                self.doneFilter = !self.doneFilter;
+            };
+
+            self.stepFilter = function(step) {
+                return self.doneFilter ? !step.done : true;
+            };
 
             self.onUpdate = function() {
                 researchDetailsFactory.updateResearchDetail(self.researchDetail).then(function() {

@@ -25,8 +25,7 @@ CREATE table contract (
   from_date date not null,
   customer text,
   amount int NOT NULL,
-  quoter int NOT NULL,
-  year int NOT NULL,
+  expiration_date date NOT NULL,
   prepaid_note text,
   done BOOL NOT NULL
 );
@@ -54,6 +53,7 @@ create table step (
   research_detail_uuid text NOT NULL,
   name text NOT NULL,
   number text NOT NULL,
+  done BOOL NOT NULL,
   expiration_date date NOT NULL
 );
 

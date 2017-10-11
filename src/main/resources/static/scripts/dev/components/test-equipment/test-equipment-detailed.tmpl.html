@@ -1,6 +1,5 @@
 <div class="ui large breadcrumb">
-    <a class="section"
-       ui-sref="test-equipments({vendor: ctrl.testEquipment.vendor})">Испытательное оборудование</a>
+    <a class="section" ui-sref="test-equipments({vendor: ctrl.testEquipment.vendor})">Испытательное оборудование</a>
     <i class="right chevron icon divider"></i>
     <div class="active section">{{ctrl.testEquipment.name}}</div>
 </div>
@@ -19,7 +18,7 @@
         </div>
 
         <div class="field">
-            <label>Дата истечения срока</label>
+            <label>Дата истечения срока аттестации</label>
             <input type="date" ng-model="ctrl.testEquipment.expirationDate">
         </div>
 

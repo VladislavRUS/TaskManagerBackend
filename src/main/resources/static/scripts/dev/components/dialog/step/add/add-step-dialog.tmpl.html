@@ -20,6 +20,13 @@
                 <input type="date" min="1" step="1" ng-model="ctrl.step.expirationDate">
             </div>
 
+            <div class="field" ng-if="ctrl.update">
+                <div class="ui checkbox">
+                    <input type="checkbox" ng-model="ctrl.step.done">
+                    <label>Выполнен</label>
+                </div>
+            </div>
+
             <div class="ui black deny button" ng-click="ctrl.onCancel()">
                 Отмена
             </div>

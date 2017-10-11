@@ -33,8 +33,7 @@ public class ContractService {
             contract.setNumber(resultSet.getString("number"));
             contract.setFromDate(resultSet.getDate("from_date"));
             contract.setAmount(resultSet.getInt("amount"));
-            contract.setQuoter(resultSet.getInt("quoter"));
-            contract.setYear(resultSet.getInt("year"));
+            contract.setExpirationDate(resultSet.getDate("expiration_date"));
             contract.setPrepaidNote(resultSet.getString("prepaid_note"));
             contract.setCustomer(resultSet.getString("customer"));
             contract.setDone(resultSet.getBoolean("done"));
@@ -46,16 +45,15 @@ public class ContractService {
     @Transactional
     public Contract createContract(String damperUuid, Contract contract) {
         String sql = "INSERT INTO contract " +
-                "(uuid, damper_uuid, number, from_date, customer, amount, quoter, year, prepaid_note, done) " +
-                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+                "(uuid, damper_uuid, number, from_date, customer, expiration_date, amount, prepaid_note, done) " +
+        "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
         String uuid = UUID.randomUUID().toString();
 
         jdbcTemplate.update(sql,
                 uuid, damperUuid,
                 contract.getNumber(), contract.getFromDate(), contract.getCustomer(),
-                contract.getAmount(), contract.getQuoter(),
-                contract.getYear(), contract.getPrepaidNote(),
+                contract.getExpirationDate(), contract.getAmount(), contract.getPrepaidNote(),
                 contract.isDone());
 
         return getContract(uuid);
@@ -73,11 +71,11 @@ public class ContractService {
 
     public Contract updateContract(Contract contract) {
         String sql = "UPDATE contract " +
-                "SET number=?, from_date=?, customer=?, amount=?, quoter=?, year=?, prepaid_note=?, done=? " +
+                "SET number=?, from_date=?, customer=?, amount=?, expiration_date=?, prepaid_note=?, done=? " +
                 "WHERE uuid=?";
         jdbcTemplate.update(sql,
                 contract.getNumber(), contract.getFromDate(), contract.getCustomer(),
-                contract.getAmount(), contract.getQuoter(), contract.getYear(),
+                contract.getAmount(), contract.getExpirationDate(),
                 contract.getPrepaidNote(), contract.isDone(), contract.getUuid());
 
         return getContract(contract.getUuid());
