@@ -7,14 +7,17 @@ import java.util.Date;
  */
 public class Contract {
     private String uuid;
-    private String damperUuid;
     private String number;
     private Date fromDate;
     private String customer;
-    private int amount;
-    private Date expirationDate;
-    private String prepaidNote;
-    private boolean done;
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(String customer) {
+        this.customer = customer;
+    }
 
     public String getUuid() {
         return uuid;
@@ -22,14 +25,6 @@ public class Contract {
 
     public void setUuid(String uuid) {
         this.uuid = uuid;
-    }
-
-    public String getDamperUuid() {
-        return damperUuid;
-    }
-
-    public void setDamperUuid(String damperUuid) {
-        this.damperUuid = damperUuid;
     }
 
     public String getNumber() {
@@ -46,57 +41,5 @@ public class Contract {
 
     public void setFromDate(Date fromDate) {
         this.fromDate = fromDate;
-    }
-
-    public String getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(String customer) {
-        this.customer = customer;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
-    }
-
-    public Date getExpirationDate() {
-        return expirationDate;
-    }
-
-    public void setExpirationDate(Date expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    public String getPrepaidNote() {
-        return prepaidNote;
-    }
-
-    public void setPrepaidNote(String prepaidNote) {
-        this.prepaidNote = prepaidNote;
-    }
-
-    public boolean isDone() {
-        return done;
-    }
-
-    public void setDone(boolean done) {
-        this.done = done;
-    }
-
-    @Override
-    public String toString() {
-        StringBuilder builder = new StringBuilder();
-
-        builder
-                .append("UUID: ").append(this.getUuid()).append(", ")
-                .append("customer: ").append(this.getCustomer()).append(", ")
-                .append("amount: ").append(this.getAmount());
-
-        return builder.toString();
     }
 }

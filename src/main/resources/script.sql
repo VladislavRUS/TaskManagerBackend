@@ -20,14 +20,17 @@ CREATE table damper (
 
 CREATE table contract (
   uuid text NOT NULL,
-  damper_uuid text NOT NULL,
   number text not null,
   from_date date not null,
-  customer text,
-  amount int NOT NULL,
-  expiration_date date NOT NULL,
-  prepaid_note text,
-  done BOOL NOT NULL
+  customer text
+);
+
+create table contract_item (
+  uuid text NOT NULL,
+  contract_uuid text NOT NULL,
+  damper_uuid text NOT NULL,
+  amount integer NOT NULL,
+  accepted integer NOT NULL
 );
 
 create table accessory (
